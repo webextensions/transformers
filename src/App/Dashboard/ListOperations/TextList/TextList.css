@@ -1,0 +1,12 @@
+.TextList :global(.ace_editor),
+.TextList :global(.ace_editor) * {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12px;
+}
+
+.translucentWithoutHover {
+    opacity: 0.2;
+}
+.translucentWithoutHover:hover {
+    opacity: 1;
+}
