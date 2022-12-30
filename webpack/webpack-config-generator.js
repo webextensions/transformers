@@ -1,6 +1,8 @@
 const
     path = require('path');
 
+const distDirname = require('../utils/get-distribution-dirname.js');
+
 const
     // webpack = require('webpack'),
     MiniCssExtractPlugin = require('mini-css-extract-plugin'),
@@ -40,9 +42,13 @@ const webpackConfigGenerator = function (generatorOptions = {}) {
             outputCssFilenamePattern = 'bundle.[name].[contenthash:20].css'
         } = generatorOptions;
 
-    const
-        nodeModulesAtProjectRoot = path.resolve(projectRoot, 'node_modules'),
+    const nodeModulesAtProjectRoot = path.resolve(projectRoot, 'node_modules');
+    let targetPublicDirectory;
+    if (distDirname) {
+        targetPublicDirectory = path.join(__dirname, '..', distDirname, 'transformers');
+    } else {
         targetPublicDirectory = path.join(projectRoot, publicDirectory);
+    }
 
     // const
     //     templateToHtml = generatorOptions.templateToHtml || {},

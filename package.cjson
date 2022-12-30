@@ -106,6 +106,9 @@
     "local-ip-addresses-and-hostnames": "^0.1.3",
 
     // Miscellaneous
+    "gh-pages": "^4.0.0",
+    "mkdirp": "^1.0.4",
+    "ncp": "^2.0.0",
     "del": "=6.1.1",
     "handlebars": "^4.7.7",
     "node-notifier": "^10.0.1",
@@ -145,6 +148,13 @@
 
     "build-inspect-brk": "npm run build-development-local-inspect-brk",
     "build":             "npm run build-development-local",
+
+    /* GitHub Pages */
+    "build:publish": "DISTDIR=publish WATCH=false NODE_ENV=production webpack --mode=production --progress --env config=\"config/config.production.js\"",
+    "clean:publish": "rimraf publish/",
+    "copy:publish": "mkdirp publish/transformers && ncp src/favicon.ico publish/transformers/favicon.ico && mkdirp publish/transformers/ && ncp README.md publish/transformers/README.md && ncp src/.nojekyll publish/transformers/.nojekyll",
+    "gh-pages": "DISTDIR=publish node ./scripts/gh-pages.js",
+    "publish": "npm run clean:publish && npm run copy:publish && npm run build:publish && npm run gh-pages",
 
     /* Server */
     "server-production-inspect-brk":       "NODE_ENV=production node --inspect-brk server/server.js    --config config/config.production.js",
