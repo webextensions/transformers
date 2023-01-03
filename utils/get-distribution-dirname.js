@@ -1,1 +1,1 @@
-module.exports = (process.env.DISTDIR === 'publish' ? 'publish' : 'public');
+module.exports = (process.env.DISTDIR === 'publish' ? 'publish' : null);
