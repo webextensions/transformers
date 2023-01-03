@@ -76,7 +76,7 @@ const RecentOperations = function ({
                                             alert(err.message); // eslint-disable-line no-alert
                                         } else {
                                             if (output === null) {
-                                                alert(JSON.stringify(extraInfo, null, '    ')); // eslint-disable-line no-alert
+                                                alert(JSON.stringify(extraInfo, null, '\t')); // eslint-disable-line no-alert
                                             } else {
                                                 editorRef.current.setValue(output);
                                                 if (typeof onValueUpdate === 'function') {

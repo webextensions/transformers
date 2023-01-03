@@ -68,6 +68,8 @@ import {
 
     $json_formatJson,
 
+    $json_removeProperty,
+
     $json_sortJson,
 
     $json_fixDataTypes,
@@ -575,6 +577,11 @@ const TextList = function ({
                                             Format JSON
                                         </option>
                                     </optgroup>
+                                    <optgroup label="Edit">
+                                        <option value={$json_removeProperty}>
+                                            Remove property
+                                        </option>
+                                    </optgroup>
                                     <optgroup label="Sort">
                                         <option value={$json_sortJson}>
                                             Sort JSON
@@ -631,7 +638,7 @@ const TextList = function ({
                                     alert(err.message); // eslint-disable-line no-alert
                                 } else {
                                     if (output === null) {
-                                        alert(JSON.stringify(extraInfo, null, '    ')); // eslint-disable-line no-alert
+                                        alert(JSON.stringify(extraInfo, null, '\t')); // eslint-disable-line no-alert
                                     } else {
                                         editorRef.current.setValue(output);
                                         if (typeof onValueUpdate === 'function') {

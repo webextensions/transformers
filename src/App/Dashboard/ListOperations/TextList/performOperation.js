@@ -47,6 +47,8 @@ import {
 
     $json_formatJson,
 
+    $json_removeProperty,
+
     $json_sortJson,
 
     $json_fixDataTypes,
@@ -60,6 +62,7 @@ const performOperation = async function ({ getInputValue, operation }) {
         if (
             [
                 $json_formatJson,
+                $json_removeProperty,
                 $json_sortJson,
                 $json_fixDataTypes,
                 $json_jsonToLines,
@@ -72,14 +75,53 @@ const performOperation = async function ({ getInputValue, operation }) {
 
             switch (operation) {
                 case $json_formatJson:
-                    output = JSON.stringify(jsonInput, null, 4);
+                    output = JSON.stringify(jsonInput, null, '\t');
+                    break;
+                case $json_removeProperty:
+                    // Just a block
+                    {
+                        // Remove a property from a JSON object recursively
+                        // TODO: Optimize this function
+                        // TODO: Verify that this function works as expected for all cases
+                        const removePropertyRecursively = (obj, propertyName) => {
+                            // eslint-disable-next-line no-prototype-builtins
+                            if (obj.hasOwnProperty(propertyName)) {
+                                delete obj[propertyName];
+                            } else {
+                                Object.keys(obj).forEach(key => {
+                                    if (typeof obj[key] === 'object') {
+                                        removePropertyRecursively(obj[key], propertyName);
+                                    } else if (Array.isArray(obj[key])) {
+                                        obj[key].forEach(item => {
+                                            if (typeof item === 'object') {
+                                                removePropertyRecursively(item, propertyName);
+                                            } else {
+                                                // Do nothing
+                                            }
+                                        });
+                                    } else {
+                                        // Do nothing
+                                    }
+                                });
+                            }
+                        };
+
+                        // eslint-disable-next-line no-alert
+                        const propertyName = prompt('Please enter the name of the property to remove:');
+                        if (propertyName) {
+                            removePropertyRecursively(jsonInput, propertyName);
+                            output = JSON.stringify(jsonInput, null, '\t');
+                        } else {
+                            return [new Error('Please provide a property name.')];
+                        }
+                    }
                     break;
                 case $json_sortJson:
-                    output = jsonStableStringify(jsonInput, { space: '    ' });
+                    output = jsonStableStringify(jsonInput, { space: '\t' });
                     break;
                 case $json_fixDataTypes:
                     output = fixDataTypes(jsonInput);
-                    output = JSON.stringify(output, null, 4);
+                    output = JSON.stringify(output, null, '\t');
                     break;
                 case $json_jsonToLines:
                     if (
@@ -246,7 +288,7 @@ const performOperation = async function ({ getInputValue, operation }) {
                     break;
 
                 case $list_linesToJsonArray:
-                    output = JSON.stringify(lines, null, 4);
+                    output = JSON.stringify(lines, null, '\t');
                     output = output.split('\n');
                     break;
             }

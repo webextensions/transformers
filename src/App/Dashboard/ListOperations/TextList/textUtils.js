@@ -84,9 +84,9 @@ const csvToJson = function (lines) {
             obj[header] = column;
         }
         if (i < lines.length - 1) {
-            output.push('    ' + JSON.stringify(obj) + ',');
+            output.push('\t' + JSON.stringify(obj) + ',');
         } else {
-            output.push('    ' + JSON.stringify(obj));
+            output.push('\t' + JSON.stringify(obj));
         }
     }
     output.push(']');

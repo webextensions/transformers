@@ -22,6 +22,7 @@ import ReorderIcon from '@mui/icons-material/Reorder.js';
 import DataObjectIcon from '@mui/icons-material/DataObject.js';
 import AppsIcon from '@mui/icons-material/Apps.js';
 import MoodIcon from '@mui/icons-material/Mood.js';
+import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove.js';
 import CategoryIcon from '@mui/icons-material/Category.js';
 
 import BuildIcon from '@mui/icons-material/Build.js';
@@ -80,6 +81,8 @@ export const
 
     $json_formatJson                         = '$json_formatJson',
 
+    $json_removeProperty                     = '$json_removeProperty',
+
     $json_sortJson                           = '$json_sortJson',
 
     $json_fixDataTypes                       = '$json_fixDataTypes',
@@ -115,6 +118,8 @@ const
             [$json_sample_json]                        : { message: 'Sample JSON',                            Icon: AppRegistrationIcon },
 
             [$json_formatJson]                         : { message: 'Format JSON',                            Icon: MoodIcon },
+
+            [$json_removeProperty]                     : { message: 'Remove property',                        Icon: PlaylistRemoveIcon },
 
             [$json_sortJson]                           : { message: 'Sort JSON',                              Icon: CategoryIcon },
 
