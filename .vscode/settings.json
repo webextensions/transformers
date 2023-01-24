@@ -11,7 +11,8 @@
         // "**/node_modules": false
 
         // Exclude the auto-generated public folders from search
-        "public-*": true
+        "public-*": true,
+        "publish": true
     },
 
     // https://github.com/wk-j/vscode-save-and-run#sample-config
