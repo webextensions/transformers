@@ -43,6 +43,7 @@ import {
     $css_sample_css,
 
     $css_formatCss,
+    $css_minifyCss,
 
     $css_cssToScss,
 
@@ -75,6 +76,7 @@ import {
     $json_sample_json,
 
     $json_formatJson,
+    $json_minifyJson,
 
     $json_removeProperty,
 
@@ -510,6 +512,9 @@ const TextList = function ({
                                         <option value={$css_formatCss}>
                                             Format CSS
                                         </option>
+                                        <option value={$css_minifyCss}>
+                                            Minify CSS
+                                        </option>
                                     </optgroup>
                                     <optgroup label="Transform">
                                         <option value={$css_cssToScss}>
@@ -613,6 +618,9 @@ const TextList = function ({
                                     <optgroup label="Format">
                                         <option value={$json_formatJson}>
                                             Format JSON
+                                        </option>
+                                        <option value={$json_minifyJson}>
+                                            Minify JSON
                                         </option>
                                     </optgroup>
                                     <optgroup label="Edit">

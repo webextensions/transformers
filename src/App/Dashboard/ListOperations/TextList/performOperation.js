@@ -1,6 +1,7 @@
 import {
     beautifyCss,
-    cssToScss
+    cssToScss,
+    minifyCss
 } from 'helpmate-css/dist/index.js';
 
 import {
@@ -27,6 +28,7 @@ import {
     $css_cssToScss,
 
     $css_formatCss,
+    $css_minifyCss,
 
     $list_sample_list,
 
@@ -57,6 +59,7 @@ import {
     $json_sample_json,
 
     $json_formatJson,
+    $json_minifyJson,
 
     $json_removeProperty,
 
@@ -73,6 +76,7 @@ const performOperation = async function ({ getInputValue, operation }) {
         if (
             [
                 $css_formatCss,
+                $css_minifyCss,
                 $css_cssToScss
             ].includes(operation)
         ) {
@@ -82,6 +86,9 @@ const performOperation = async function ({ getInputValue, operation }) {
             switch (operation) {
                 case $css_formatCss:
                     output = beautifyCss(input);
+                    break;
+                case $css_minifyCss:
+                    output = minifyCss(input);
                     break;
                 case $css_cssToScss:
                     if (input.trim() === '') {
@@ -102,6 +109,7 @@ const performOperation = async function ({ getInputValue, operation }) {
         else if (
             [
                 $json_formatJson,
+                $json_minifyJson,
                 $json_removeProperty,
                 $json_sortJson,
                 $json_fixDataTypes,
@@ -116,6 +124,9 @@ const performOperation = async function ({ getInputValue, operation }) {
             switch (operation) {
                 case $json_formatJson:
                     output = JSON.stringify(jsonInput, null, '\t');
+                    break;
+                case $json_minifyJson:
+                    output = JSON.stringify(jsonInput);
                     break;
                 case $json_removeProperty:
                     // Just a block

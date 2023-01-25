@@ -4,6 +4,8 @@ import CircleIcon from '@mui/icons-material/Circle.js';
 
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration.js';
 
+import CompressIcon from '@mui/icons-material/Compress.js';
+
 import DataObjectIcon from '@mui/icons-material/DataObject.js';
 
 import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet.js';
@@ -51,6 +53,7 @@ export const
     $css_sample_css                          = '$css_sample_css',
 
     $css_formatCss                           = '$css_formatCss',
+    $css_minifyCss                           = '$css_minifyCss',
 
     $css_cssToScss                           = '$css_cssToScss',
 
@@ -88,6 +91,7 @@ export const
     $json_sample_json                        = '$json_sample_json',
 
     $json_formatJson                         = '$json_formatJson',
+    $json_minifyJson                         = '$json_minifyJson',
 
     $json_removeProperty                     = '$json_removeProperty',
 
@@ -119,6 +123,7 @@ const
             [$css_sample_css]                          : { message: 'Sample CSS',                             Icon: AppRegistrationIcon },
 
             [$css_formatCss]                           : { message: 'Format CSS',                             Icon: MoodIcon },
+            [$css_minifyCss]                           : { message: 'Minify CSS',                             Icon: CompressIcon },
 
             [$css_cssToScss]                           : { message: 'CSS to SCSS',                            Icon: DataObjectIcon }
         },
@@ -134,6 +139,7 @@ const
             [$json_sample_json]                        : { message: 'Sample JSON',                            Icon: AppRegistrationIcon },
 
             [$json_formatJson]                         : { message: 'Format JSON',                            Icon: MoodIcon },
+            [$json_minifyJson]                         : { message: 'Minify JSON',                            Icon: CompressIcon },
 
             [$json_removeProperty]                     : { message: 'Remove property',                        Icon: PlaylistRemoveIcon },
 
