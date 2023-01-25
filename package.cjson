@@ -1,6 +1,6 @@
 {
   "name": "transformers",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Transformers: Tools for performing operations on the text (Lists, Sets, CSV, JSON, etc)",
   "author": "Priyank Parashar",
 
