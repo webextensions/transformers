@@ -1,9 +1,3 @@
-/*!
-* screenfull
-* v5.2.0 - 2021-11-03
-* (c) Sindre Sorhus; MIT License
-*/
-
 /**
  * @license
  * Lodash <https://lodash.com/>
