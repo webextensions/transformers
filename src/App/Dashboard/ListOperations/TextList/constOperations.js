@@ -4,6 +4,8 @@ import CircleIcon from '@mui/icons-material/Circle.js';
 
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration.js';
 
+import DataObjectIcon from '@mui/icons-material/DataObject.js';
+
 import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet.js';
 import CopyAllIcon from '@mui/icons-material/CopyAll.js';
 // import RestaurantIcon from '@mui/icons-material/Restaurant.js';
@@ -19,7 +21,6 @@ import CleaningServicesIcon from '@mui/icons-material/CleaningServices.js';
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote.js';
 
 import ReorderIcon from '@mui/icons-material/Reorder.js';
-import DataObjectIcon from '@mui/icons-material/DataObject.js';
 import AppsIcon from '@mui/icons-material/Apps.js';
 import MoodIcon from '@mui/icons-material/Mood.js';
 import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove.js';
@@ -40,12 +41,19 @@ import BarChartIcon from '@mui/icons-material/BarChart.js';
 
 // eslint-disable-next-line import/exports-last
 export const
+    mode_css = 'css',
     mode_csv = 'csv',
     mode_json = 'json',
     mode_list = 'list';
 
 // eslint-disable-next-line import/exports-last
 export const
+    $css_sample_css                          = '$css_sample_css',
+
+    $css_formatCss                           = '$css_formatCss',
+
+    $css_cssToScss                           = '$css_cssToScss',
+
     $list_sample_list                        = '$list_sample_list',
 
     $list_removeEmptyLines                   = '$list_removeEmptyLines',
@@ -96,6 +104,7 @@ export const
 
 // eslint-disable-next-line import/exports-last
 export const defaultRecommendedOperations = [
+    $css_sample_css,
     $csv_sample_csv,
     $json_sample_json,
     $list_sample_list
@@ -106,6 +115,13 @@ export const IconNotAvailable = CircleIcon;
 
 const
     availableOperations = {
+        [mode_css]: {
+            [$css_sample_css]                          : { message: 'Sample CSS',                             Icon: AppRegistrationIcon },
+
+            [$css_formatCss]                           : { message: 'Format CSS',                             Icon: MoodIcon },
+
+            [$css_cssToScss]                           : { message: 'CSS to SCSS',                            Icon: DataObjectIcon }
+        },
         [mode_csv]: {
             [$csv_sample_csv]                          : { message: 'Sample CSV',                             Icon: AppRegistrationIcon },
 

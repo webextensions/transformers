@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver.js'; // https://github.com/securingsincity/react-ace/issues/725#issuecomment-543109155
+import 'ace-builds/src-noconflict/mode-css.js';
 import 'ace-builds/src-noconflict/mode-json.js';
 import 'ace-builds/src-noconflict/theme-github.js';
 // import 'ace-builds/src-noconflict/ext-language_tools.js';
@@ -34,9 +35,16 @@ import { useLocalStorage } from 'react-use';
 import { recentOperationsAtom } from './JotaiState.js';
 
 import {
+    mode_css,
     mode_csv,
     mode_json,
     mode_list,
+
+    $css_sample_css,
+
+    $css_formatCss,
+
+    $css_cssToScss,
 
     $list_sample_list,
 
@@ -107,6 +115,7 @@ const TextList = function ({
     const [mode, setMode] = useLocalStorage('mode', mode_list, { raw: true });
 
     const [selectedOperations, setSelectedOperations] = useLocalStorage('selectedOperations', {
+        [mode_css]: '',
         [mode_csv]: '',
         [mode_json]: '',
         [mode_list]: ''
@@ -125,6 +134,8 @@ const TextList = function ({
     const modeForSyntaxHighlighting = (() => {
         if (flagSyntaxHighlighting === 'yes') {
             switch (mode) {
+                case mode_css:
+                    return 'css';
                 case mode_csv:
                     return 'text';
                 case mode_json:
@@ -307,11 +318,14 @@ const TextList = function ({
                                     a.href = URL.createObjectURL(blob);
                                     let extension;
                                     switch (mode) {
-                                        case mode_json:
-                                            extension = 'json';
+                                        case mode_css:
+                                            extension = 'css';
                                             break;
                                         case mode_csv:
                                             extension = 'csv';
+                                            break;
+                                        case mode_json:
+                                            extension = 'json';
                                             break;
                                         default:
                                             extension = 'txt';
@@ -330,7 +344,10 @@ const TextList = function ({
                         <div>
                             {(() => {
                                 const disabled = (() => {
-                                    if (mode === mode_json) {
+                                    if (
+                                        mode === mode_json ||
+                                        mode === mode_css
+                                    ) {
                                         return false;
                                     } else {
                                         return true;
@@ -398,6 +415,7 @@ const TextList = function ({
                                 }}
                                 onChange={(e) => setMode(e.target.value)}
                             >
+                                <option value={mode_css}>CSS</option>
                                 <option value={mode_csv}>CSV</option>
                                 <option value={mode_json}>JSON</option>
                                 <option value={mode_list}>List</option>
@@ -480,6 +498,26 @@ const TextList = function ({
                                 -- Operations --
                             </option>
 
+                            {
+                                mode === mode_css &&
+                                <React.Fragment>
+                                    <optgroup label="Sample">
+                                        <option value={$css_sample_css}>
+                                            Sample CSS
+                                        </option>
+                                    </optgroup>
+                                    <optgroup label="Format">
+                                        <option value={$css_formatCss}>
+                                            Format CSS
+                                        </option>
+                                    </optgroup>
+                                    <optgroup label="Transform">
+                                        <option value={$css_cssToScss}>
+                                            CSS to SCSS
+                                        </option>
+                                    </optgroup>
+                                </React.Fragment>
+                            }
                             {
                                 mode === mode_list &&
                                 <React.Fragment>

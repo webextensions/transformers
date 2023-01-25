@@ -1,4 +1,9 @@
 import {
+    beautifyCss,
+    cssToScss
+} from 'helpmate-css/dist/index.js';
+
+import {
     removeEmptyLines,
     removeDuplicates,
 
@@ -17,6 +22,12 @@ import {
 } from './textUtils.js';
 
 import {
+    $css_sample_css,
+
+    $css_cssToScss,
+
+    $css_formatCss,
+
     $list_sample_list,
 
     $list_removeEmptyLines,
@@ -60,6 +71,35 @@ import {
 const performOperation = async function ({ getInputValue, operation }) {
     try {
         if (
+            [
+                $css_formatCss,
+                $css_cssToScss
+            ].includes(operation)
+        ) {
+            const input = getInputValue();
+            let output;
+
+            switch (operation) {
+                case $css_formatCss:
+                    output = beautifyCss(input);
+                    break;
+                case $css_cssToScss:
+                    if (input.trim() === '') {
+                        output = input;
+                    } else {
+                        output = cssToScss(input);
+
+                        if (output === 'Error: no source supplied to csspretty.') {
+                            // eslint-disable-next-line no-alert
+                            alert('Sorry! The CSS to SCSS conversion failed.\n\nPlease try again with some simpler syntax.');
+                        }
+                    }
+                    break;
+            }
+
+            return [null, output];
+        }
+        else if (
             [
                 $json_formatJson,
                 $json_removeProperty,
@@ -170,6 +210,8 @@ const performOperation = async function ({ getInputValue, operation }) {
             }
         } else if (
             [
+                $css_sample_css,
+
                 $csv_sample_csv,
 
                 $csv_removeFirstColumnFromCsv,
@@ -203,6 +245,22 @@ const performOperation = async function ({ getInputValue, operation }) {
             let output = lines;
 
             switch (operation) {
+                case $css_sample_css:
+                    output = [
+                        'body {',
+                        '    background-color: #f0f0f0;',
+                        '}',
+                        '',
+                        'body h1 {',
+                        '    color: #000000;',
+                        '    font-size: 24px;',
+                        '    font-weight: bold;',
+                        '    text-align: center;',
+                        '}',
+                        ''
+                    ];
+                    break;
+
                 case $csv_sample_csv:
                     output = [
                         'Name,Age,Height',
