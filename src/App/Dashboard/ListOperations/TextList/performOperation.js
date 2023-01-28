@@ -4,6 +4,8 @@ import {
     minifyCss
 } from 'helpmate-css/dist/index.js';
 
+import less from 'less';
+
 import {
     removeEmptyLines,
     removeDuplicates,
@@ -68,7 +70,14 @@ import {
     $json_fixDataTypes,
 
     $json_jsonToLines,
-    $json_jsonToCsv
+    $json_jsonToCsv,
+
+    $less_sample_less,
+
+    $less_formatLess,
+    $less_minifyLess,
+
+    $less_lessToCss
 } from './constOperations.js';
 
 const performOperation = async function ({ getInputValue, operation }) {
@@ -77,11 +86,16 @@ const performOperation = async function ({ getInputValue, operation }) {
             [
                 $css_formatCss,
                 $css_minifyCss,
-                $css_cssToScss
+                $css_cssToScss,
+                $less_formatLess,
+                $less_minifyLess,
+                $less_lessToCss
             ].includes(operation)
         ) {
             const input = getInputValue();
             let output;
+            let err = null;
+            const extraInfo = {};
 
             switch (operation) {
                 case $css_formatCss:
@@ -96,17 +110,45 @@ const performOperation = async function ({ getInputValue, operation }) {
                     } else {
                         output = cssToScss(input);
 
+                        // TODO: Identify and add note about in which case this might happen
                         if (output === 'Error: no source supplied to csspretty.') {
                             // eslint-disable-next-line no-alert
                             alert('Sorry! The CSS to SCSS conversion failed.\n\nPlease try again with some simpler syntax.');
                         }
                     }
                     break;
+                case $less_formatLess:
+                    output = beautifyCss(input);
+                    break;
+                case $less_minifyLess:
+                    output = minifyCss(input);
+                    break;
+
+                case $less_lessToCss:
+                    if (input.trim() === '') {
+                        output = input;
+                    } else {
+                        try {
+                            const renderedOutput = await less.render(input);
+                            output = renderedOutput.css;
+                        } catch (e) {
+                            err = new Error(e.message + `\n(Line ${e.line}, Column ${e.column}) / (Character ${e.index})`);
+                            output = null;
+
+                            const moveCursorTo = {
+                                row: e.line - 1,
+                                column: e.column,
+
+                                position: e.index
+                            };
+                            extraInfo.moveCursorTo = moveCursorTo;
+                        }
+                    }
+                    break;
             }
 
-            return [null, output];
-        }
-        else if (
+            return [err, output, extraInfo];
+        } else if (
             [
                 $json_formatJson,
                 $json_minifyJson,
@@ -232,6 +274,8 @@ const performOperation = async function ({ getInputValue, operation }) {
 
                 $json_sample_json,
 
+                $less_sample_less,
+
                 $list_sample_list,
 
                 $list_removeEmptyLines,
@@ -301,6 +345,20 @@ const performOperation = async function ({ getInputValue, operation }) {
                         '        { "name": "Alice",   "age": 20, "height": 1.65 },',
                         '        { "name": "David",   "age": 23, "height": 1.95 }',
                         '    ]',
+                        '}'
+                    ];
+                    break;
+
+                case $less_sample_less:
+                    output = [
+                        '@color: #222;',
+                        '',
+                        'body {',
+                        '    color: @color;',
+                        '',
+                        '    a {',
+                        '        color: @color;',
+                        '    }',
                         '}'
                     ];
                     break;

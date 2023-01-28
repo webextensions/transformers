@@ -38,6 +38,7 @@ import {
     mode_css,
     mode_csv,
     mode_json,
+    mode_less,
     mode_list,
 
     $css_sample_css,
@@ -87,6 +88,13 @@ import {
     $json_jsonToLines,
     $json_jsonToCsv,
 
+    $less_sample_less,
+
+    $less_formatLess,
+    $less_minifyLess,
+
+    $less_lessToCss,
+
     defaultRecommendedOperations
 } from './constOperations.js';
 
@@ -120,6 +128,7 @@ const TextList = function ({
         [mode_css]: '',
         [mode_csv]: '',
         [mode_json]: '',
+        [mode_less]: '',
         [mode_list]: ''
     });
 
@@ -142,6 +151,8 @@ const TextList = function ({
                     return 'text';
                 case mode_json:
                     return 'json';
+                case mode_less:
+                    return 'less';
                 case mode_list:
                     return 'text';
                 default:
@@ -329,6 +340,9 @@ const TextList = function ({
                                         case mode_json:
                                             extension = 'json';
                                             break;
+                                        case mode_less:
+                                            extension = 'less';
+                                            break;
                                         default:
                                             extension = 'txt';
                                     }
@@ -348,7 +362,8 @@ const TextList = function ({
                                 const disabled = (() => {
                                     if (
                                         mode === mode_json ||
-                                        mode === mode_css
+                                        mode === mode_css ||
+                                        mode === mode_less
                                     ) {
                                         return false;
                                     } else {
@@ -420,6 +435,7 @@ const TextList = function ({
                                 <option value={mode_css}>CSS</option>
                                 <option value={mode_csv}>CSV</option>
                                 <option value={mode_json}>JSON</option>
+                                <option value={mode_less}>Less</option>
                                 <option value={mode_list}>List</option>
                             </Select>
                         </div>
@@ -519,6 +535,29 @@ const TextList = function ({
                                     <optgroup label="Transform">
                                         <option value={$css_cssToScss}>
                                             CSS to SCSS
+                                        </option>
+                                    </optgroup>
+                                </React.Fragment>
+                            }
+                            {
+                                mode === mode_less &&
+                                <React.Fragment>
+                                    <optgroup label="Sample">
+                                        <option value={$less_sample_less}>
+                                            Sample Less
+                                        </option>
+                                    </optgroup>
+                                    <optgroup label="Format">
+                                        <option value={$less_formatLess}>
+                                            Format Less
+                                        </option>
+                                        <option value={$less_minifyLess}>
+                                            Minify Less
+                                        </option>
+                                    </optgroup>
+                                    <optgroup label="Transform">
+                                        <option value={$less_lessToCss}>
+                                            Less to CSS
                                         </option>
                                     </optgroup>
                                 </React.Fragment>
@@ -682,6 +721,19 @@ const TextList = function ({
                                 if (err) {
                                     console.error(err);
                                     alert(err.message); // eslint-disable-line no-alert
+
+                                    if (extraInfo && extraInfo.moveCursorTo) {
+                                        // editorRef.current.moveCursorTo(
+                                        //     extraInfo.moveCursorTo.row,
+                                        //     extraInfo.moveCursorTo.column
+                                        // );
+                                        editorRef.current.moveCursorToPosition({
+                                            row: extraInfo.moveCursorTo.row,
+                                            column: extraInfo.moveCursorTo.column
+                                        });
+
+                                        editorRef.current.focus();
+                                    }
                                 } else {
                                     if (output === null) {
                                         alert(JSON.stringify(extraInfo, null, '\t')); // eslint-disable-line no-alert

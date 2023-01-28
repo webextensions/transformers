@@ -46,6 +46,7 @@ export const
     mode_css = 'css',
     mode_csv = 'csv',
     mode_json = 'json',
+    mode_less = 'less',
     mode_list = 'list';
 
 // eslint-disable-next-line import/exports-last
@@ -103,7 +104,14 @@ export const
     // $json_removeLastProperty              = '$json_removeLastProperty',
 
     $json_jsonToLines                        = '$json_jsonToLines',
-    $json_jsonToCsv                          = '$json_jsonToCsv';
+    $json_jsonToCsv                          = '$json_jsonToCsv',
+
+    $less_sample_less                        = '$less_sample_less',
+
+    $less_formatLess                         = '$less_formatLess',
+    $less_minifyLess                         = '$less_minifyLess',
+
+    $less_lessToCss                          = '$less_lessToCss';
 
 
 // eslint-disable-next-line import/exports-last
@@ -152,6 +160,14 @@ const
 
             [$json_jsonToLines]                        : { message: 'JSON to lines',                          Icon: ReorderIcon },
             [$json_jsonToCsv]                          : { message: 'JSON to CSV',                            Icon: AppsIcon }
+        },
+        [mode_less]: {
+            [$less_sample_less]                        : { message: 'Sample LESS',                            Icon: AppRegistrationIcon },
+
+            [$less_formatLess]                         : { message: 'Format LESS',                            Icon: MoodIcon },
+            [$less_minifyLess]                         : { message: 'Minify LESS',                            Icon: CompressIcon },
+
+            [$less_lessToCss]                          : { message: 'LESS to CSS',                            Icon: DataObjectIcon }
         },
         [mode_list]: {
             [$list_sample_list]                        : { message: 'Sample list',                            Icon: AppRegistrationIcon },
