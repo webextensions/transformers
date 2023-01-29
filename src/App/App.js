@@ -24,6 +24,19 @@ const router = createBrowserRouter([
                 <PageFooter />
             </div>
         )
+    },
+    // TODO: Avoid code duplication
+    {
+        path: '/transformers/',
+        element: (
+            <div>
+                <PageHeader />
+                <div>
+                    <Dashboard />
+                </div>
+                <PageFooter />
+            </div>
+        )
     }
 ]);
 
