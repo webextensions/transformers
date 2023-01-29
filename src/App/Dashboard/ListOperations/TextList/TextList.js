@@ -1,5 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+
+import { useSearchParams  } from 'react-router-dom';
 
 import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver.js'; // https://github.com/securingsincity/react-ace/issues/725#issuecomment-543109155
@@ -123,6 +125,13 @@ const TextList = function ({
     editorHeight
 }) {
     const [mode, setMode] = useLocalStorage('mode', mode_list, { raw: true });
+
+    const [searchParams, setSearchParams] = useSearchParams();
+    useEffect(() => {
+        if (searchParams.get('mode')) {
+            setMode(searchParams.get('mode'));
+        }
+    }, [searchParams]);
 
     const [selectedOperations, setSelectedOperations] = useLocalStorage('selectedOperations', {
         [mode_css]: '',
@@ -430,7 +439,13 @@ const TextList = function ({
                                     height: 24,
                                     fontSize: 11
                                 }}
-                                onChange={(e) => setMode(e.target.value)}
+                                onChange={(e) => {
+                                    setMode(e.target.value);
+                                    setSearchParams({
+                                        ...searchParams,
+                                        mode: e.target.value
+                                    });
+                                }}
                             >
                                 <option value={mode_css}>CSS</option>
                                 <option value={mode_csv}>CSV</option>

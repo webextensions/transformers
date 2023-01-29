@@ -1,5 +1,10 @@
 import React from 'react';
 
+import {
+    createBrowserRouter,
+    RouterProvider
+} from 'react-router-dom';
+
 import './styles-reset.css';
 import './App.css';
 
@@ -7,9 +12,10 @@ import { PageHeader } from './PageHeader/PageHeader.js';
 import { Dashboard } from './Dashboard/Dashboard.js';
 import { PageFooter } from './PageFooter/PageFooter.js';
 
-class App extends React.Component {
-    render() {
-        return (
+const router = createBrowserRouter([
+    {
+        path: '/',
+        element: (
             <div>
                 <PageHeader />
                 <div>
@@ -17,6 +23,14 @@ class App extends React.Component {
                 </div>
                 <PageFooter />
             </div>
+        )
+    }
+]);
+
+class App extends React.Component {
+    render() {
+        return (
+            <RouterProvider router={router} />
         );
     }
 }

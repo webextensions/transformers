@@ -48,6 +48,8 @@
     "prop-types": "^15.8.1",
     "react-use": "^17.4.0",
 
+    "react-router-dom": "^6.8.0",
+
     "@mui/material": "^5.11.6",
     "@mui/icons-material": "^5.11.0",
     "@emotion/react": "^11.10.5",
