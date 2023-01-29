@@ -132,6 +132,9 @@ const performOperation = async function ({ getInputValue, operation }) {
                         try {
                             const renderedOutput = await less.render(input);
                             output = renderedOutput.css;
+
+                            // By default, "less.render()" provides the output with indentation of 2 space characters
+                            output = beautifyCss(output);
                         } catch (e) {
                             err = new Error(e.message + `\n(Line ${e.line}, Column ${e.column}) / (Character ${e.index})`);
                             output = null;
