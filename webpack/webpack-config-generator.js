@@ -21,8 +21,14 @@ const
     projectRoot = path.join(__dirname, '..');
 
 const BABEL_QUERY = {
-    presets: ['@babel/preset-react']
-    // plugins: ['transform-es2015-modules-commonjs']
+    presets: [
+        // '@babel/preset-env',
+        '@babel/preset-react'
+    ],
+    plugins: [
+        // 'transform-es2015-modules-commonjs',
+        // '@babel/plugin-syntax-dynamic-import'
+    ]
 };
 
 const webpackConfigGenerator = function (generatorOptions = {}) {
@@ -39,6 +45,7 @@ const webpackConfigGenerator = function (generatorOptions = {}) {
             // useSafeAndSecure,
             // useTrackTime,
             outputJsFilenamePattern = 'bundle.[name].[contenthash:20].js',
+            outputJsChunkFilenamePattern = 'chunk.[name].[contenthash:20].js',
             outputCssFilenamePattern = 'bundle.[name].[contenthash:20].css'
         } = generatorOptions;
 
@@ -80,7 +87,8 @@ const webpackConfigGenerator = function (generatorOptions = {}) {
         }()),
         output: {
             path: targetPublicDirectory,
-            filename: outputJsFilenamePattern
+            filename: outputJsFilenamePattern,
+            chunkFilename: outputJsChunkFilenamePattern
         },
 
         // // https://webpack.js.org/configuration/externals/
@@ -178,6 +186,10 @@ const webpackConfigGenerator = function (generatorOptions = {}) {
             ]
         },
 
+        performance: {
+            hints: 'warning'
+        },
+
         optimization: {
             minimize: useMinimize,
             noEmitOnErrors: true,
@@ -194,7 +206,12 @@ const webpackConfigGenerator = function (generatorOptions = {}) {
                     commons: {
                         test: /[\\/]node_modules[\\/]/,
                         name: 'vendors', // https://webpack.js.org/plugins/split-chunks-plugin/#splitchunksname
-                        chunks: 'all'
+                        chunks: 'initial'
+                    },
+                    lessNpmPackage: {
+                        test: /[\\/]node_modules[\\/]less[\\/]/,
+                        name: 'lessNpmPackage',
+                        chunks: 'async'
                     }
                 }
             },

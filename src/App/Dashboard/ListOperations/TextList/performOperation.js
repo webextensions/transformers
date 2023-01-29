@@ -5,7 +5,6 @@ import {
 } from 'helpmate-css/dist/index.js';
 
 import './before-loading-less.js';
-import less from 'less';
 
 import {
     removeEmptyLines,
@@ -81,6 +80,11 @@ import {
     $less_lessToCss
 } from './constOperations.js';
 
+const lazyLoadLess = async () => {
+    const less = await import('less');
+    return less;
+};
+
 const performOperation = async function ({ getInputValue, operation }) {
     try {
         if (
@@ -130,6 +134,8 @@ const performOperation = async function ({ getInputValue, operation }) {
                         output = input;
                     } else {
                         try {
+                            const less = await lazyLoadLess();
+
                             const renderedOutput = await less.render(input);
                             output = renderedOutput.css;
 

@@ -39,9 +39,15 @@ class TemplateToHtmlPlugin {
                         chunk = chunks[key],
                         filePath = chunk.filePath;
                     if (filePath.match(/\.css$/)) {
-                        cssCode += `<link rel="stylesheet" href="${filePath}" />`;
+                        // Do not load `chunk.` files and let them get loaded in lazy manner
+                        if (filePath.indexOf('chunk.') === -1) {
+                            cssCode += `<link rel="stylesheet" href="${filePath}" />`;
+                        }
                     } else if (filePath.match(/\.js$/)) {
-                        jsCode += `\n<script src="${filePath}"></script>`;
+                        // Do not load `chunk.` files and let them get loaded in lazy manner
+                        if (filePath.indexOf('chunk.') === -1) {
+                            jsCode += `\n<script src="${filePath}"></script>`;
+                        }
                     }
                 });
 
