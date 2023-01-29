@@ -4,6 +4,7 @@ import {
     minifyCss
 } from 'helpmate-css/dist/index.js';
 
+import './before-loading-less.js';
 import less from 'less';
 
 import {
