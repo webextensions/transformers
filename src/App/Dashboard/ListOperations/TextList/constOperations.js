@@ -51,6 +51,16 @@ export const
 
 // eslint-disable-next-line import/exports-last
 export const
+    modes = [
+        mode_css,
+        mode_csv,
+        mode_json,
+        mode_less,
+        mode_list
+    ];
+
+// eslint-disable-next-line import/exports-last
+export const
     $css_sample_css                          = '$css_sample_css',
 
     $css_formatCss                           = '$css_formatCss',

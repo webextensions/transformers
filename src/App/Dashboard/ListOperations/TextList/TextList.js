@@ -43,6 +43,8 @@ import {
     mode_less,
     mode_list,
 
+    modes,
+
     $css_sample_css,
 
     $css_formatCss,
@@ -124,12 +126,19 @@ const TextList = function ({
     editorWidth,
     editorHeight
 }) {
-    const [mode, setMode] = useLocalStorage('mode', mode_list, { raw: true });
+    const [storedMode, setStoredMode] = useLocalStorage('mode', mode_list, { raw: true });
+    const mode = (() => {
+        if (modes.indexOf(storedMode) === -1) {
+            return mode_list;
+        } else {
+            return storedMode;
+        }
+    })();
 
     const [searchParams, setSearchParams] = useSearchParams();
     useEffect(() => {
         if (searchParams.get('mode')) {
-            setMode(searchParams.get('mode'));
+            setStoredMode(searchParams.get('mode'));
         }
     }, [searchParams]);
 
@@ -440,7 +449,7 @@ const TextList = function ({
                                     fontSize: 11
                                 }}
                                 onChange={(e) => {
-                                    setMode(e.target.value);
+                                    setStoredMode(e.target.value);
                                     setSearchParams({
                                         ...searchParams,
                                         mode: e.target.value
