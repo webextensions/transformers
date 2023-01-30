@@ -259,6 +259,10 @@ const webpackConfigGenerator = function (generatorOptions = {}) {
                                     {
                                         from: path.join(projectRoot, 'src', 'favicon.ico'),
                                         to: targetPublicDirectory
+                                    },
+                                    {
+                                        from: path.join(projectRoot, 'src', 'favicon.ico.source.txt'),
+                                        to: targetPublicDirectory
                                     }
                                 ];
                                 return arr;

@@ -6,6 +6,13 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, shrink-to-fit=no" />
 
+    <!--
+        Favicon is loaded from "./favicon.ico" since this page is served from:
+            * `/index.html` on Local
+            * `/transformers/index.html` on GitHub Pages
+    -->
+    <link rel="shortcut icon" href="./favicon.ico" />
+
     <style>
         /* If most of the times, the page would have a vertical scroll, then this style should be added to the html file
         itself to avoid FOUC */
