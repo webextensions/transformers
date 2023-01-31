@@ -134,6 +134,15 @@ export const defaultRecommendedOperations = [
 ];
 
 // eslint-disable-next-line import/exports-last
+export const defaultSelectedOperations = {
+    [mode_css]: '',
+    [mode_csv]: '',
+    [mode_json]: '',
+    [mode_less]: '',
+    [mode_list]: ''
+};
+
+// eslint-disable-next-line import/exports-last
 export const IconNotAvailable = CircleIcon;
 
 const

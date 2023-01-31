@@ -99,7 +99,9 @@ import {
 
     $less_lessToCss,
 
-    defaultRecommendedOperations
+    defaultRecommendedOperations,
+
+    defaultSelectedOperations
 } from './constOperations.js';
 
 import { RecentOperations } from './RecentOperations.js';
@@ -181,35 +183,30 @@ const TextList = function ({
     );
 
     const [searchParams, setSearchParams] = useSearchParams();
-    useEffect(() => {
-        const modeFromSearchParams = searchParams.get('mode');
-        const sanitizedModeWithStatus = getSanitizedModeWithStatus(modeFromSearchParams);
+    useEffect(
+        () => {
+            const modeFromSearchParams = searchParams.get('mode');
+            const sanitizedModeWithStatus = getSanitizedModeWithStatus(modeFromSearchParams);
 
-        if (sanitizedModeWithStatus.wasAlreadyClean) {
-            setStoredMode(modeFromSearchParams);
-            setMode(modeFromSearchParams);
-        }
-    }, []); // This useEffect() should run only once (at the time of mounting)
+            if (sanitizedModeWithStatus.wasAlreadyClean) {
+                setStoredMode(modeFromSearchParams);
+                setMode(modeFromSearchParams);
+            }
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [] // This useEffect() should run only once (at the time of mounting)
+    );
 
-    const [storedOperations, setStoredOperations] = useLocalStorage('selectedOperations', {
-        [mode_css]: '',
-        [mode_csv]: '',
-        [mode_json]: '',
-        [mode_less]: '',
-        [mode_list]: ''
-    });
+    const [storedOperations, setStoredOperations] = useLocalStorage(
+        'selectedOperations',
+        JSON.parse(JSON.stringify(defaultSelectedOperations))
+    );
 
     const selectedOperations = (() => {
         if (storedOperations) {
             return storedOperations;
         } else {
-            return {
-                [mode_css]: '',
-                [mode_csv]: '',
-                [mode_json]: '',
-                [mode_less]: '',
-                [mode_list]: ''
-            };
+            return JSON.parse(JSON.stringify(defaultSelectedOperations));
         }
     })();
 
