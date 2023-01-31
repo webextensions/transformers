@@ -13,7 +13,7 @@ import Button from '@mui/material/Button/index.js';
 
 import { MainEditor } from '../MainEditor/MainEditor.js';
 
-import styles from './ListOperations.css';
+import styles from './TripleEditor.css';
 
 const performABToC = ({
     editorARef,
@@ -45,13 +45,13 @@ const performABToC = ({
     editorCRef.current.setValue(valueC);
 };
 
-const ListOperations = function () {
+const TripleEditor = function () {
     const editorARef = useRef(null);
     const editorBRef = useRef(null);
     const editorCRef = useRef(null);
 
     return (
-        <div className={styles.ListOperations}>
+        <div className={styles.TripleEditor}>
             <div style={{ display: 'flex', justifyContent: 'center', minWidth: 1120 }}>
                 <div>
                     <div
@@ -234,4 +234,4 @@ const ListOperations = function () {
     );
 };
 
-export { ListOperations };
+export { TripleEditor };

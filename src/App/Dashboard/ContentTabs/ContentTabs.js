@@ -11,7 +11,7 @@ import { getCurrentSearchParamsAsJson } from '../utils/getCurrentSearchParamsAsJ
 
 import { SingleEditor } from '../SingleEditor/SingleEditor.js';
 import { DoubleEditor } from '../DoubleEditor/DoubleEditor.js';
-import { ListOperations } from '../ListOperations/ListOperations.js';
+import { TripleEditor } from '../TripleEditor/TripleEditor.js';
 
 const TabPanel = function (props) {
     const { children, value, index, ...other } = props;
@@ -173,7 +173,7 @@ const ContentTabs = () => {
                     </div>
                 </TabPanel>
                 <TabPanel value={selectedTabIndex} index={2}>
-                    <ListOperations />
+                    <TripleEditor />
                 </TabPanel>
             </div>
         </div>
