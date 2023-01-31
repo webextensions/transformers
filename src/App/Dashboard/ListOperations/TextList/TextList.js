@@ -117,6 +117,55 @@ const copy = async function (simpleText) {
     }
 };
 
+const getCurrentSearchParamsAsJson = () => {
+    const params = new URLSearchParams(window.location.search);
+    const ob = {};
+    for (const param of params) {
+        ob[param[0]] = param[1];
+    }
+
+    return ob;
+};
+
+const generateTargetSearchParamsAsJson = ({ mode, operation, selectedOperations }) => {
+    const currentSearchParams = getCurrentSearchParamsAsJson();
+    const targetSearchParams = { ...currentSearchParams };
+
+    if (!targetSearchParams.mode) {
+        delete targetSearchParams.mode;
+    }
+    if (mode) {
+        targetSearchParams.mode = mode;
+    }
+
+    if (
+        !targetSearchParams.operation ||
+        !selectedOperations[mode] ||
+        operation === ''
+    ) {
+        delete targetSearchParams.operation;
+    }
+    if (operation) {
+        targetSearchParams.operation = operation;
+    }
+
+    return targetSearchParams;
+};
+
+const getSanitizedModeWithStatus = (mode) => {
+    if (modes.indexOf(mode) >= 0) {
+        return {
+            wasAlreadyClean: true,
+            mode
+        };
+    } else {
+        return {
+            wasAlreadyClean: false,
+            mode: mode_list
+        };
+    }
+};
+
 const TextList = function ({
     placeholder,
     onLoad,
@@ -127,28 +176,42 @@ const TextList = function ({
     editorHeight
 }) {
     const [storedMode, setStoredMode] = useLocalStorage('mode', mode_list, { raw: true });
-    const mode = (() => {
-        if (modes.indexOf(storedMode) === -1) {
-            return mode_list;
-        } else {
-            return storedMode;
-        }
-    })();
+    const [mode, setMode] = useState(
+        getSanitizedModeWithStatus(storedMode).mode
+    );
 
     const [searchParams, setSearchParams] = useSearchParams();
     useEffect(() => {
-        if (searchParams.get('mode')) {
-            setStoredMode(searchParams.get('mode'));
-        }
-    }, [searchParams]);
+        const modeFromSearchParams = searchParams.get('mode');
+        const sanitizedModeWithStatus = getSanitizedModeWithStatus(modeFromSearchParams);
 
-    const [selectedOperations, setSelectedOperations] = useLocalStorage('selectedOperations', {
+        if (sanitizedModeWithStatus.wasAlreadyClean) {
+            setStoredMode(modeFromSearchParams);
+            setMode(modeFromSearchParams);
+        }
+    }, []); // This useEffect() should run only once (at the time of mounting)
+
+    const [storedOperations, setStoredOperations] = useLocalStorage('selectedOperations', {
         [mode_css]: '',
         [mode_csv]: '',
         [mode_json]: '',
         [mode_less]: '',
         [mode_list]: ''
     });
+
+    const selectedOperations = (() => {
+        if (storedOperations) {
+            return storedOperations;
+        } else {
+            return {
+                [mode_css]: '',
+                [mode_csv]: '',
+                [mode_json]: '',
+                [mode_less]: '',
+                [mode_list]: ''
+            };
+        }
+    })();
 
     const operation = selectedOperations[mode];
 
@@ -449,11 +512,16 @@ const TextList = function ({
                                     fontSize: 11
                                 }}
                                 onChange={(e) => {
-                                    setStoredMode(e.target.value);
-                                    setSearchParams({
-                                        ...searchParams,
-                                        mode: e.target.value
+                                    const mode = e.target.value;
+                                    setMode(mode);
+                                    setStoredMode(mode);
+
+                                    const searchParamsToApply = generateTargetSearchParamsAsJson({
+                                        mode,
+                                        operation: selectedOperations[mode],
+                                        selectedOperations
                                     });
+                                    setSearchParams(searchParamsToApply);
                                 }}
                             >
                                 <option value={mode_css}>CSS</option>
@@ -528,9 +596,19 @@ const TextList = function ({
                             }}
                             value={selectedOperations[mode]}
                             onChange={(e) => {
+                                const selectedOperation = e.target.value;
+
                                 const json = JSON.parse(JSON.stringify(selectedOperations));
-                                json[mode] = e.target.value;
-                                setSelectedOperations(json);
+                                json[mode] = selectedOperation;
+
+                                setStoredOperations(json);
+
+                                const searchParamsToApply = generateTargetSearchParamsAsJson({
+                                    mode,
+                                    operation: selectedOperation,
+                                    selectedOperations
+                                });
+                                setSearchParams(searchParamsToApply);
                             }}
                         >
                             <option
