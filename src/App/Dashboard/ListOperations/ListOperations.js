@@ -148,11 +148,11 @@ const ListOperations = function () {
                                     editorARef,
                                     editorBRef,
                                     editorCRef,
-                                    operation: 'append'
+                                    operation: 'union'
                                 });
                             }}
                         >
-                            A + B
+                            A ∪ B
                         </Button>
 
                         <Button
@@ -182,11 +182,11 @@ const ListOperations = function () {
                                     editorARef,
                                     editorBRef,
                                     editorCRef,
-                                    operation: 'union'
+                                    operation: 'append'
                                 });
                             }}
                         >
-                            A ∪ B
+                            A + B
                         </Button>
 
                         <Button
