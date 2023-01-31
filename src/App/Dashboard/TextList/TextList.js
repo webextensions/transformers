@@ -36,7 +36,7 @@ import { useLocalStorage } from 'react-use';
 
 import { recentOperationsAtom } from './JotaiState.js';
 
-import { getCurrentSearchParamsAsJson } from '../../utils/getCurrentSearchParamsAsJson.js';
+import { getCurrentSearchParamsAsJson } from '../utils/getCurrentSearchParamsAsJson.js';
 
 import {
     mode_css,

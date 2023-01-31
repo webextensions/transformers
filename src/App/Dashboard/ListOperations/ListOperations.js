@@ -11,7 +11,7 @@ import SwapHorizontalCircleRoundedIcon from '@mui/icons-material/SwapHorizontalC
 
 import Button from '@mui/material/Button/index.js';
 
-import { TextList } from './TextList/TextList.js';
+import { TextList } from '../TextList/TextList.js';
 
 import styles from './ListOperations.css';
 

@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 
 // TODO: Move directory "TextList/" up by one level
-import { TextList } from '../ListOperations/TextList/TextList.js';
+import { TextList } from '../TextList/TextList.js';
 
 const SingleEditor = () => {
     const editorRef = useRef(null);
