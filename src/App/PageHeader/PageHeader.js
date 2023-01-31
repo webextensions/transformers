@@ -15,7 +15,11 @@ class PageHeader extends React.Component {
                     }}
                 >
                     <h1 style={{ margin: 0, textAlign: 'center' }}>
-                        {'Transformers: '}
+                        <span style={{ fontVariant: 'small-caps' }}>
+                            <span style={{ letterSpacing: '0.05em', fontSize: '28px' }}>
+                                {'Transformers: '}
+                            </span>
+                        </span>
                         <span style={{ fontVariant: 'small-caps' }}>
                             <span style={{ letterSpacing: '0.05em' }}>
                                 Operations&nbsp;on&nbsp;the&nbsp;Text

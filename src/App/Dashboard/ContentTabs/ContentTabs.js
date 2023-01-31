@@ -109,10 +109,49 @@ const ContentTabs = () => {
                     minWidth: '1120'
                 }}
             >
-                <Tabs value={selectedTabIndex} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label="Transformers I"   style={{ fontFamily: '"Transformers", sans-serif' }}/>
-                    <Tab label="Transformers II"  style={{ fontFamily: '"Transformers", sans-serif' }}/>
-                    <Tab label="Transformers III" style={{ fontFamily: '"Transformers", sans-serif' }}/>
+                <Tabs value={selectedTabIndex} onChange={handleChange}>
+                    <Tab
+                        label={
+                            <div
+                                style={{
+                                    fontFamily: '"Transformers", sans-serif',
+                                    fontVariant: 'small-caps',
+                                    textTransform: 'none',
+                                    fontSize: 18
+                                }}
+                            >
+                                Transformers I
+                            </div>
+                        }
+                    />
+                    <Tab
+                        label={
+                            <div
+                                style={{
+                                    fontFamily: '"Transformers", sans-serif',
+                                    fontVariant: 'small-caps',
+                                    textTransform: 'none',
+                                    fontSize: 18
+                                }}
+                            >
+                                Transformers II
+                            </div>
+                        }
+                    />
+                    <Tab
+                        label={
+                            <div
+                                style={{
+                                    fontFamily: '"Transformers", sans-serif',
+                                    fontVariant: 'small-caps',
+                                    textTransform: 'none',
+                                    fontSize: 18
+                                }}
+                            >
+                                Transformers III
+                            </div>
+                        }
+                    />
                 </Tabs>
             </div>
             <div
