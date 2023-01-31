@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ListOperations } from './ListOperations/ListOperations.js';
+import { ContentTabs } from './ContentTabs/ContentTabs.js';
 
 import styles from './Dashboard.css';
 
@@ -8,7 +8,7 @@ const Dashboard = () => {
     return (
         <div className={styles.Dashboard}>
             <div style={{ marginTop: 45 }}>
-                <ListOperations />
+                <ContentTabs />
             </div>
         </div>
     );
