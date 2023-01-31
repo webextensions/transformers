@@ -129,6 +129,7 @@ export const defaultRecommendedOperations = [
     $css_sample_css,
     $csv_sample_csv,
     $json_sample_json,
+    $less_sample_less,
     $list_sample_list
 ];
 
