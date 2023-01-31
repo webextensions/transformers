@@ -110,7 +110,7 @@ import { RecentOperations } from './RecentOperations.js';
 
 import { performOperation } from './performOperation.js';
 
-import styles from './TextList.css';
+import styles from './MainEditor.css';
 
 const copy = async function (simpleText) {
     try {
@@ -160,7 +160,7 @@ const getSanitizedModeWithStatus = (mode) => {
     }
 };
 
-const TextList = function ({
+const MainEditor = function ({
     placeholder,
     onLoad,
     onValueUpdate,
@@ -237,7 +237,7 @@ const TextList = function ({
     const editorRef = useRef(null);
 
     return (
-        <div style={style} className={styles.TextList}>
+        <div style={style} className={styles.MainEditor}>
             <div style={{ marginTop: 10 }}>
                 <div
                     className={styles.translucentWithoutHover}
@@ -890,7 +890,7 @@ const TextList = function ({
         </div>
     );
 };
-TextList.propTypes = {
+MainEditor.propTypes = {
     placeholder: PropTypes.string,
     onLoad: PropTypes.func,
     onValueUpdate: PropTypes.func,
@@ -900,4 +900,4 @@ TextList.propTypes = {
     editorHeight: PropTypes.string
 };
 
-export { TextList };
+export { MainEditor };

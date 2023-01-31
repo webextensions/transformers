@@ -1,13 +1,12 @@
 import React, { useRef } from 'react';
 
-// TODO: Move directory "TextList/" up by one level
-import { TextList } from '../TextList/TextList.js';
+import { MainEditor } from '../MainEditor/MainEditor.js';
 
 const SingleEditor = () => {
     const editorRef = useRef(null);
     return (
         <div>
-            <TextList
+            <MainEditor
                 placeholder="Provide text here"
                 onLoad={(editor) => {
                     editorRef.current = editor;

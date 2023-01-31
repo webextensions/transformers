@@ -1,5 +1,5 @@
-.TextList :global(.ace_editor),
-.TextList :global(.ace_editor) * {
+.MainEditor :global(.ace_editor),
+.MainEditor :global(.ace_editor) * {
     font-family: 'Courier New', Courier, monospace;
     font-size: 12px;
 }

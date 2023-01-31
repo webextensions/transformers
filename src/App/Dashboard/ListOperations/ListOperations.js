@@ -11,7 +11,7 @@ import SwapHorizontalCircleRoundedIcon from '@mui/icons-material/SwapHorizontalC
 
 import Button from '@mui/material/Button/index.js';
 
-import { TextList } from '../TextList/TextList.js';
+import { MainEditor } from '../MainEditor/MainEditor.js';
 
 import styles from './ListOperations.css';
 
@@ -64,7 +64,7 @@ const ListOperations = function () {
                         A
                     </div>
                     <div>
-                        <TextList
+                        <MainEditor
                             placeholder="Provide text here"
                             onLoad={(editor) => {
                                 editorARef.current = editor;
@@ -115,7 +115,7 @@ const ListOperations = function () {
                         B
                     </div>
                     <div>
-                        <TextList
+                        <MainEditor
                             placeholder="Provide text here"
                             onLoad={(editor) => {
                                 editorBRef.current = editor;
@@ -218,7 +218,7 @@ const ListOperations = function () {
                         C
                     </div>
                     <div>
-                        <TextList
+                        <MainEditor
                             placeholder="Result of the operation will be available here"
                             onLoad={(editor) => {
                                 editorCRef.current = editor;
