@@ -36,6 +36,8 @@ import { useLocalStorage } from 'react-use';
 
 import { recentOperationsAtom } from './JotaiState.js';
 
+import { getCurrentSearchParamsAsJson } from '../../utils/getCurrentSearchParamsAsJson.js';
+
 import {
     mode_css,
     mode_csv,
@@ -117,16 +119,6 @@ const copy = async function (simpleText) {
     } catch (e) {
         return false;
     }
-};
-
-const getCurrentSearchParamsAsJson = () => {
-    const params = new URLSearchParams(window.location.search);
-    const ob = {};
-    for (const param of params) {
-        ob[param[0]] = param[1];
-    }
-
-    return ob;
 };
 
 const generateTargetSearchParamsAsJson = ({ mode, operation, selectedOperations }) => {
