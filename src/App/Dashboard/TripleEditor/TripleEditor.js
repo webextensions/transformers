@@ -226,6 +226,7 @@ const TripleEditor = function () {
                             style={{ marginTop: 5 }}
                             editorWidth="320px"
                             editorHeight="300px"
+                            hideOperations
                         />
                     </div>
                 </div>

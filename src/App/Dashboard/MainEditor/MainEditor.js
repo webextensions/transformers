@@ -170,7 +170,7 @@ const MainEditor = function ({
 }) {
     const { enqueueSnackbar } = useSnackbar();
 
-    const [storedMode, setStoredMode] = useLocalStorage('mode', mode_list, { raw: true });
+    const [storedMode, setStoredMode] = useLocalStorage('mode', mode_json, { raw: true });
     const [mode, setMode] = useState(
         getSanitizedModeWithStatus(storedMode).mode
     );
@@ -745,7 +745,12 @@ const MainEditor = function ({
                                 style={{
                                     width: 220,
                                     height: 28,
-                                    fontSize: 11
+                                    fontSize: 11,
+                                    border: (
+                                        selectedOperations[mode] === '' ?
+                                            '1px dashed orange' :
+                                            undefined
+                                    )
                                 }}
                                 value={selectedOperations[mode]}
                                 onChange={(e) => {
