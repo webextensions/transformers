@@ -61,57 +61,57 @@ export const
 
 // eslint-disable-next-line import/exports-last
 export const
-    $css_formatCss                           = '$css_formatCss',
-    $css_minifyCss                           = '$css_minifyCss',
+    $css_formatCss                           = 'format',
+    $css_minifyCss                           = 'minify',
 
-    $css_cssToScss                           = '$css_cssToScss',
+    $css_cssToScss                           = 'cssToScss',
 
-    $list_removeEmptyLines                   = '$list_removeEmptyLines',
-    $list_removeDuplicates                   = '$list_removeDuplicates',
-    // $list_removeBeyondNLines              = '$list_removeBeyondNLines',
+    $list_removeEmptyLines                   = 'removeEmptyLines',
+    $list_removeDuplicates                   = 'removeDuplicates',
+    // $list_removeBeyondNLines              = 'removeBeyondNLines',
 
-    $list_sort                               = '$list_sort',
-    $list_caseInsensitiveSort                = '$list_caseInsensitiveSort',
-    $list_naturalSort                        = '$list_naturalSort',
-    $list_randomize                          = '$list_randomize',
-    $list_reverse                            = '$list_reverse',
+    $list_sort                               = 'sort',
+    $list_caseInsensitiveSort                = 'caseInsensitiveSort',
+    $list_naturalSort                        = 'naturalSort',
+    $list_randomize                          = 'randomize',
+    $list_reverse                            = 'reverse',
 
-    $list_trimLines                          = '$list_trimLines',
-    $list_removeCommaCharacterAtLineEnds     = '$list_removeCommaCharacterAtLineEnds',
-    $list_removeQuoteAndApostropheCharacters = '$list_removeQuoteAndApostropheCharacters',
+    $list_trimLines                          = 'trimLines',
+    $list_removeCommaCharacterAtLineEnds     = 'removeCommaCharacterAtLineEnds',
+    $list_removeQuoteAndApostropheCharacters = 'removeQuoteAndApostropheCharacters',
 
-    $list_getStats                           = '$list_getStats',
-    // $list_countLines                      = '$list_countLines',
-    // $list_countCharacters                 = '$list_countCharacters',
-    // $list_countWords                      = '$list_countWords',
-    // $list_countUniqueWords                = '$list_countUniqueWords',
+    $list_getStats                           = 'getStats',
+    // $list_countLines                      = 'countLines',
+    // $list_countCharacters                 = 'countCharacters',
+    // $list_countWords                      = 'countWords',
+    // $list_countUniqueWords                = 'countUniqueWords',
 
-    $list_linesToJsonArray                   = '$list_linesToJsonArray',
+    $list_linesToJsonArray                   = 'linesToJsonArray',
 
-    $csv_removeFirstColumnFromCsv            = '$csv_removeFirstColumnFromCsv',
-    $csv_removeLastColumnFromCsv             = '$csv_removeLastColumnFromCsv',
+    $csv_removeFirstColumnFromCsv            = 'removeFirstColumnFromCsv',
+    $csv_removeLastColumnFromCsv             = 'removeLastColumnFromCsv',
 
-    $csv_csvToJson                           = '$csv_csvToJson',
+    $csv_csvToJson                           = 'csvToJson',
 
-    $json_formatJson                         = '$json_formatJson',
-    $json_minifyJson                         = '$json_minifyJson',
+    $json_formatJson                         = 'format',
+    $json_minifyJson                         = 'minify',
 
-    $json_removeProperty                     = '$json_removeProperty',
+    $json_removeProperty                     = 'removeProperty',
 
-    $json_sortJson                           = '$json_sortJson',
+    $json_sortJson                           = 'sort',
 
-    $json_fixDataTypes                       = '$json_fixDataTypes',
+    $json_fixDataTypes                       = 'fixDataTypes',
 
-    // $json_removeFirstProperty             = '$json_removeFirstProperty',
-    // $json_removeLastProperty              = '$json_removeLastProperty',
+    // $json_removeFirstProperty             = 'removeFirstProperty',
+    // $json_removeLastProperty              = 'removeLastProperty',
 
-    $json_jsonToLines                        = '$json_jsonToLines',
-    $json_jsonToCsv                          = '$json_jsonToCsv',
+    $json_jsonToLines                        = 'jsonToLines',
+    $json_jsonToCsv                          = 'jsonToCsv',
 
-    $less_formatLess                         = '$less_formatLess',
-    $less_minifyLess                         = '$less_minifyLess',
+    $less_formatLess                         = 'format',
+    $less_minifyLess                         = 'minify',
 
-    $less_lessToCss                          = '$less_lessToCss';
+    $less_lessToCss                          = 'lessToCss';
 
 
 // eslint-disable-next-line import/exports-last
