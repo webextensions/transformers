@@ -25,14 +25,10 @@ import {
 } from './textUtils.js';
 
 import {
-    $css_sample_css,
-
     $css_cssToScss,
 
     $css_formatCss,
     $css_minifyCss,
-
-    $list_sample_list,
 
     $list_removeEmptyLines,
     $list_removeDuplicates,
@@ -51,14 +47,10 @@ import {
 
     $list_linesToJsonArray,
 
-    $csv_sample_csv,
-
     $csv_removeFirstColumnFromCsv,
     $csv_removeLastColumnFromCsv,
 
     $csv_csvToJson,
-
-    $json_sample_json,
 
     $json_formatJson,
     $json_minifyJson,
@@ -71,8 +63,6 @@ import {
 
     $json_jsonToLines,
     $json_jsonToCsv,
-
-    $less_sample_less,
 
     $less_formatLess,
     $less_minifyLess,
@@ -273,20 +263,10 @@ const performOperation = async function ({ getInputValue, operation }) {
             }
         } else if (
             [
-                $css_sample_css,
-
-                $csv_sample_csv,
-
                 $csv_removeFirstColumnFromCsv,
                 $csv_removeLastColumnFromCsv,
 
                 $csv_csvToJson,
-
-                $json_sample_json,
-
-                $less_sample_less,
-
-                $list_sample_list,
 
                 $list_removeEmptyLines,
                 $list_removeDuplicates,
@@ -310,31 +290,6 @@ const performOperation = async function ({ getInputValue, operation }) {
             let output = lines;
 
             switch (operation) {
-                case $css_sample_css:
-                    output = [
-                        'body {',
-                        '    background-color: #f0f0f0;',
-                        '}',
-                        '',
-                        'body h1 {',
-                        '    color: #000000;',
-                        '    font-size: 24px;',
-                        '    font-weight: bold;',
-                        '    text-align: center;',
-                        '}',
-                        ''
-                    ];
-                    break;
-
-                case $csv_sample_csv:
-                    output = [
-                        'Name,Age,Height',
-                        'Charlie,22,1.85',
-                        'Bob,21,1.75',
-                        'Alice,20,1.65',
-                        'David,23,1.95'
-                    ];
-                    break;
                 case $csv_removeFirstColumnFromCsv:
                     output = removeFirstColumnFromCsvLines(lines);
                     break;
@@ -344,42 +299,6 @@ const performOperation = async function ({ getInputValue, operation }) {
 
                 case $csv_csvToJson:
                     output = csvToJson(lines);
-                    break;
-
-                case $json_sample_json:
-                    output = [
-                        '{',
-                        '    "data": [',
-                        '        { "name": "Charlie", "age": 22, "height": 1.85 },',
-                        '        { "name": "Bob",     "age": 21, "height": 1.75 },',
-                        '        { "name": "Alice",   "age": 20, "height": 1.65 },',
-                        '        { "name": "David",   "age": 23, "height": 1.95 }',
-                        '    ]',
-                        '}'
-                    ];
-                    break;
-
-                case $less_sample_less:
-                    output = [
-                        '@color: #222;',
-                        '',
-                        'body {',
-                        '    color: @color;',
-                        '',
-                        '    a {',
-                        '        color: @color;',
-                        '    }',
-                        '}'
-                    ];
-                    break;
-
-                case $list_sample_list:
-                    output = [
-                        'Charlie',
-                        'Bob',
-                        'Alice',
-                        'David'
-                    ];
                     break;
 
                 case $list_removeEmptyLines:

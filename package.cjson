@@ -60,6 +60,10 @@
     "react-ace": "^10.1.0",
     "ace-builds": "^1.15.0",
 
+    "notistack": "^2.0.8",
+
+    "use-debounce": "^9.0.3",
+
     // Less
     "less": "^4.1.3",
 

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { SnackbarProvider } from 'notistack';
+
 import {
     createBrowserRouter,
     RouterProvider
@@ -34,7 +36,18 @@ const router = createBrowserRouter([
 class App extends React.Component {
     render() {
         return (
-            <RouterProvider router={router} />
+            <SnackbarProvider
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right'
+                }}
+                maxSnack={3}
+                dense
+                preventDuplicate
+                autoHideDuration={3000}
+            >
+                <RouterProvider router={router} />
+            </SnackbarProvider>
         );
     }
 }

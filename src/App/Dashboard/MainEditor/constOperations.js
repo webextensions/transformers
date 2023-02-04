@@ -61,14 +61,10 @@ export const
 
 // eslint-disable-next-line import/exports-last
 export const
-    $css_sample_css                          = '$css_sample_css',
-
     $css_formatCss                           = '$css_formatCss',
     $css_minifyCss                           = '$css_minifyCss',
 
     $css_cssToScss                           = '$css_cssToScss',
-
-    $list_sample_list                        = '$list_sample_list',
 
     $list_removeEmptyLines                   = '$list_removeEmptyLines',
     $list_removeDuplicates                   = '$list_removeDuplicates',
@@ -92,14 +88,10 @@ export const
 
     $list_linesToJsonArray                   = '$list_linesToJsonArray',
 
-    $csv_sample_csv                          = '$csv_sample_csv',
-
     $csv_removeFirstColumnFromCsv            = '$csv_removeFirstColumnFromCsv',
     $csv_removeLastColumnFromCsv             = '$csv_removeLastColumnFromCsv',
 
     $csv_csvToJson                           = '$csv_csvToJson',
-
-    $json_sample_json                        = '$json_sample_json',
 
     $json_formatJson                         = '$json_formatJson',
     $json_minifyJson                         = '$json_minifyJson',
@@ -116,8 +108,6 @@ export const
     $json_jsonToLines                        = '$json_jsonToLines',
     $json_jsonToCsv                          = '$json_jsonToCsv',
 
-    $less_sample_less                        = '$less_sample_less',
-
     $less_formatLess                         = '$less_formatLess',
     $less_minifyLess                         = '$less_minifyLess',
 
@@ -126,11 +116,11 @@ export const
 
 // eslint-disable-next-line import/exports-last
 export const defaultRecommendedOperations = [
-    $css_sample_css,
-    $csv_sample_csv,
-    $json_sample_json,
-    $less_sample_less,
-    $list_sample_list
+    $css_formatCss,
+    $csv_csvToJson,
+    $json_formatJson,
+    $less_formatLess,
+    $list_sort
 ];
 
 // eslint-disable-next-line import/exports-last
@@ -148,24 +138,18 @@ export const IconNotAvailable = CircleIcon;
 const
     availableOperations = {
         [mode_css]: {
-            [$css_sample_css]                          : { message: 'Sample CSS',                             Icon: AppRegistrationIcon },
-
             [$css_formatCss]                           : { message: 'Format CSS',                             Icon: MoodIcon },
             [$css_minifyCss]                           : { message: 'Minify CSS',                             Icon: CompressIcon },
 
             [$css_cssToScss]                           : { message: 'CSS to SCSS',                            Icon: DataObjectIcon }
         },
         [mode_csv]: {
-            [$csv_sample_csv]                          : { message: 'Sample CSV',                             Icon: AppRegistrationIcon },
-
             [$csv_removeFirstColumnFromCsv]            : { message: 'Remove first column from CSV',           Icon: FirstPageIcon },
             [$csv_removeLastColumnFromCsv]             : { message: 'Remove last column from CSV',            Icon: LastPageIcon },
 
             [$csv_csvToJson]                           : { message: 'CSV to JSON',                            Icon: DataObjectIcon }
         },
         [mode_json]: {
-            [$json_sample_json]                        : { message: 'Sample JSON',                            Icon: AppRegistrationIcon },
-
             [$json_formatJson]                         : { message: 'Format JSON',                            Icon: MoodIcon },
             [$json_minifyJson]                         : { message: 'Minify JSON',                            Icon: CompressIcon },
 
@@ -182,16 +166,12 @@ const
             [$json_jsonToCsv]                          : { message: 'JSON to CSV',                            Icon: AppsIcon }
         },
         [mode_less]: {
-            [$less_sample_less]                        : { message: 'Sample LESS',                            Icon: AppRegistrationIcon },
-
             [$less_formatLess]                         : { message: 'Format LESS',                            Icon: MoodIcon },
             [$less_minifyLess]                         : { message: 'Minify LESS',                            Icon: CompressIcon },
 
             [$less_lessToCss]                          : { message: 'LESS to CSS',                            Icon: DataObjectIcon }
         },
         [mode_list]: {
-            [$list_sample_list]                        : { message: 'Sample list',                            Icon: AppRegistrationIcon },
-
             [$list_removeEmptyLines]                   : { message: 'Remove empty lines',                     Icon: SettingsEthernetIcon },
             [$list_removeDuplicates]                   : { message: 'Remove duplicates',                      Icon: CopyAllIcon },
             // [$list_removeBeyondNLines]              : { message: 'Remove beyond N lines',                  Icon: RestaurantIcon },

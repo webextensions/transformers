@@ -13,6 +13,8 @@ import 'ace-builds/src-noconflict/theme-github.js';
 import IconButton from '@mui/material/IconButton/index.js';
 import Button from '@mui/material/Button/index.js';
 
+import ScienceIcon from '@mui/icons-material/Science.js';
+
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined.js';
 import BorderColorIcon from '@mui/icons-material/BorderColor.js';
 
@@ -34,6 +36,10 @@ import { useAtom } from 'jotai';
 
 import { useLocalStorage } from 'react-use';
 
+import { useSnackbar } from 'notistack';
+
+import { useDebouncedCallback } from 'use-debounce';
+
 import { recentOperationsAtom } from './JotaiState.js';
 
 import { getCurrentSearchParamsAsJson } from '../utils/getCurrentSearchParamsAsJson.js';
@@ -47,14 +53,10 @@ import {
 
     modes,
 
-    $css_sample_css,
-
     $css_formatCss,
     $css_minifyCss,
 
     $css_cssToScss,
-
-    $list_sample_list,
 
     $list_removeEmptyLines,
     $list_removeDuplicates,
@@ -73,14 +75,10 @@ import {
 
     $list_linesToJsonArray,
 
-    $csv_sample_csv,
-
     $csv_removeFirstColumnFromCsv,
     $csv_removeLastColumnFromCsv,
 
     $csv_csvToJson,
-
-    $json_sample_json,
 
     $json_formatJson,
     $json_minifyJson,
@@ -93,8 +91,6 @@ import {
 
     $json_jsonToLines,
     $json_jsonToCsv,
-
-    $less_sample_less,
 
     $less_formatLess,
     $less_minifyLess,
@@ -167,8 +163,13 @@ const MainEditor = function ({
     allowFileInput,
     style,
     editorWidth,
-    editorHeight
+    editorHeight,
+    autoApply,
+    onComputeOutput,
+    hideOperations
 }) {
+    const { enqueueSnackbar } = useSnackbar();
+
     const [storedMode, setStoredMode] = useLocalStorage('mode', mode_list, { raw: true });
     const [mode, setMode] = useState(
         getSanitizedModeWithStatus(storedMode).mode
@@ -235,6 +236,87 @@ const MainEditor = function ({
 
     // Save "editor" reference for later usage.
     const editorRef = useRef(null);
+
+    // The "onChange" event may get called twice because of the auto-format functionality. Hence, using this "debounced"
+    // function to avoid multiple calls (notifications).
+    const debouncedEnqueueSnackbar = useDebouncedCallback(
+        (errMessage) => {
+            enqueueSnackbar(errMessage);
+        },
+        32
+    );
+
+    const debouncedOnChange = useDebouncedCallback(
+        async (val, delta) => {
+            setRefreshUndoRedo(Date.now());
+
+            if (autoApply) {
+                if (operation) { // Operation might be empty (if the user has not selected any operation)
+                    await applyTheOperation();
+                }
+            }
+        },
+        750
+    );
+
+    const applyTheOperation = async () => {
+        const operationsByUser = [
+            operation,
+            ...recentOperations
+        ];
+        // Remove duplicate operations (keep the first occurrence)
+        const uniqueOperationsByUser = operationsByUser.filter((operation, index) => {
+            return operationsByUser.indexOf(operation) === index;
+        });
+        setRecentOperations(uniqueOperationsByUser);
+        localStorage.setItem('recentOperations', JSON.stringify(uniqueOperationsByUser));
+
+        // DUPLICATE: Some piece of this code is duplicated elsewhere in this project
+        const getInputValue = () => {
+            const value = editorRef.current.getValue();
+            return value;
+        };
+        const [err, output, extraInfo] = await performOperation({
+            getInputValue,
+            operation
+        });
+
+        if (err) {
+            console.error(err);
+            debouncedEnqueueSnackbar(err.message);
+
+            if (extraInfo && extraInfo.moveCursorTo) {
+                // editorRef.current.moveCursorTo(
+                //     extraInfo.moveCursorTo.row,
+                //     extraInfo.moveCursorTo.column
+                // );
+                editorRef.current.moveCursorToPosition({
+                    row: extraInfo.moveCursorTo.row,
+                    column: extraInfo.moveCursorTo.column
+                });
+
+                editorRef.current.focus();
+            }
+        } else {
+            if (output === null) {
+                const extraInfoString = JSON.stringify(extraInfo, null, '\t');
+                console.error(extraInfoString);
+                debouncedEnqueueSnackbar(extraInfoString);
+            } else {
+                if (typeof onComputeOutput === 'function') {
+                    onComputeOutput({
+                        operation,
+                        output
+                    });
+                } else {
+                    editorRef.current.setValue(output);
+                }
+                if (typeof onValueUpdate === 'function') {
+                    onValueUpdate(output);
+                }
+            }
+        }
+    };
 
     return (
         <div style={style} className={styles.MainEditor}>
@@ -455,7 +537,6 @@ const MainEditor = function ({
                                     <IconButton
                                         size="small"
                                         title={title}
-                                        // style={{ marginLeft: 5 }}
                                         onClick={() => {
                                             if (disabled) {
                                                 // TODO: Show a tooltip message
@@ -490,6 +571,90 @@ const MainEditor = function ({
                                     </IconButton>
                                 );
                             })()}
+                        </div>
+                        <div>
+                            <div>
+                                {(() => {
+                                    return (
+                                        <IconButton
+                                            size="small"
+                                            title="Insert sample value"
+                                            onClick={() => {
+                                                const editor = editorRef.current;
+
+                                                let output = [];
+                                                switch (mode) {
+                                                    case mode_css:
+                                                        output = output = [
+                                                            'body {',
+                                                            '    background-color: #f0f0f0;',
+                                                            '}',
+                                                            '',
+                                                            'body h1 {',
+                                                            '    color: #000000;',
+                                                            '    font-size: 24px;',
+                                                            '    font-weight: bold;',
+                                                            '    text-align: center;',
+                                                            '}',
+                                                            ''
+                                                        ];
+                                                        break;
+                                                    case mode_csv:
+                                                        output = [
+                                                            'Name,Age,Height',
+                                                            'Charlie,22,1.85',
+                                                            'Bob,21,1.75',
+                                                            'Alice,20,1.65',
+                                                            'David,23,1.95'
+                                                        ];
+                                                        break;
+                                                    case mode_json:
+                                                        output = [
+                                                            '{',
+                                                            '    "data": [',
+                                                            '        { "name": "Charlie", "age": 22, "height": 1.85 },',
+                                                            '        { "name": "Bob",     "age": 21, "height": 1.75 },',
+                                                            '        { "name": "Alice",   "age": 20, "height": 1.65 },',
+                                                            '        { "name": "David",   "age": 23, "height": 1.95 }',
+                                                            '    ]',
+                                                            '}'
+                                                        ];
+                                                        break;
+                                                    case mode_less:
+                                                        output = [
+                                                            '@color: #222;',
+                                                            '',
+                                                            'body {',
+                                                            '    color: @color;',
+                                                            '',
+                                                            '    a {',
+                                                            '        color: @color;',
+                                                            '    }',
+                                                            '}'
+                                                        ];
+                                                        break;
+                                                    case mode_list:
+                                                        output = [
+                                                            'Charlie',
+                                                            'Bob',
+                                                            'Alice',
+                                                            'David'
+                                                        ];
+                                                        break;
+                                                    default:
+                                                        output = [
+                                                            'Please provide content here'
+                                                        ];
+                                                }
+
+                                                editor.setValue(output.join('\n'));
+                                            }}
+                                        >
+                                            <ScienceIcon style={{ fontSize: 16 }} />
+                                        </IconButton>
+                                    );
+                                })()}
+                            </div>
                         </div>
                         <div style={{ marginLeft: 5 }}>
                             <Select
@@ -547,11 +712,8 @@ const MainEditor = function ({
                                 onLoad(editor);
                             }
                         }}
-                        onChange={(evt) => {
-                            setRefreshUndoRedo(Date.now());
-                            if (typeof onValueUpdate === 'function') {
-                                onValueUpdate(evt.target.value);
-                            }
+                        onChange={async (val, delta) => {
+                            await debouncedOnChange(val, delta);
                         }}
                         editorProps={{ $blockScrolling: true }}
                         width={editorWidth}
@@ -567,326 +729,257 @@ const MainEditor = function ({
                 }
             </div>
 
-            <div style={{ marginTop: 10 }}>
-                <div
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between'
-                    }}
-                >
-                    <div>
-                        <Select
-                            native
-                            style={{
-                                width: 220,
-                                height: 28,
-                                fontSize: 11
-                            }}
-                            value={selectedOperations[mode]}
-                            onChange={(e) => {
-                                const selectedOperation = e.target.value;
+            {
+                !hideOperations &&
+                <div style={{ marginTop: 10 }}>
+                    <div
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between'
+                        }}
+                    >
+                        <div>
+                            <Select
+                                native
+                                style={{
+                                    width: 220,
+                                    height: 28,
+                                    fontSize: 11
+                                }}
+                                value={selectedOperations[mode]}
+                                onChange={(e) => {
+                                    const selectedOperation = e.target.value;
 
-                                const json = JSON.parse(JSON.stringify(selectedOperations));
-                                json[mode] = selectedOperation;
+                                    const json = JSON.parse(JSON.stringify(selectedOperations));
+                                    json[mode] = selectedOperation;
 
-                                setStoredOperations(json);
+                                    setStoredOperations(json);
 
-                                const searchParamsToApply = generateTargetSearchParamsAsJson({
-                                    mode,
-                                    operation: selectedOperation,
-                                    selectedOperations
-                                });
-                                setSearchParams(searchParamsToApply);
-                            }}
-                        >
-                            <option
-                                value=""
-                                style={{ color: '#777' }}
+                                    const searchParamsToApply = generateTargetSearchParamsAsJson({
+                                        mode,
+                                        operation: selectedOperation,
+                                        selectedOperations
+                                    });
+                                    setSearchParams(searchParamsToApply);
+                                }}
                             >
-                                -- Operations --
-                            </option>
-
-                            {
-                                mode === mode_css &&
-                                <React.Fragment>
-                                    <optgroup label="Sample">
-                                        <option value={$css_sample_css}>
-                                            Sample CSS
-                                        </option>
-                                    </optgroup>
-                                    <optgroup label="Format">
-                                        <option value={$css_formatCss}>
-                                            Format CSS
-                                        </option>
-                                        <option value={$css_minifyCss}>
-                                            Minify CSS
-                                        </option>
-                                    </optgroup>
-                                    <optgroup label="Transform">
-                                        <option value={$css_cssToScss}>
-                                            CSS to SCSS
-                                        </option>
-                                    </optgroup>
-                                </React.Fragment>
-                            }
-                            {
-                                mode === mode_less &&
-                                <React.Fragment>
-                                    <optgroup label="Sample">
-                                        <option value={$less_sample_less}>
-                                            Sample Less
-                                        </option>
-                                    </optgroup>
-                                    <optgroup label="Format">
-                                        <option value={$less_formatLess}>
-                                            Format Less
-                                        </option>
-                                        <option value={$less_minifyLess}>
-                                            Minify Less
-                                        </option>
-                                    </optgroup>
-                                    <optgroup label="Transform">
-                                        <option value={$less_lessToCss}>
-                                            Less to CSS
-                                        </option>
-                                    </optgroup>
-                                </React.Fragment>
-                            }
-                            {
-                                mode === mode_list &&
-                                <React.Fragment>
-                                    <optgroup label="Sample">
-                                        <option value={$list_sample_list}>
-                                            Sample list
-                                        </option>
-                                    </optgroup>
-
-                                    <optgroup label="Lines">
-                                        <option value={$list_removeEmptyLines}>
-                                            Remove empty lines
-                                        </option>
-                                        <option value={$list_removeDuplicates}>
-                                            Remove duplicates
-                                        </option>
-                                    </optgroup>
-
-                                    <optgroup label="Sort">
-                                        <option value={$list_sort}>
-                                            Sort
-                                        </option>
-                                        <option value={$list_caseInsensitiveSort}>
-                                            Case-insensitive sort
-                                        </option>
-                                        <option value={$list_naturalSort}>
-                                            Natural sort
-                                        </option>
-                                        <option value={$list_randomize}>
-                                            Randomize
-                                        </option>
-                                        <option value={$list_reverse}>
-                                            Reverse
-                                        </option>
-                                    </optgroup>
-
-                                    <optgroup label="String">
-                                        <option value={$list_trimLines}>
-                                            Trim lines
-                                        </option>
-                                        <option value={$list_removeCommaCharacterAtLineEnds}>
-                                            Remove comma character at line ends
-                                        </option>
-                                        <option value={$list_removeQuoteAndApostropheCharacters}>
-                                            Remove &quot; and &apos; characters
-                                        </option>
-                                    </optgroup>
-
-                                    <optgroup label="Stats">
-                                        <option value={$list_getStats}>
-                                            Get Stats
-                                        </option>
-                                    </optgroup>
-
-                                    <optgroup label="Transform">
-                                        <option value={$list_linesToJsonArray}>
-                                            Lines to JSON Array
-                                        </option>
-                                    </optgroup>
-                                </React.Fragment>
-                            }
-                            {
-                                mode === mode_csv &&
-                                <React.Fragment>
-                                    <optgroup label="Sample">
-                                        <option value={$csv_sample_csv}>
-                                            Sample CSV
-                                        </option>
-                                    </optgroup>
-                                    <optgroup label="Columns">
-                                        <option value={$csv_removeFirstColumnFromCsv}>
-                                            Remove first column from CSV
-                                        </option>
-                                        <option value={$csv_removeLastColumnFromCsv}>
-                                            Remove last column from CSV
-                                        </option>
-                                    </optgroup>
-                                    <optgroup label="Transform">
-                                        <option value={$csv_csvToJson}>
-                                            CSV to JSON
-                                        </option>
-                                    </optgroup>
-                                </React.Fragment>
-                            }
-                            {
-                                mode === mode_json &&
-                                <React.Fragment>
-                                    <optgroup label="Sample">
-                                        <option value={$json_sample_json}>
-                                            Sample JSON
-                                        </option>
-                                    </optgroup>
-                                    <optgroup label="Format">
-                                        <option value={$json_formatJson}>
-                                            Format JSON
-                                        </option>
-                                        <option value={$json_minifyJson}>
-                                            Minify JSON
-                                        </option>
-                                    </optgroup>
-                                    <optgroup label="Edit">
-                                        <option value={$json_removeProperty}>
-                                            Remove property
-                                        </option>
-                                    </optgroup>
-                                    <optgroup label="Sort">
-                                        <option value={$json_sortJson}>
-                                            Sort JSON
-                                        </option>
-                                    </optgroup>
-                                    <optgroup label="Fix">
-                                        <option value={$json_fixDataTypes}>
-                                            Fix data types
-                                        </option>
-                                    </optgroup>
-                                    <optgroup label="Transform">
-                                        <option value={$json_jsonToLines}>
-                                            JSON to Lines
-                                        </option>
-                                        <option value={$json_jsonToCsv}>
-                                            JSON to CSV
-                                        </option>
-                                    </optgroup>
-                                </React.Fragment>
-                            }
-                        </Select>
-                    </div>
-                    <div style={{ marginLeft: 5 }}>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            size="small"
-                            startIcon={<CheckIcon />}
-                            disabled={operation === ''}
-                            onClick={async () => {
-                                const operationsByUser = [
-                                    operation,
-                                    ...recentOperations
-                                ];
-                                // Remove duplicate operations (keep the first occurrence)
-                                const uniqueOperationsByUser = operationsByUser.filter((operation, index) => {
-                                    return operationsByUser.indexOf(operation) === index;
-                                });
-                                setRecentOperations(uniqueOperationsByUser);
-                                localStorage.setItem('recentOperations', JSON.stringify(uniqueOperationsByUser));
-
-                                // DUPLICATE: Some piece of this code is duplicated elsewhere in this project
-                                const getInputValue = () => {
-                                    const value = editorRef.current.getValue();
-                                    return value;
-                                };
-                                const [err, output, extraInfo] = await performOperation({
-                                    getInputValue,
-                                    operation
-                                });
-
-                                if (err) {
-                                    console.error(err);
-                                    alert(err.message); // eslint-disable-line no-alert
-
-                                    if (extraInfo && extraInfo.moveCursorTo) {
-                                        // editorRef.current.moveCursorTo(
-                                        //     extraInfo.moveCursorTo.row,
-                                        //     extraInfo.moveCursorTo.column
-                                        // );
-                                        editorRef.current.moveCursorToPosition({
-                                            row: extraInfo.moveCursorTo.row,
-                                            column: extraInfo.moveCursorTo.column
-                                        });
-
-                                        editorRef.current.focus();
-                                    }
-                                } else {
-                                    if (output === null) {
-                                        alert(JSON.stringify(extraInfo, null, '\t')); // eslint-disable-line no-alert
-                                    } else {
-                                        editorRef.current.setValue(output);
-                                        if (typeof onValueUpdate === 'function') {
-                                            onValueUpdate(output);
-                                        }
-                                    }
-                                }
-                            }}
-                        >
-                            Apply
-                        </Button>
-                    </div>
-                </div>
-                {
-                    recentOperations.length > 0 &&
-                    <div style={{ marginTop: 10 }}>
-                        <div
-                            style={{
-                                display: 'flex',
-                                backgroundColor: '#f5f5f5',
-                                border: '1px solid #e0e0e0',
-                                borderRadius: 999
-                            }}
-                        >
-                            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', fontSize: 12 }}>
-                                <IconButton
-                                    size="small"
-                                    title="Reset suggested operations"
-                                    onClick={() => {
-                                        setRecentOperations(defaultRecommendedOperations);
-                                        localStorage.setItem('recentOperations', JSON.stringify([]));
-                                    }}
+                                <option
+                                    value=""
+                                    style={{ color: '#777' }}
                                 >
-                                    <StarIcon style={{ fontSize: 16 }} />
-                                </IconButton>
-                            </div>
-                            <div
-                                style={{
-                                    borderRight: '1px solid #e0e0e0'
-                                }}
-                            ></div>
-                            <div
-                                style={{
-                                    backgroundColor: '#fff',
-                                    width: '100%',
-                                    borderTopRightRadius: 999,
-                                    borderBottomRightRadius: 999
+                                    -- Operations --
+                                </option>
+
+                                {
+                                    mode === mode_css &&
+                                    <React.Fragment>
+                                        <optgroup label="Format">
+                                            <option value={$css_formatCss}>
+                                                Format CSS
+                                            </option>
+                                            <option value={$css_minifyCss}>
+                                                Minify CSS
+                                            </option>
+                                        </optgroup>
+                                        <optgroup label="Transform">
+                                            <option value={$css_cssToScss}>
+                                                CSS to SCSS
+                                            </option>
+                                        </optgroup>
+                                    </React.Fragment>
+                                }
+                                {
+                                    mode === mode_less &&
+                                    <React.Fragment>
+                                        <optgroup label="Format">
+                                            <option value={$less_formatLess}>
+                                                Format Less
+                                            </option>
+                                            <option value={$less_minifyLess}>
+                                                Minify Less
+                                            </option>
+                                        </optgroup>
+                                        <optgroup label="Transform">
+                                            <option value={$less_lessToCss}>
+                                                Less to CSS
+                                            </option>
+                                        </optgroup>
+                                    </React.Fragment>
+                                }
+                                {
+                                    mode === mode_list &&
+                                    <React.Fragment>
+                                        <optgroup label="Lines">
+                                            <option value={$list_removeEmptyLines}>
+                                                Remove empty lines
+                                            </option>
+                                            <option value={$list_removeDuplicates}>
+                                                Remove duplicates
+                                            </option>
+                                        </optgroup>
+
+                                        <optgroup label="Sort">
+                                            <option value={$list_sort}>
+                                                Sort
+                                            </option>
+                                            <option value={$list_caseInsensitiveSort}>
+                                                Case-insensitive sort
+                                            </option>
+                                            <option value={$list_naturalSort}>
+                                                Natural sort
+                                            </option>
+                                            <option value={$list_randomize}>
+                                                Randomize
+                                            </option>
+                                            <option value={$list_reverse}>
+                                                Reverse
+                                            </option>
+                                        </optgroup>
+
+                                        <optgroup label="String">
+                                            <option value={$list_trimLines}>
+                                                Trim lines
+                                            </option>
+                                            <option value={$list_removeCommaCharacterAtLineEnds}>
+                                                Remove comma character at line ends
+                                            </option>
+                                            <option value={$list_removeQuoteAndApostropheCharacters}>
+                                                Remove &quot; and &apos; characters
+                                            </option>
+                                        </optgroup>
+
+                                        <optgroup label="Stats">
+                                            <option value={$list_getStats}>
+                                                Get Stats
+                                            </option>
+                                        </optgroup>
+
+                                        <optgroup label="Transform">
+                                            <option value={$list_linesToJsonArray}>
+                                                Lines to JSON Array
+                                            </option>
+                                        </optgroup>
+                                    </React.Fragment>
+                                }
+                                {
+                                    mode === mode_csv &&
+                                    <React.Fragment>
+                                        <optgroup label="Columns">
+                                            <option value={$csv_removeFirstColumnFromCsv}>
+                                                Remove first column from CSV
+                                            </option>
+                                            <option value={$csv_removeLastColumnFromCsv}>
+                                                Remove last column from CSV
+                                            </option>
+                                        </optgroup>
+                                        <optgroup label="Transform">
+                                            <option value={$csv_csvToJson}>
+                                                CSV to JSON
+                                            </option>
+                                        </optgroup>
+                                    </React.Fragment>
+                                }
+                                {
+                                    mode === mode_json &&
+                                    <React.Fragment>
+                                        <optgroup label="Format">
+                                            <option value={$json_formatJson}>
+                                                Format JSON
+                                            </option>
+                                            <option value={$json_minifyJson}>
+                                                Minify JSON
+                                            </option>
+                                        </optgroup>
+                                        <optgroup label="Edit">
+                                            <option value={$json_removeProperty}>
+                                                Remove property
+                                            </option>
+                                        </optgroup>
+                                        <optgroup label="Sort">
+                                            <option value={$json_sortJson}>
+                                                Sort JSON
+                                            </option>
+                                        </optgroup>
+                                        <optgroup label="Fix">
+                                            <option value={$json_fixDataTypes}>
+                                                Fix data types
+                                            </option>
+                                        </optgroup>
+                                        <optgroup label="Transform">
+                                            <option value={$json_jsonToLines}>
+                                                JSON to Lines
+                                            </option>
+                                            <option value={$json_jsonToCsv}>
+                                                JSON to CSV
+                                            </option>
+                                        </optgroup>
+                                    </React.Fragment>
+                                }
+                            </Select>
+                        </div>
+                        <div style={{ marginLeft: 5 }}>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                size="small"
+                                startIcon={<CheckIcon />}
+                                disabled={operation === ''}
+                                onClick={async () => {
+                                    await applyTheOperation();
                                 }}
                             >
-                                <RecentOperations
-                                    editorRef={editorRef}
-                                    onValueUpdate={onValueUpdate}
-                                    mode={mode}
-                                />
-                            </div>
+                                Apply
+                            </Button>
                         </div>
                     </div>
-                }
-            </div>
+                    {
+                        recentOperations.length > 0 &&
+                        <div style={{ marginTop: 10 }}>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    backgroundColor: '#f5f5f5',
+                                    border: '1px solid #e0e0e0',
+                                    borderRadius: 999
+                                }}
+                            >
+                                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', fontSize: 12 }}>
+                                    <IconButton
+                                        size="small"
+                                        title="Reset suggested operations"
+                                        onClick={() => {
+                                            setRecentOperations(defaultRecommendedOperations);
+                                            localStorage.setItem('recentOperations', JSON.stringify([]));
+                                        }}
+                                    >
+                                        <StarIcon style={{ fontSize: 16 }} />
+                                    </IconButton>
+                                </div>
+                                <div
+                                    style={{
+                                        borderRight: '1px solid #e0e0e0'
+                                    }}
+                                ></div>
+                                <div
+                                    style={{
+                                        backgroundColor: '#fff',
+                                        width: '100%',
+                                        borderTopRightRadius: 999,
+                                        borderBottomRightRadius: 999
+                                    }}
+                                >
+                                    <RecentOperations
+                                        editorRef={editorRef}
+                                        onValueUpdate={onValueUpdate}
+                                        mode={mode}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
         </div>
     );
 };
