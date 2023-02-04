@@ -108,20 +108,23 @@ blockquote::before, blockquote::after, q::before, q::after {
     letter-spacing: 0.1em;
 }
 
-.TextList__TextList--NZ7zn .ace_editor,
-.TextList__TextList--NZ7zn .ace_editor * {
+.MainEditor__MainEditor--Q_tBg .ace_editor,
+.MainEditor__MainEditor--Q_tBg .ace_editor * {
     font-family: 'Courier New', Courier, monospace;
     font-size: 12px;
 }
 
-.TextList__translucentWithoutHover--n0_xk {
+.MainEditor__translucentWithoutHover--GBmBJ {
     opacity: 0.2;
 }
-.TextList__translucentWithoutHover--n0_xk:hover {
+.MainEditor__translucentWithoutHover--GBmBJ:hover {
     opacity: 1;
 }
 
-.ListOperations__ListOperations--VCX0Q {
+.DoubleEditor__DoubleEditor--molkI {
+}
+
+.TripleEditor__TripleEditor--CeiGf {
 }
 
 .Dashboard__Dashboard--d2pNX {
@@ -130,10 +133,10 @@ blockquote::before, blockquote::after, q::before, q::after {
 .PageFooter__PageFooter--yI25Y {
 }
 
-.CreatedByMessage__msg--okO87 {
+.msg {
     font-weight: bold;
     font-size: 10px;
 }
 
 
-/*# sourceMappingURL=bundle.index.1dd99a6f6f88c9463534.css.map*/
+/*# sourceMappingURL=bundle.index.3a9a24272019b8aa8ccc.css.map*/
