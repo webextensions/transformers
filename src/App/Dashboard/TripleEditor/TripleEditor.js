@@ -58,7 +58,8 @@ const TripleEditor = function () {
                         style={{
                             textAlign: 'center',
                             fontFamily: '"Transformers", sans-serif',
-                            fontSize: 20
+                            fontSize: 20,
+                            color: '#777'
                         }}
                     >
                         A
@@ -108,7 +109,8 @@ const TripleEditor = function () {
                         style={{
                             textAlign: 'center',
                             fontFamily: '"Transformers", sans-serif',
-                            fontSize: 20
+                            fontSize: 20,
+                            color: '#777'
                         }}
                     >
                         B
@@ -210,7 +212,8 @@ const TripleEditor = function () {
                         style={{
                             textAlign: 'center',
                             fontFamily: '"Transformers", sans-serif',
-                            fontSize: 20
+                            fontSize: 20,
+                            color: '#777'
                         }}
                     >
                         C
