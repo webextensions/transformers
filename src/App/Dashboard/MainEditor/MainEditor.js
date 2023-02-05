@@ -320,14 +320,13 @@ const MainEditor = function ({
     };
 
     useEffect(() => {
-        if (autoApply) {
+        // Operation might be empty (at the time of mounting this component)
+        if (autoApply && operation) {
             (async () => {
-                if (operation) { // Operation might be empty (at the time of mounting this component)
-                    await applyTheOperation();
-                }
+                await applyTheOperation();
             })();
         }
-    }, [autoApply]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [autoApply, operation]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div style={style} className={styles.MainEditor}>
