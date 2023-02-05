@@ -61,55 +61,55 @@ export const
 
 // eslint-disable-next-line import/exports-last
 export const
-    $css_formatCss                           = 'format',
-    $css_minifyCss                           = 'minify',
+    $css_formatCss                           = 'cssFormat',
+    $css_minifyCss                           = 'cssMinify',
 
     $css_cssToScss                           = 'cssToScss',
 
-    $list_removeEmptyLines                   = 'removeEmptyLines',
-    $list_removeDuplicates                   = 'removeDuplicates',
-    // $list_removeBeyondNLines              = 'removeBeyondNLines',
+    $list_removeEmptyLines                   = 'listRemoveEmptyLines',
+    $list_removeDuplicates                   = 'listRemoveDuplicates',
+    // $list_removeBeyondNLines              = 'listRemoveBeyondNLines',
 
-    $list_sort                               = 'sort',
-    $list_caseInsensitiveSort                = 'caseInsensitiveSort',
-    $list_naturalSort                        = 'naturalSort',
-    $list_randomize                          = 'randomize',
-    $list_reverse                            = 'reverse',
+    $list_sort                               = 'listSort',
+    $list_caseInsensitiveSort                = 'listCaseInsensitiveSort',
+    $list_naturalSort                        = 'listNaturalSort',
+    $list_randomize                          = 'listRandomize',
+    $list_reverse                            = 'listReverse',
 
-    $list_trimLines                          = 'trimLines',
-    $list_removeCommaCharacterAtLineEnds     = 'removeCommaCharacterAtLineEnds',
-    $list_removeQuoteAndApostropheCharacters = 'removeQuoteAndApostropheCharacters',
+    $list_trimLines                          = 'listTrimLines',
+    $list_removeCommaCharacterAtLineEnds     = 'listRemoveCommaCharacterAtLineEnds',
+    $list_removeQuoteAndApostropheCharacters = 'listRemoveQuoteAndApostropheCharacters',
 
-    $list_getStats                           = 'getStats',
-    // $list_countLines                      = 'countLines',
-    // $list_countCharacters                 = 'countCharacters',
-    // $list_countWords                      = 'countWords',
-    // $list_countUniqueWords                = 'countUniqueWords',
+    $list_getStats                           = 'listGetStats',
+    // $list_countLines                      = 'listCountLines',
+    // $list_countCharacters                 = 'listCountCharacters',
+    // $list_countWords                      = 'listCountWords',
+    // $list_countUniqueWords                = 'listCountUniqueWords',
 
-    $list_linesToJsonArray                   = 'linesToJsonArray',
+    $list_linesToJsonArray                   = 'listLinesToJsonArray',
 
-    $csv_removeFirstColumnFromCsv            = 'removeFirstColumnFromCsv',
-    $csv_removeLastColumnFromCsv             = 'removeLastColumnFromCsv',
+    $csv_removeFirstColumnFromCsv            = 'csvRemoveFirstColumnFromCsv',
+    $csv_removeLastColumnFromCsv             = 'csvRemoveLastColumnFromCsv',
 
     $csv_csvToJson                           = 'csvToJson',
 
-    $json_formatJson                         = 'format',
-    $json_minifyJson                         = 'minify',
+    $json_formatJson                         = 'jsonFormat',
+    $json_minifyJson                         = 'jsonMinify',
 
-    $json_removeProperty                     = 'removeProperty',
+    $json_removeProperty                     = 'jsonRemoveProperty',
 
-    $json_sortJson                           = 'sort',
+    $json_sortJson                           = 'jsonSort',
 
-    $json_fixDataTypes                       = 'fixDataTypes',
+    $json_fixDataTypes                       = 'jsonFixDataTypes',
 
-    // $json_removeFirstProperty             = 'removeFirstProperty',
-    // $json_removeLastProperty              = 'removeLastProperty',
+    // $json_removeFirstProperty             = 'jsonRemoveFirstProperty',
+    // $json_removeLastProperty              = 'jsonRemoveLastProperty',
 
     $json_jsonToLines                        = 'jsonToLines',
     $json_jsonToCsv                          = 'jsonToCsv',
 
-    $less_formatLess                         = 'format',
-    $less_minifyLess                         = 'minify',
+    $less_formatLess                         = 'lessFormat',
+    $less_minifyLess                         = 'lessMinify',
 
     $less_lessToCss                          = 'lessToCss';
 
