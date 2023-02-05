@@ -733,8 +733,10 @@ const MainEditor = function ({
                                 onLoad(editor);
                             }
                         }}
-                        onChange={async (val, delta) => {
-                            await debouncedOnChange(val, delta);
+                        onChange={(val, delta) => {
+                            (async () => {
+                                await debouncedOnChange(val, delta);
+                            })();
                         }}
                         editorProps={{ $blockScrolling: true }}
                         width={editorWidth}
