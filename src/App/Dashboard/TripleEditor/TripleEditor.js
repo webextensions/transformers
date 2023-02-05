@@ -80,10 +80,10 @@ const TripleEditor = function () {
                     <div style={{ textAlign: 'center' }}>&nbsp;</div>
                     <div
                         style={{
-                            marginTop: 55,
+                            marginTop: 88,
                             display: 'flex',
                             flexDirection: 'column',
-                            justifyContent: 'center',
+                            // justifyContent: 'center',
                             height: '300px'
                         }}
                     >
@@ -131,10 +131,10 @@ const TripleEditor = function () {
                     <div style={{ textAlign: 'center' }}>&nbsp;</div>
                     <div
                         style={{
-                            marginTop: 55,
+                            marginTop: 92,
                             display: 'flex',
                             flexDirection: 'column',
-                            justifyContent: 'center',
+                            // justifyContent: 'center',
                             height: '300px'
                         }}
                     >
