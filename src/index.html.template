@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html data-app-version="{{appVersion}}">
 
 <head>
     <title>Transformers: Tools for working with data from Lists, Sets, CSV, JSON, etc</title>

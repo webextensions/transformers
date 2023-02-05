@@ -4,9 +4,12 @@
 
 const path = require('path');
 
+const clearModule = require('clear-module');
 const handlebars = require('handlebars');
 
 const logger = require('note-down');
+
+const packageJsonPath = path.resolve(__dirname, '..', '..', '..', 'package.json');
 
 class TemplateToHtmlPlugin {
     constructor(options) {
@@ -114,6 +117,15 @@ class TemplateToHtmlPlugin {
 
             const context = JSON.parse(JSON.stringify(_this.options.contextData));
             context.chunks = context.chunks || {};
+
+            let packageJson;
+            try {
+                clearModule(packageJsonPath);
+                packageJson = require(packageJsonPath);
+            } catch (e) {
+                logger.warn('WARNING: Unable to load package.json');
+            }
+            context.appVersion = packageJson?.version;
 
             compilation.chunks.forEach(function (chunk) {
                 const chunkFiles = chunk.files;
