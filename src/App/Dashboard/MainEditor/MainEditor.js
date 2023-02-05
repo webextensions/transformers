@@ -907,14 +907,14 @@ const MainEditor = function ({
                                                 Minify JSON
                                             </option>
                                         </optgroup>
-                                        <optgroup label="Edit">
-                                            <option value={$json_removeProperty}>
-                                                Remove property
-                                            </option>
-                                        </optgroup>
                                         <optgroup label="Sort">
                                             <option value={$json_sort}>
                                                 Sort JSON
+                                            </option>
+                                        </optgroup>
+                                        <optgroup label="Edit">
+                                            <option value={$json_removeProperty}>
+                                                Remove property
                                             </option>
                                         </optgroup>
                                         <optgroup label="Fix">

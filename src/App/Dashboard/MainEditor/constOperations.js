@@ -94,9 +94,9 @@ export const
     $json_format                             = 'jsonFormat',
     $json_minify                             = 'jsonMinify',
 
-    $json_removeProperty                     = 'jsonRemoveProperty',
-
     $json_sort                               = 'jsonSort',
+
+    $json_removeProperty                     = 'jsonRemoveProperty',
 
     $json_fixDataTypes                       = 'jsonFixDataTypes',
 
@@ -151,9 +151,9 @@ const
             [$json_format]                             : { message: 'Format JSON',                            Icon: MoodIcon },
             [$json_minify]                             : { message: 'Minify JSON',                            Icon: CompressIcon },
 
-            [$json_removeProperty]                     : { message: 'Remove property',                        Icon: PlaylistRemoveIcon },
-
             [$json_sort]                               : { message: 'Sort JSON',                              Icon: CategoryIcon },
+
+            [$json_removeProperty]                     : { message: 'Remove property',                        Icon: PlaylistRemoveIcon },
 
             [$json_fixDataTypes]                       : { message: 'Fix data types',                         Icon: BuildIcon },
 
