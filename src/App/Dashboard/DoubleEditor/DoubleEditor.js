@@ -100,10 +100,6 @@ const DoubleEditor = () => {
                                     onChange={(event) => {
                                         const flagAutoApply = event.target.checked;
                                         setAutoApply(flagAutoApply);
-
-                                        if (flagAutoApply) {
-                                            // TODO: Apply the operation
-                                        }
                                     }}
                                 />
                             }

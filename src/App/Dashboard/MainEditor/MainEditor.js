@@ -319,6 +319,14 @@ const MainEditor = function ({
         }
     };
 
+    useEffect(() => {
+        if (autoApply) {
+            (async () => {
+                await applyTheOperation();
+            })();
+        }
+    }, [autoApply]); // eslint-disable-line react-hooks/exhaustive-deps
+
     return (
         <div style={style} className={styles.MainEditor}>
             <div style={{ marginTop: 10 }}>
