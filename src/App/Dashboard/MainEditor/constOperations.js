@@ -43,8 +43,8 @@ import BarChartIcon from '@mui/icons-material/BarChart.js';
 
 // eslint-disable-next-line import/exports-last
 export const
-    mode_css = 'css',
-    mode_csv = 'csv',
+    mode_css  = 'css',
+    mode_csv  = 'csv',
     mode_json = 'json',
     mode_less = 'less',
     mode_list = 'list';
@@ -61,10 +61,10 @@ export const
 
 // eslint-disable-next-line import/exports-last
 export const
-    $css_formatCss                           = 'cssFormat',
-    $css_minifyCss                           = 'cssMinify',
+    $css_format                              = 'cssFormat',
+    $css_minify                              = 'cssMinify',
 
-    $css_cssToScss                           = 'cssToScss',
+    $css_toScss                              = 'cssToScss',
 
     $list_removeEmptyLines                   = 'listRemoveEmptyLines',
     $list_removeDuplicates                   = 'listRemoveDuplicates',
@@ -91,35 +91,35 @@ export const
     $csv_removeFirstColumnFromCsv            = 'csvRemoveFirstColumnFromCsv',
     $csv_removeLastColumnFromCsv             = 'csvRemoveLastColumnFromCsv',
 
-    $csv_csvToJson                           = 'csvToJson',
+    $csv_toJson                              = 'csvToJson',
 
-    $json_formatJson                         = 'jsonFormat',
-    $json_minifyJson                         = 'jsonMinify',
+    $json_format                             = 'jsonFormat',
+    $json_minify                             = 'jsonMinify',
 
     $json_removeProperty                     = 'jsonRemoveProperty',
 
-    $json_sortJson                           = 'jsonSort',
+    $json_sort                               = 'jsonSort',
 
     $json_fixDataTypes                       = 'jsonFixDataTypes',
 
     // $json_removeFirstProperty             = 'jsonRemoveFirstProperty',
     // $json_removeLastProperty              = 'jsonRemoveLastProperty',
 
-    $json_jsonToLines                        = 'jsonToLines',
-    $json_jsonToCsv                          = 'jsonToCsv',
+    $json_toLines                            = 'jsonToLines',
+    $json_toCsv                              = 'jsonToCsv',
 
-    $less_formatLess                         = 'lessFormat',
-    $less_minifyLess                         = 'lessMinify',
+    $less_format                             = 'lessFormat',
+    $less_minify                             = 'lessMinify',
 
-    $less_lessToCss                          = 'lessToCss';
+    $less_toCss                              = 'lessToCss';
 
 
 // eslint-disable-next-line import/exports-last
 export const defaultRecommendedOperations = [
-    $css_formatCss,
-    $csv_csvToJson,
-    $json_formatJson,
-    $less_formatLess,
+    $css_format,
+    $csv_toJson,
+    $json_format,
+    $less_format,
     $list_sort
 ];
 
@@ -138,38 +138,38 @@ export const IconNotAvailable = CircleIcon;
 const
     availableOperations = {
         [mode_css]: {
-            [$css_formatCss]                           : { message: 'Format CSS',                             Icon: MoodIcon },
-            [$css_minifyCss]                           : { message: 'Minify CSS',                             Icon: CompressIcon },
+            [$css_format]                              : { message: 'Format CSS',                             Icon: MoodIcon },
+            [$css_minify]                              : { message: 'Minify CSS',                             Icon: CompressIcon },
 
-            [$css_cssToScss]                           : { message: 'CSS to SCSS',                            Icon: DataObjectIcon }
+            [$css_toScss]                              : { message: 'CSS to SCSS',                            Icon: DataObjectIcon }
         },
         [mode_csv]: {
             [$csv_removeFirstColumnFromCsv]            : { message: 'Remove first column from CSV',           Icon: FirstPageIcon },
             [$csv_removeLastColumnFromCsv]             : { message: 'Remove last column from CSV',            Icon: LastPageIcon },
 
-            [$csv_csvToJson]                           : { message: 'CSV to JSON',                            Icon: DataObjectIcon }
+            [$csv_toJson]                              : { message: 'CSV to JSON',                            Icon: DataObjectIcon }
         },
         [mode_json]: {
-            [$json_formatJson]                         : { message: 'Format JSON',                            Icon: MoodIcon },
-            [$json_minifyJson]                         : { message: 'Minify JSON',                            Icon: CompressIcon },
+            [$json_format]                             : { message: 'Format JSON',                            Icon: MoodIcon },
+            [$json_minify]                             : { message: 'Minify JSON',                            Icon: CompressIcon },
 
             [$json_removeProperty]                     : { message: 'Remove property',                        Icon: PlaylistRemoveIcon },
 
-            [$json_sortJson]                           : { message: 'Sort JSON',                              Icon: CategoryIcon },
+            [$json_sort]                               : { message: 'Sort JSON',                              Icon: CategoryIcon },
 
             [$json_fixDataTypes]                       : { message: 'Fix data types',                         Icon: BuildIcon },
 
             // [$json_removeFirstProperty]             : { message: 'Remove first property',                  Icon: VerticalAlignTopIcon },
             // [$json_removeLastProperty]              : { message: 'Remove last property',                   Icon: VerticalAlignBottomIcon },
 
-            [$json_jsonToLines]                        : { message: 'JSON to lines',                          Icon: ReorderIcon },
-            [$json_jsonToCsv]                          : { message: 'JSON to CSV',                            Icon: AppsIcon }
+            [$json_toLines]                            : { message: 'JSON to lines',                          Icon: ReorderIcon },
+            [$json_toCsv]                              : { message: 'JSON to CSV',                            Icon: AppsIcon }
         },
         [mode_less]: {
-            [$less_formatLess]                         : { message: 'Format LESS',                            Icon: MoodIcon },
-            [$less_minifyLess]                         : { message: 'Minify LESS',                            Icon: CompressIcon },
+            [$less_format]                             : { message: 'Format LESS',                            Icon: MoodIcon },
+            [$less_minify]                             : { message: 'Minify LESS',                            Icon: CompressIcon },
 
-            [$less_lessToCss]                          : { message: 'LESS to CSS',                            Icon: DataObjectIcon }
+            [$less_toCss]                              : { message: 'LESS to CSS',                            Icon: DataObjectIcon }
         },
         [mode_list]: {
             [$list_removeEmptyLines]                   : { message: 'Remove empty lines',                     Icon: SettingsEthernetIcon },

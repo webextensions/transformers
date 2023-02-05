@@ -25,10 +25,10 @@ import {
 } from './textUtils.js';
 
 import {
-    $css_cssToScss,
+    $css_toScss,
 
-    $css_formatCss,
-    $css_minifyCss,
+    $css_format,
+    $css_minify,
 
     $list_removeEmptyLines,
     $list_removeDuplicates,
@@ -50,24 +50,24 @@ import {
     $csv_removeFirstColumnFromCsv,
     $csv_removeLastColumnFromCsv,
 
-    $csv_csvToJson,
+    $csv_toJson,
 
-    $json_formatJson,
-    $json_minifyJson,
+    $json_format,
+    $json_minify,
 
     $json_removeProperty,
 
-    $json_sortJson,
+    $json_sort,
 
     $json_fixDataTypes,
 
-    $json_jsonToLines,
-    $json_jsonToCsv,
+    $json_toLines,
+    $json_toCsv,
 
-    $less_formatLess,
-    $less_minifyLess,
+    $less_format,
+    $less_minify,
 
-    $less_lessToCss
+    $less_toCss
 } from './constOperations.js';
 
 const lazyLoadLess = async () => {
@@ -79,12 +79,12 @@ const performOperation = async function ({ getInputValue, operation }) {
     try {
         if (
             [
-                $css_formatCss,
-                $css_minifyCss,
-                $css_cssToScss,
-                $less_formatLess,
-                $less_minifyLess,
-                $less_lessToCss
+                $css_format,
+                $css_minify,
+                $css_toScss,
+                $less_format,
+                $less_minify,
+                $less_toCss
             ].includes(operation)
         ) {
             const input = getInputValue();
@@ -93,13 +93,13 @@ const performOperation = async function ({ getInputValue, operation }) {
             const extraInfo = {};
 
             switch (operation) {
-                case $css_formatCss:
+                case $css_format:
                     output = beautifyCss(input);
                     break;
-                case $css_minifyCss:
+                case $css_minify:
                     output = minifyCss(input);
                     break;
-                case $css_cssToScss:
+                case $css_toScss:
                     if (input.trim() === '') {
                         output = input;
                     } else {
@@ -112,14 +112,14 @@ const performOperation = async function ({ getInputValue, operation }) {
                         }
                     }
                     break;
-                case $less_formatLess:
+                case $less_format:
                     output = beautifyCss(input);
                     break;
-                case $less_minifyLess:
+                case $less_minify:
                     output = minifyCss(input);
                     break;
 
-                case $less_lessToCss:
+                case $less_toCss:
                     if (input.trim() === '') {
                         output = input;
                     } else {
@@ -150,13 +150,13 @@ const performOperation = async function ({ getInputValue, operation }) {
             return [err, output, extraInfo];
         } else if (
             [
-                $json_formatJson,
-                $json_minifyJson,
+                $json_format,
+                $json_minify,
                 $json_removeProperty,
-                $json_sortJson,
+                $json_sort,
                 $json_fixDataTypes,
-                $json_jsonToLines,
-                $json_jsonToCsv
+                $json_toLines,
+                $json_toCsv
             ].includes(operation)
         ) {
             const input = getInputValue();
@@ -164,10 +164,10 @@ const performOperation = async function ({ getInputValue, operation }) {
             let output;
 
             switch (operation) {
-                case $json_formatJson:
+                case $json_format:
                     output = JSON.stringify(jsonInput, null, '\t');
                     break;
-                case $json_minifyJson:
+                case $json_minify:
                     output = JSON.stringify(jsonInput);
                     break;
                 case $json_removeProperty:
@@ -209,14 +209,14 @@ const performOperation = async function ({ getInputValue, operation }) {
                         }
                     }
                     break;
-                case $json_sortJson:
+                case $json_sort:
                     output = jsonStableStringify(jsonInput, { space: '\t' });
                     break;
                 case $json_fixDataTypes:
                     output = fixDataTypes(jsonInput);
                     output = JSON.stringify(output, null, '\t');
                     break;
-                case $json_jsonToLines:
+                case $json_toLines:
                     if (
                         Array.isArray(jsonInput) &&
                         jsonInput.every(item => typeof item === 'string')
@@ -226,7 +226,7 @@ const performOperation = async function ({ getInputValue, operation }) {
                         return [new Error('Please provide an Array of Strings as the input.')];
                     }
                     break;
-                case $json_jsonToCsv:
+                case $json_toCsv:
                     output = jsonToCsv(jsonInput);
                     break;
             }
@@ -266,7 +266,7 @@ const performOperation = async function ({ getInputValue, operation }) {
                 $csv_removeFirstColumnFromCsv,
                 $csv_removeLastColumnFromCsv,
 
-                $csv_csvToJson,
+                $csv_toJson,
 
                 $list_removeEmptyLines,
                 $list_removeDuplicates,
@@ -297,7 +297,7 @@ const performOperation = async function ({ getInputValue, operation }) {
                     output = removeLastColumnFromCsvLines(lines);
                     break;
 
-                case $csv_csvToJson:
+                case $csv_toJson:
                     output = csvToJson(lines);
                     break;
 

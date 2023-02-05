@@ -53,10 +53,10 @@ import {
 
     modes,
 
-    $css_formatCss,
-    $css_minifyCss,
+    $css_format,
+    $css_minify,
 
-    $css_cssToScss,
+    $css_toScss,
 
     $list_removeEmptyLines,
     $list_removeDuplicates,
@@ -78,24 +78,24 @@ import {
     $csv_removeFirstColumnFromCsv,
     $csv_removeLastColumnFromCsv,
 
-    $csv_csvToJson,
+    $csv_toJson,
 
-    $json_formatJson,
-    $json_minifyJson,
+    $json_format,
+    $json_minify,
 
     $json_removeProperty,
 
-    $json_sortJson,
+    $json_sort,
 
     $json_fixDataTypes,
 
-    $json_jsonToLines,
-    $json_jsonToCsv,
+    $json_toLines,
+    $json_toCsv,
 
-    $less_formatLess,
-    $less_minifyLess,
+    $less_format,
+    $less_minify,
 
-    $less_lessToCss,
+    $less_toCss,
 
     defaultRecommendedOperations,
 
@@ -780,15 +780,15 @@ const MainEditor = function ({
                                     mode === mode_css &&
                                     <React.Fragment>
                                         <optgroup label="Format">
-                                            <option value={$css_formatCss}>
+                                            <option value={$css_format}>
                                                 Format CSS
                                             </option>
-                                            <option value={$css_minifyCss}>
+                                            <option value={$css_minify}>
                                                 Minify CSS
                                             </option>
                                         </optgroup>
                                         <optgroup label="Transform">
-                                            <option value={$css_cssToScss}>
+                                            <option value={$css_toScss}>
                                                 CSS to SCSS
                                             </option>
                                         </optgroup>
@@ -798,15 +798,15 @@ const MainEditor = function ({
                                     mode === mode_less &&
                                     <React.Fragment>
                                         <optgroup label="Format">
-                                            <option value={$less_formatLess}>
+                                            <option value={$less_format}>
                                                 Format Less
                                             </option>
-                                            <option value={$less_minifyLess}>
+                                            <option value={$less_minify}>
                                                 Minify Less
                                             </option>
                                         </optgroup>
                                         <optgroup label="Transform">
-                                            <option value={$less_lessToCss}>
+                                            <option value={$less_toCss}>
                                                 Less to CSS
                                             </option>
                                         </optgroup>
@@ -879,7 +879,7 @@ const MainEditor = function ({
                                             </option>
                                         </optgroup>
                                         <optgroup label="Transform">
-                                            <option value={$csv_csvToJson}>
+                                            <option value={$csv_toJson}>
                                                 CSV to JSON
                                             </option>
                                         </optgroup>
@@ -889,10 +889,10 @@ const MainEditor = function ({
                                     mode === mode_json &&
                                     <React.Fragment>
                                         <optgroup label="Format">
-                                            <option value={$json_formatJson}>
+                                            <option value={$json_format}>
                                                 Format JSON
                                             </option>
-                                            <option value={$json_minifyJson}>
+                                            <option value={$json_minify}>
                                                 Minify JSON
                                             </option>
                                         </optgroup>
@@ -902,7 +902,7 @@ const MainEditor = function ({
                                             </option>
                                         </optgroup>
                                         <optgroup label="Sort">
-                                            <option value={$json_sortJson}>
+                                            <option value={$json_sort}>
                                                 Sort JSON
                                             </option>
                                         </optgroup>
@@ -912,10 +912,10 @@ const MainEditor = function ({
                                             </option>
                                         </optgroup>
                                         <optgroup label="Transform">
-                                            <option value={$json_jsonToLines}>
+                                            <option value={$json_toLines}>
                                                 JSON to Lines
                                             </option>
-                                            <option value={$json_jsonToCsv}>
+                                            <option value={$json_toCsv}>
                                                 JSON to CSV
                                             </option>
                                         </optgroup>
