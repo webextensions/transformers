@@ -340,6 +340,503 @@ const MainEditor = function ({
         <div style={style} className={styles.MainEditor}>
             <div style={{ marginTop: 10 }}>
                 <div
+                    style={{ marginTop: 20 }}
+                    className={styles.translucentWithoutHover}
+                >
+                    <div>
+                        <div
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between'
+                            }}
+                        >
+                            {
+                                hideOperations &&
+                                <div>&nbsp;</div>
+                            }
+                            <div style={{ display: 'flex' }}>
+                                <div>
+                                    <Select
+                                        native
+                                        value={mode}
+                                        style={{
+                                            width: 75,
+                                            height: 24,
+                                            fontSize: 11
+                                        }}
+                                        onChange={(e) => {
+                                            const mode = e.target.value;
+                                            setMode(mode);
+                                            setStoredMode(mode);
+
+                                            const searchParamsToApply = generateTargetSearchParamsAsJson({
+                                                mode,
+                                                operation: selectedOperations[mode],
+                                                selectedOperations
+                                            });
+                                            setSearchParams(searchParamsToApply);
+                                        }}
+                                    >
+                                        <option value={mode_css}>CSS</option>
+                                        <option value={mode_csv}>CSV</option>
+                                        <option value={mode_json}>JSON</option>
+                                        <option value={mode_less}>Less</option>
+                                        <option value={mode_list}>List</option>
+                                    </Select>
+                                </div>
+                                <div style={{ marginLeft: 5 }}>
+                                    {(() => {
+                                        const disabled = (() => {
+                                            if (
+                                                mode === mode_json ||
+                                                mode === mode_css ||
+                                                mode === mode_less
+                                            ) {
+                                                return false;
+                                            } else {
+                                                return true;
+                                            }
+                                        })();
+                                        let title;
+                                        if (disabled) {
+                                            title = 'Syntax highlighting not available for this mode';
+                                        } else {
+                                            if (flagSyntaxHighlighting === 'yes') {
+                                                title = 'Disable syntax highlighting';
+                                            } else {
+                                                title = 'Enable syntax highlighting';
+                                            }
+                                        }
+
+                                        return (
+                                            <IconButton
+                                                size="small"
+                                                title={title}
+                                                onClick={() => {
+                                                    if (disabled) {
+                                                        // TODO: Show a tooltip message
+                                                    } else {
+                                                        setFlagSyntaxHighlighting(
+                                                            flagSyntaxHighlighting === 'yes' ? 'no' : 'yes'
+                                                        );
+                                                    }
+                                                }}
+                                            >
+                                                {(() => {
+                                                    let Icon;
+                                                    if (flagSyntaxHighlighting === 'yes') {
+                                                        Icon = BorderColorIcon;
+                                                    } else {
+                                                        Icon = BorderColorOutlinedIcon;
+                                                    }
+
+                                                    let color;
+                                                    if (disabled) {
+                                                        color = '#ccc';
+                                                    } else {
+                                                        if (flagSyntaxHighlighting === 'yes') {
+                                                            color = '#1976d2';
+                                                        } else {
+                                                            color = undefined;
+                                                        }
+                                                    }
+
+                                                    return <Icon style={{ fontSize: 16, color }} />;
+                                                })()}
+                                            </IconButton>
+                                        );
+                                    })()}
+                                </div>
+                            </div>
+                            <div
+                                style={{
+                                    // TODO: Use a better way to "right-align" the content (probably via appropriate "prop")
+                                    display: hideOperations ? 'none' : 'flex'
+                                }}
+                            >
+                                <div style={{ marginLeft: 5 }}>
+                                    <Select
+                                        native
+                                        style={{
+                                            width: 125,
+                                            height: 28,
+                                            fontSize: 11,
+                                            border: (
+                                                selectedOperations[mode] === '' ?
+                                                    '1px dashed orange' :
+                                                    undefined
+                                            )
+                                        }}
+                                        value={selectedOperations[mode]}
+                                        onChange={(e) => {
+                                            const selectedOperation = e.target.value;
+
+                                            const json = JSON.parse(JSON.stringify(selectedOperations));
+                                            json[mode] = selectedOperation;
+
+                                            setStoredOperations(json);
+
+                                            const searchParamsToApply = generateTargetSearchParamsAsJson({
+                                                mode,
+                                                operation: selectedOperation,
+                                                selectedOperations
+                                            });
+                                            setSearchParams(searchParamsToApply);
+                                        }}
+                                    >
+                                        <option
+                                            value=""
+                                            style={{ color: '#777' }}
+                                        >
+                                            -- Operations --
+                                        </option>
+
+                                        {
+                                            mode === mode_css &&
+                                            <React.Fragment>
+                                                <optgroup label="Format">
+                                                    <option value={$css_format}>
+                                                        Format CSS
+                                                    </option>
+                                                    <option value={$css_minify}>
+                                                        Minify CSS
+                                                    </option>
+                                                </optgroup>
+                                                <optgroup label="Transform">
+                                                    <option value={$css_toScss}>
+                                                        CSS to SCSS
+                                                    </option>
+                                                </optgroup>
+                                            </React.Fragment>
+                                        }
+                                        {
+                                            mode === mode_less &&
+                                            <React.Fragment>
+                                                <optgroup label="Format">
+                                                    <option value={$less_format}>
+                                                        Format Less
+                                                    </option>
+                                                    <option value={$less_minify}>
+                                                        Minify Less
+                                                    </option>
+                                                </optgroup>
+                                                <optgroup label="Transform">
+                                                    <option value={$less_toCss}>
+                                                        Less to CSS
+                                                    </option>
+                                                </optgroup>
+                                            </React.Fragment>
+                                        }
+                                        {
+                                            mode === mode_list &&
+                                            <React.Fragment>
+                                                <optgroup label="Lines">
+                                                    <option value={$list_removeEmptyLines}>
+                                                        Remove empty lines
+                                                    </option>
+                                                    <option value={$list_removeDuplicates}>
+                                                        Remove duplicates
+                                                    </option>
+                                                </optgroup>
+
+                                                <optgroup label="Sort">
+                                                    <option value={$list_sort}>
+                                                        Sort
+                                                    </option>
+                                                    <option value={$list_caseInsensitiveSort}>
+                                                        Case-insensitive sort
+                                                    </option>
+                                                    <option value={$list_naturalSort}>
+                                                        Natural sort
+                                                    </option>
+                                                    <option value={$list_randomize}>
+                                                        Randomize
+                                                    </option>
+                                                    <option value={$list_reverse}>
+                                                        Reverse
+                                                    </option>
+                                                </optgroup>
+
+                                                <optgroup label="String">
+                                                    <option value={$list_trimLines}>
+                                                        Trim lines
+                                                    </option>
+                                                    <option value={$list_removeCommaCharacterAtLineEnds}>
+                                                        Remove comma character at line ends
+                                                    </option>
+                                                    <option value={$list_removeQuoteAndApostropheCharacters}>
+                                                        Remove &quot; and &apos; characters
+                                                    </option>
+                                                </optgroup>
+
+                                                <optgroup label="Stats">
+                                                    <option value={$list_getStats}>
+                                                        Get Stats
+                                                    </option>
+                                                </optgroup>
+
+                                                <optgroup label="Transform">
+                                                    <option value={$list_linesToJsonArray}>
+                                                        Lines to JSON Array
+                                                    </option>
+                                                </optgroup>
+                                            </React.Fragment>
+                                        }
+                                        {
+                                            mode === mode_csv &&
+                                            <React.Fragment>
+                                                <optgroup label="Columns">
+                                                    <option value={$csv_removeFirstColumnFromCsv}>
+                                                        Remove first column from CSV
+                                                    </option>
+                                                    <option value={$csv_removeLastColumnFromCsv}>
+                                                        Remove last column from CSV
+                                                    </option>
+                                                </optgroup>
+                                                <optgroup label="Transform">
+                                                    <option value={$csv_toJson}>
+                                                        CSV to JSON
+                                                    </option>
+                                                </optgroup>
+                                            </React.Fragment>
+                                        }
+                                        {
+                                            mode === mode_json &&
+                                            <React.Fragment>
+                                                <optgroup label="Format">
+                                                    <option value={$json_format}>
+                                                        Format JSON
+                                                    </option>
+                                                    <option value={$json_minify}>
+                                                        Minify JSON
+                                                    </option>
+                                                </optgroup>
+                                                <optgroup label="Sort">
+                                                    <option value={$json_sort}>
+                                                        Sort JSON
+                                                    </option>
+                                                </optgroup>
+                                                <optgroup label="Edit">
+                                                    <option value={$json_removeProperty}>
+                                                        Remove property
+                                                    </option>
+                                                </optgroup>
+                                                <optgroup label="Fix">
+                                                    <option value={$json_fixDataTypes}>
+                                                        Fix data types
+                                                    </option>
+                                                </optgroup>
+                                                <optgroup label="Transform">
+                                                    <option value={$json_toLines}>
+                                                        JSON to Lines
+                                                    </option>
+                                                    <option value={$json_toCsv}>
+                                                        JSON to CSV
+                                                    </option>
+                                                </optgroup>
+                                            </React.Fragment>
+                                        }
+                                    </Select>
+                                </div>
+
+                                <div style={{ marginLeft: 5 }}>
+                                    <IconButton
+                                        size="small"
+                                        title="Insert sample value"
+                                        onClick={() => {
+                                            const editor = editorRef.current;
+
+                                            let output = [];
+                                            switch (mode) {
+                                                case mode_css:
+                                                    output = output = [
+                                                        'body {',
+                                                        '    background-color: #f0f0f0;',
+                                                        '}',
+                                                        '',
+                                                        'body h1 {',
+                                                        '    color: #000000;',
+                                                        '    font-size: 24px;',
+                                                        '    font-weight: bold;',
+                                                        '    text-align: center;',
+                                                        '}',
+                                                        ''
+                                                    ];
+                                                    break;
+                                                case mode_csv:
+                                                    output = [
+                                                        'Name,Age,Height',
+                                                        'Charlie,22,1.85',
+                                                        'Bob,21,1.75',
+                                                        'Alice,20,1.65',
+                                                        'David,23,1.95'
+                                                    ];
+                                                    break;
+                                                case mode_json:
+                                                    output = [
+                                                        '{',
+                                                        '    "data": [',
+                                                        '        { "name": "Charlie", "age": 22, "height": 1.85 },',
+                                                        '        { "name": "Bob",     "age": 21, "height": 1.75 },',
+                                                        '        { "name": "Alice",   "age": 20, "height": 1.65 },',
+                                                        '        { "name": "David",   "age": 23, "height": 1.95 }',
+                                                        '    ]',
+                                                        '}'
+                                                    ];
+                                                    break;
+                                                case mode_less:
+                                                    output = [
+                                                        '@color: #222;',
+                                                        '',
+                                                        'body {',
+                                                        '    color: @color;',
+                                                        '',
+                                                        '    a {',
+                                                        '        color: @color;',
+                                                        '    }',
+                                                        '}'
+                                                    ];
+                                                    break;
+                                                case mode_list:
+                                                    output = [
+                                                        'Charlie',
+                                                        'Bob',
+                                                        'Alice',
+                                                        'David'
+                                                    ];
+                                                    break;
+                                                default:
+                                                    output = [
+                                                        'Please provide content here'
+                                                    ];
+                                            }
+
+                                            editor.setValue(output.join('\n'));
+                                        }}
+                                    >
+                                        <ScienceIcon style={{ fontSize: 16 }} />
+                                    </IconButton>
+                                </div>
+
+                                <div style={{ marginLeft: 5 }}>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        size="small"
+                                        startIcon={<CheckIcon />}
+                                        disabled={operation === ''}
+                                        onClick={async () => {
+                                            await applyTheOperation();
+                                        }}
+                                        style={{ height: 28 }}
+                                    >
+                                        Apply
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {
+                        recentOperations.length > 0 &&
+                        <div
+                            style={{
+                                marginTop: 10,
+                                visibility: hideOperations ? 'hidden' : 'visible'
+                            }}
+                        >
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'row-reverse',
+                                    backgroundColor: '#f5f5f5',
+                                    border: '1px solid #e0e0e0',
+                                    borderRadius: 999
+                                }}
+                            >
+                                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', fontSize: 12 }}>
+                                    <IconButton
+                                        size="small"
+                                        title="Reset suggested operations"
+                                        onClick={() => {
+                                            setRecentOperations(defaultRecommendedOperations);
+                                            localStorage.setItem('recentOperations', JSON.stringify([]));
+                                        }}
+                                    >
+                                        <StarIcon style={{ fontSize: 16 }} />
+                                    </IconButton>
+                                </div>
+                                <div
+                                    style={{
+                                        borderRight: '1px solid #e0e0e0'
+                                    }}
+                                ></div>
+                                <div
+                                    style={{
+                                        backgroundColor: '#fff',
+                                        width: '100%',
+                                        borderTopLeftRadius: 999,
+                                        borderBottomLeftRadius: 999
+                                    }}
+                                >
+                                    <RecentOperations
+                                        editorRef={editorRef}
+                                        onValueUpdate={onValueUpdate}
+                                        mode={mode}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div style={{ marginTop: 10 }}>
+                <div>
+                    <AceEditor
+                        placeholder={
+                            placeholder ||
+                            `Provide ${readable[mode]} here`
+                        }
+                        setOptions={{
+                            // useWorker: false,
+                            // enableBasicAutocompletion: true,
+                            // enableLiveAutocompletion: true,
+                            // enableSnippets: true,
+                            // showLineNumbers: true,
+                            // tabSize: 4,
+                            // useSoftTabs: true,
+
+                            wrap: flagLineWrap === 'yes' ? true : false
+                        }}
+                        mode={modeForSyntaxHighlighting}
+                        theme="github"
+                        onLoad={(editor) => {
+                            editorRef.current = editor;
+                            if (typeof onLoad === 'function') {
+                                onLoad(editor);
+                            }
+                        }}
+                        onChange={(val, delta) => {
+                            (async () => {
+                                await debouncedOnChange(val, delta);
+                            })();
+                        }}
+                        editorProps={{ $blockScrolling: true }}
+                        width={editorWidth}
+                        height={editorHeight}
+                    />
+
+                </div>
+                {
+                    allowFileInput &&
+                    <div style={{ marginTop: 10 }}>
+                        <input type="file" />
+                    </div>
+                }
+            </div>
+            <div style={{ marginTop: 10 }}>
+                <div
                     className={styles.translucentWithoutHover}
                     style={{ display: 'flex', justifyContent: 'space-between' }}
                 >
@@ -526,488 +1023,8 @@ const MainEditor = function ({
                             <SaveIcon style={{ fontSize: 16 }} />
                         </IconButton>
                     </div>
-                    <div style={{ display: 'flex' }}>
-                        <div>
-                            {(() => {
-                                const disabled = (() => {
-                                    if (
-                                        mode === mode_json ||
-                                        mode === mode_css ||
-                                        mode === mode_less
-                                    ) {
-                                        return false;
-                                    } else {
-                                        return true;
-                                    }
-                                })();
-                                let title;
-                                if (disabled) {
-                                    title = 'Syntax highlighting not available for this mode';
-                                } else {
-                                    if (flagSyntaxHighlighting === 'yes') {
-                                        title = 'Disable syntax highlighting';
-                                    } else {
-                                        title = 'Enable syntax highlighting';
-                                    }
-                                }
-
-                                return (
-                                    <IconButton
-                                        size="small"
-                                        title={title}
-                                        onClick={() => {
-                                            if (disabled) {
-                                                // TODO: Show a tooltip message
-                                            } else {
-                                                setFlagSyntaxHighlighting(
-                                                    flagSyntaxHighlighting === 'yes' ? 'no' : 'yes'
-                                                );
-                                            }
-                                        }}
-                                    >
-                                        {(() => {
-                                            let Icon;
-                                            if (flagSyntaxHighlighting === 'yes') {
-                                                Icon = BorderColorIcon;
-                                            } else {
-                                                Icon = BorderColorOutlinedIcon;
-                                            }
-
-                                            let color;
-                                            if (disabled) {
-                                                color = '#ccc';
-                                            } else {
-                                                if (flagSyntaxHighlighting === 'yes') {
-                                                    color = '#1976d2';
-                                                } else {
-                                                    color = undefined;
-                                                }
-                                            }
-
-                                            return <Icon style={{ fontSize: 16, color }} />;
-                                        })()}
-                                    </IconButton>
-                                );
-                            })()}
-                        </div>
-                        <div>
-                            <div>
-                                {(() => {
-                                    return (
-                                        <IconButton
-                                            size="small"
-                                            title="Insert sample value"
-                                            onClick={() => {
-                                                const editor = editorRef.current;
-
-                                                let output = [];
-                                                switch (mode) {
-                                                    case mode_css:
-                                                        output = output = [
-                                                            'body {',
-                                                            '    background-color: #f0f0f0;',
-                                                            '}',
-                                                            '',
-                                                            'body h1 {',
-                                                            '    color: #000000;',
-                                                            '    font-size: 24px;',
-                                                            '    font-weight: bold;',
-                                                            '    text-align: center;',
-                                                            '}',
-                                                            ''
-                                                        ];
-                                                        break;
-                                                    case mode_csv:
-                                                        output = [
-                                                            'Name,Age,Height',
-                                                            'Charlie,22,1.85',
-                                                            'Bob,21,1.75',
-                                                            'Alice,20,1.65',
-                                                            'David,23,1.95'
-                                                        ];
-                                                        break;
-                                                    case mode_json:
-                                                        output = [
-                                                            '{',
-                                                            '    "data": [',
-                                                            '        { "name": "Charlie", "age": 22, "height": 1.85 },',
-                                                            '        { "name": "Bob",     "age": 21, "height": 1.75 },',
-                                                            '        { "name": "Alice",   "age": 20, "height": 1.65 },',
-                                                            '        { "name": "David",   "age": 23, "height": 1.95 }',
-                                                            '    ]',
-                                                            '}'
-                                                        ];
-                                                        break;
-                                                    case mode_less:
-                                                        output = [
-                                                            '@color: #222;',
-                                                            '',
-                                                            'body {',
-                                                            '    color: @color;',
-                                                            '',
-                                                            '    a {',
-                                                            '        color: @color;',
-                                                            '    }',
-                                                            '}'
-                                                        ];
-                                                        break;
-                                                    case mode_list:
-                                                        output = [
-                                                            'Charlie',
-                                                            'Bob',
-                                                            'Alice',
-                                                            'David'
-                                                        ];
-                                                        break;
-                                                    default:
-                                                        output = [
-                                                            'Please provide content here'
-                                                        ];
-                                                }
-
-                                                editor.setValue(output.join('\n'));
-                                            }}
-                                        >
-                                            <ScienceIcon style={{ fontSize: 16 }} />
-                                        </IconButton>
-                                    );
-                                })()}
-                            </div>
-                        </div>
-                        <div style={{ marginLeft: 5 }}>
-                            <Select
-                                native
-                                value={mode}
-                                style={{
-                                    width: 75,
-                                    height: 24,
-                                    fontSize: 11
-                                }}
-                                onChange={(e) => {
-                                    const mode = e.target.value;
-                                    setMode(mode);
-                                    setStoredMode(mode);
-
-                                    const searchParamsToApply = generateTargetSearchParamsAsJson({
-                                        mode,
-                                        operation: selectedOperations[mode],
-                                        selectedOperations
-                                    });
-                                    setSearchParams(searchParamsToApply);
-                                }}
-                            >
-                                <option value={mode_css}>CSS</option>
-                                <option value={mode_csv}>CSV</option>
-                                <option value={mode_json}>JSON</option>
-                                <option value={mode_less}>Less</option>
-                                <option value={mode_list}>List</option>
-                            </Select>
-                        </div>
-                    </div>
                 </div>
             </div>
-
-            <div style={{ marginTop: 10 }}>
-                <div>
-                    <AceEditor
-                        placeholder={
-                            placeholder ||
-                            `Provide ${readable[mode]} here`
-                        }
-                        setOptions={{
-                            // useWorker: false,
-                            // enableBasicAutocompletion: true,
-                            // enableLiveAutocompletion: true,
-                            // enableSnippets: true,
-                            // showLineNumbers: true,
-                            // tabSize: 4,
-                            // useSoftTabs: true,
-
-                            wrap: flagLineWrap === 'yes' ? true : false
-                        }}
-                        mode={modeForSyntaxHighlighting}
-                        theme="github"
-                        onLoad={(editor) => {
-                            editorRef.current = editor;
-                            if (typeof onLoad === 'function') {
-                                onLoad(editor);
-                            }
-                        }}
-                        onChange={(val, delta) => {
-                            (async () => {
-                                await debouncedOnChange(val, delta);
-                            })();
-                        }}
-                        editorProps={{ $blockScrolling: true }}
-                        width={editorWidth}
-                        height={editorHeight}
-                    />
-
-                </div>
-                {
-                    allowFileInput &&
-                    <div style={{ marginTop: 10 }}>
-                        <input type="file" />
-                    </div>
-                }
-            </div>
-
-            {
-                !hideOperations &&
-                <div style={{ marginTop: 10 }}>
-                    <div
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between'
-                        }}
-                    >
-                        <div>
-                            <Select
-                                native
-                                style={{
-                                    width: 220,
-                                    height: 28,
-                                    fontSize: 11,
-                                    border: (
-                                        selectedOperations[mode] === '' ?
-                                            '1px dashed orange' :
-                                            undefined
-                                    )
-                                }}
-                                value={selectedOperations[mode]}
-                                onChange={(e) => {
-                                    const selectedOperation = e.target.value;
-
-                                    const json = JSON.parse(JSON.stringify(selectedOperations));
-                                    json[mode] = selectedOperation;
-
-                                    setStoredOperations(json);
-
-                                    const searchParamsToApply = generateTargetSearchParamsAsJson({
-                                        mode,
-                                        operation: selectedOperation,
-                                        selectedOperations
-                                    });
-                                    setSearchParams(searchParamsToApply);
-                                }}
-                            >
-                                <option
-                                    value=""
-                                    style={{ color: '#777' }}
-                                >
-                                    -- Operations --
-                                </option>
-
-                                {
-                                    mode === mode_css &&
-                                    <React.Fragment>
-                                        <optgroup label="Format">
-                                            <option value={$css_format}>
-                                                Format CSS
-                                            </option>
-                                            <option value={$css_minify}>
-                                                Minify CSS
-                                            </option>
-                                        </optgroup>
-                                        <optgroup label="Transform">
-                                            <option value={$css_toScss}>
-                                                CSS to SCSS
-                                            </option>
-                                        </optgroup>
-                                    </React.Fragment>
-                                }
-                                {
-                                    mode === mode_less &&
-                                    <React.Fragment>
-                                        <optgroup label="Format">
-                                            <option value={$less_format}>
-                                                Format Less
-                                            </option>
-                                            <option value={$less_minify}>
-                                                Minify Less
-                                            </option>
-                                        </optgroup>
-                                        <optgroup label="Transform">
-                                            <option value={$less_toCss}>
-                                                Less to CSS
-                                            </option>
-                                        </optgroup>
-                                    </React.Fragment>
-                                }
-                                {
-                                    mode === mode_list &&
-                                    <React.Fragment>
-                                        <optgroup label="Lines">
-                                            <option value={$list_removeEmptyLines}>
-                                                Remove empty lines
-                                            </option>
-                                            <option value={$list_removeDuplicates}>
-                                                Remove duplicates
-                                            </option>
-                                        </optgroup>
-
-                                        <optgroup label="Sort">
-                                            <option value={$list_sort}>
-                                                Sort
-                                            </option>
-                                            <option value={$list_caseInsensitiveSort}>
-                                                Case-insensitive sort
-                                            </option>
-                                            <option value={$list_naturalSort}>
-                                                Natural sort
-                                            </option>
-                                            <option value={$list_randomize}>
-                                                Randomize
-                                            </option>
-                                            <option value={$list_reverse}>
-                                                Reverse
-                                            </option>
-                                        </optgroup>
-
-                                        <optgroup label="String">
-                                            <option value={$list_trimLines}>
-                                                Trim lines
-                                            </option>
-                                            <option value={$list_removeCommaCharacterAtLineEnds}>
-                                                Remove comma character at line ends
-                                            </option>
-                                            <option value={$list_removeQuoteAndApostropheCharacters}>
-                                                Remove &quot; and &apos; characters
-                                            </option>
-                                        </optgroup>
-
-                                        <optgroup label="Stats">
-                                            <option value={$list_getStats}>
-                                                Get Stats
-                                            </option>
-                                        </optgroup>
-
-                                        <optgroup label="Transform">
-                                            <option value={$list_linesToJsonArray}>
-                                                Lines to JSON Array
-                                            </option>
-                                        </optgroup>
-                                    </React.Fragment>
-                                }
-                                {
-                                    mode === mode_csv &&
-                                    <React.Fragment>
-                                        <optgroup label="Columns">
-                                            <option value={$csv_removeFirstColumnFromCsv}>
-                                                Remove first column from CSV
-                                            </option>
-                                            <option value={$csv_removeLastColumnFromCsv}>
-                                                Remove last column from CSV
-                                            </option>
-                                        </optgroup>
-                                        <optgroup label="Transform">
-                                            <option value={$csv_toJson}>
-                                                CSV to JSON
-                                            </option>
-                                        </optgroup>
-                                    </React.Fragment>
-                                }
-                                {
-                                    mode === mode_json &&
-                                    <React.Fragment>
-                                        <optgroup label="Format">
-                                            <option value={$json_format}>
-                                                Format JSON
-                                            </option>
-                                            <option value={$json_minify}>
-                                                Minify JSON
-                                            </option>
-                                        </optgroup>
-                                        <optgroup label="Sort">
-                                            <option value={$json_sort}>
-                                                Sort JSON
-                                            </option>
-                                        </optgroup>
-                                        <optgroup label="Edit">
-                                            <option value={$json_removeProperty}>
-                                                Remove property
-                                            </option>
-                                        </optgroup>
-                                        <optgroup label="Fix">
-                                            <option value={$json_fixDataTypes}>
-                                                Fix data types
-                                            </option>
-                                        </optgroup>
-                                        <optgroup label="Transform">
-                                            <option value={$json_toLines}>
-                                                JSON to Lines
-                                            </option>
-                                            <option value={$json_toCsv}>
-                                                JSON to CSV
-                                            </option>
-                                        </optgroup>
-                                    </React.Fragment>
-                                }
-                            </Select>
-                        </div>
-                        <div style={{ marginLeft: 5 }}>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                size="small"
-                                startIcon={<CheckIcon />}
-                                disabled={operation === ''}
-                                onClick={async () => {
-                                    await applyTheOperation();
-                                }}
-                            >
-                                Apply
-                            </Button>
-                        </div>
-                    </div>
-                    {
-                        recentOperations.length > 0 &&
-                        <div style={{ marginTop: 10 }}>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    backgroundColor: '#f5f5f5',
-                                    border: '1px solid #e0e0e0',
-                                    borderRadius: 999
-                                }}
-                            >
-                                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', fontSize: 12 }}>
-                                    <IconButton
-                                        size="small"
-                                        title="Reset suggested operations"
-                                        onClick={() => {
-                                            setRecentOperations(defaultRecommendedOperations);
-                                            localStorage.setItem('recentOperations', JSON.stringify([]));
-                                        }}
-                                    >
-                                        <StarIcon style={{ fontSize: 16 }} />
-                                    </IconButton>
-                                </div>
-                                <div
-                                    style={{
-                                        borderRight: '1px solid #e0e0e0'
-                                    }}
-                                ></div>
-                                <div
-                                    style={{
-                                        backgroundColor: '#fff',
-                                        width: '100%',
-                                        borderTopRightRadius: 999,
-                                        borderBottomRightRadius: 999
-                                    }}
-                                >
-                                    <RecentOperations
-                                        editorRef={editorRef}
-                                        onValueUpdate={onValueUpdate}
-                                        mode={mode}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    }
-                </div>
-            }
         </div>
     );
 };

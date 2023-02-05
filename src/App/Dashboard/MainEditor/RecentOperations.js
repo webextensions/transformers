@@ -29,7 +29,9 @@ const RecentOperations = function ({
                 display: 'flex',
                 width: 291,
                 overflow: 'hidden',
-                paddingLeft: 10
+                paddingRight: 10,
+                marginLeft: 'auto',
+                flexDirection: 'row-reverse'
             }}
         >
             {

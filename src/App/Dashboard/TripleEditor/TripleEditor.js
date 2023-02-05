@@ -70,7 +70,7 @@ const TripleEditor = function () {
                                 editorARef.current = editor;
                             }}
                             style={{ marginTop: 5 }}
-                            editorWidth="320px"
+                            editorWidth="360px"
                             editorHeight="300px"
                             // allowFileInput
                         />
@@ -121,7 +121,7 @@ const TripleEditor = function () {
                                 editorBRef.current = editor;
                             }}
                             style={{ marginTop: 5 }}
-                            editorWidth="320px"
+                            editorWidth="360px"
                             editorHeight="300px"
                             // allowFileInput
                         />
@@ -225,7 +225,7 @@ const TripleEditor = function () {
                                 editorCRef.current = editor;
                             }}
                             style={{ marginTop: 5 }}
-                            editorWidth="320px"
+                            editorWidth="360px"
                             editorHeight="300px"
                             hideOperations
                         />

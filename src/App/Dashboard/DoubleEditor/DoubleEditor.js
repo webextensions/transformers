@@ -50,11 +50,38 @@ const DoubleEditor = () => {
                         />
                     </div>
                 </div>
-                <div style={{ marginLeft: 10 }}>
+                <div style={{ marginLeft: 20 }}>
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            // height: '300px'
+                            marginTop: 30
+                        }}
+                    >
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={autoApply}
+                                    size="small"
+                                    onChange={(event) => {
+                                        const flagAutoApply = event.target.checked;
+                                        setAutoApply(flagAutoApply);
+                                    }}
+                                />
+                            }
+                            label={
+                                <div style={{ marginLeft: 1 }}>
+                                    <span style={{ fontSize: 12 }}>Auto-apply</span>
+                                </div>
+                            }
+                        />
+                    </div>
                     <div style={{ textAlign: 'center' }}>&nbsp;</div>
                     <div
                         style={{
-                            marginTop: 55,
+                            marginTop: 20,
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'center'
@@ -82,32 +109,6 @@ const DoubleEditor = () => {
                                 <SwapHorizontalCircleRoundedIcon />
                             </IconButton>
                         </div>
-                    </div>
-                    <div style={{ textAlign: 'center' }}>&nbsp;</div>
-                    <div
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center'
-                            // height: '300px'
-                        }}
-                    >
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    checked={autoApply}
-                                    onChange={(event) => {
-                                        const flagAutoApply = event.target.checked;
-                                        setAutoApply(flagAutoApply);
-                                    }}
-                                />
-                            }
-                            label={
-                                <div>
-                                    <span style={{ fontSize: 12 }}>Auto-apply</span>
-                                </div>
-                            }
-                        />
                     </div>
                 </div>
                 <div style={{ marginLeft: 10 }}>
