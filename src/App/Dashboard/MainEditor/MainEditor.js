@@ -322,7 +322,9 @@ const MainEditor = function ({
     useEffect(() => {
         if (autoApply) {
             (async () => {
-                await applyTheOperation();
+                if (operation) { // Operation might be empty (at the time of mounting this component)
+                    await applyTheOperation();
+                }
             })();
         }
     }, [autoApply]); // eslint-disable-line react-hooks/exhaustive-deps
