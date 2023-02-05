@@ -2,8 +2,6 @@
 
 import CircleIcon from '@mui/icons-material/Circle.js';
 
-import AppRegistrationIcon from '@mui/icons-material/AppRegistration.js';
-
 import CompressIcon from '@mui/icons-material/Compress.js';
 
 import DataObjectIcon from '@mui/icons-material/DataObject.js';

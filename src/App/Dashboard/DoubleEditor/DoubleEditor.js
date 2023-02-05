@@ -42,9 +42,12 @@ const DoubleEditor = () => {
                             editorHeight="300px"
                             // allowFileInput
                             autoApply={autoApply}
-                            onComputeOutput={({ operation, output }) => {
-                                editorBRef.current.setValue(output);
-                            }}
+                            onComputeOutput={
+                                // eslint-disable-next-line no-unused-vars
+                                ({ operation, output }) => {
+                                    editorBRef.current.setValue(output);
+                                }
+                            }
                         />
                     </div>
                 </div>

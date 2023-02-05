@@ -247,6 +247,7 @@ const MainEditor = function ({
     );
 
     const debouncedOnChange = useDebouncedCallback(
+        // eslint-disable-next-line no-unused-vars
         async (val, delta) => {
             setRefreshUndoRedo(Date.now());
 
@@ -995,7 +996,10 @@ MainEditor.propTypes = {
     allowFileInput: PropTypes.bool,
     style: PropTypes.object,
     editorWidth: PropTypes.string,
-    editorHeight: PropTypes.string
+    editorHeight: PropTypes.string,
+    autoApply: PropTypes.bool,
+    onComputeOutput: PropTypes.func,
+    hideOperations: PropTypes.bool
 };
 
 export { MainEditor };
