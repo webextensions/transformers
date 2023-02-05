@@ -7,7 +7,6 @@ const SingleEditor = () => {
     return (
         <div>
             <MainEditor
-                placeholder="Provide text here"
                 onLoad={(editor) => {
                     editorRef.current = editor;
                 }}

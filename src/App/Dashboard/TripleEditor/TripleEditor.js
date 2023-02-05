@@ -65,7 +65,6 @@ const TripleEditor = function () {
                     </div>
                     <div>
                         <MainEditor
-                            placeholder="Provide text here"
                             onLoad={(editor) => {
                                 editorARef.current = editor;
                             }}
@@ -116,7 +115,6 @@ const TripleEditor = function () {
                     </div>
                     <div>
                         <MainEditor
-                            placeholder="Provide text here"
                             onLoad={(editor) => {
                                 editorBRef.current = editor;
                             }}

@@ -33,7 +33,6 @@ const DoubleEditor = () => {
                     </div>
                     <div>
                         <MainEditor
-                            placeholder="Provide text here"
                             onLoad={(editor) => {
                                 editorARef.current = editor;
                             }}

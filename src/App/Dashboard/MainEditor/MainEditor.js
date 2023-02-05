@@ -156,6 +156,14 @@ const getSanitizedModeWithStatus = (mode) => {
     }
 };
 
+const readable = {
+    [mode_css]: 'CSS',
+    [mode_csv]: 'CSV',
+    [mode_json]: 'JSON',
+    [mode_less]: 'LESS',
+    [mode_list]: 'List'
+};
+
 const MainEditor = function ({
     placeholder,
     onLoad,
@@ -702,7 +710,10 @@ const MainEditor = function ({
             <div style={{ marginTop: 10 }}>
                 <div>
                     <AceEditor
-                        placeholder={placeholder}
+                        placeholder={
+                            placeholder ||
+                            `Provide ${readable[mode]} here`
+                        }
                         setOptions={{
                             // useWorker: false,
                             // enableBasicAutocompletion: true,
