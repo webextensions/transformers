@@ -5,8 +5,8 @@ import { createRoot } from 'react-dom/client'; // eslint-disable-line node/file-
 
 import './index.css';
 
-import { App } from './App/App.js';
+import { AppWrapper } from './App/AppWrapper.js';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
-root.render(<App />);
+root.render(<AppWrapper />);
