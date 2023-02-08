@@ -106,6 +106,7 @@ import { RecentOperations } from './RecentOperations.js';
 
 import { performOperation } from './performOperation.js';
 
+import helperStyles from '../../helperStyles.css';
 import styles from './MainEditor.css';
 
 const copy = async function (simpleText) {
@@ -348,7 +349,8 @@ const MainEditor = function ({
                             style={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                justifyContent: 'space-between'
+                                justifyContent: 'space-between',
+                                containerType: 'inline-size'
                             }}
                         >
                             {
@@ -458,9 +460,9 @@ const MainEditor = function ({
                                 <div style={{ marginLeft: 5 }}>
                                     <Select
                                         native
+                                        className={styles.SelectTheOperation}
                                         style={{
-                                            width: 125,
-                                            height: 28,
+                                            height: 24,
                                             fontSize: 11,
                                             border: (
                                                 selectedOperations[mode] === '' ?
@@ -720,16 +722,34 @@ const MainEditor = function ({
                                 </div>
 
                                 <div style={{ marginLeft: 5 }}>
+                                    <IconButton
+                                        size="small"
+                                        className={helperStyles.hideForContainerGE640}
+                                        style={{
+                                            backgroundColor: '#1976d2'
+                                        }}
+                                        onClick={async () => {
+                                            await applyTheOperation();
+                                        }}
+                                    >
+                                        <CheckIcon
+                                            style={{
+                                                fontSize: 14,
+                                                color: '#fff'
+                                            }}
+                                        />
+                                    </IconButton>
                                     <Button
                                         variant="contained"
                                         color="primary"
                                         size="small"
                                         startIcon={<CheckIcon />}
                                         disabled={operation === ''}
+                                        className={helperStyles.hideForContainerLT640}
                                         onClick={async () => {
                                             await applyTheOperation();
                                         }}
-                                        style={{ height: 28 }}
+                                        style={{ height: 24 }}
                                     >
                                         Apply
                                     </Button>
@@ -825,6 +845,9 @@ const MainEditor = function ({
                         editorProps={{ $blockScrolling: true }}
                         width={editorWidth}
                         height={editorHeight}
+                        style={{
+                            minHeight: '65vh'
+                        }}
                     />
 
                 </div>

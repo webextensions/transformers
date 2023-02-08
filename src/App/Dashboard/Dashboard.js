@@ -6,10 +6,11 @@ import styles from './Dashboard.css';
 
 const Dashboard = () => {
     return (
-        <div className={styles.Dashboard}>
-            <div style={{ marginTop: 35 }}>
-                <ContentTabs />
-            </div>
+        <div
+            className={styles.Dashboard}
+            style={{ marginTop: 35 }}
+        >
+            <ContentTabs />
         </div>
     );
 };

@@ -1,0 +1,11 @@
+@container (min-width: 640px) {
+    .hideForContainerGE640 {
+        display: none;
+    }
+}
+
+@container not (min-width: 640px) {
+    .hideForContainerLT640 {
+        display: none;
+    }
+}

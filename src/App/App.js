@@ -12,7 +12,9 @@ const App = function () {
     return (
         <div className={styles.App}>
             <PageHeader />
-            <Dashboard />
+            <div className={styles.ContentWide}>
+                <Dashboard />
+            </div>
             <PageFooter />
         </div>
     );

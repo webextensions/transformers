@@ -10,3 +10,12 @@
 .translucentWithoutHover:hover {
     opacity: 1;
 }
+
+.SelectTheOperation {
+    width: 75px;
+}
+@container (min-width: 320px) {
+    .SelectTheOperation {
+        width: 125px;
+    }
+}

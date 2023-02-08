@@ -1,2 +1,49 @@
 .DoubleEditor {
 }
+
+.DoubleEditorContainer {
+    display: grid;
+    grid-gap: 15px;
+
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+    .DoubleEditorContainer {
+        grid-template-columns: 1fr 124px 1fr;
+        grid-template-rows: auto;
+    }
+}
+
+.Combinator {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (min-width: 768px) {
+    .Combinator {
+        margin-top: 27px;
+    }
+}
+
+.Swap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+@media (min-width: 768px) {
+    .Swap {
+        margin-top: 36px;
+    }
+}
+
+.SwapButton {
+    transform: rotate(90deg);
+}
+@media (min-width: 768px) {
+    .SwapButton {
+        transform: unset;
+    }
+}

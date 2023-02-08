@@ -1,0 +1,18 @@
+.ContentWide {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+@media (min-width: 640px) {
+    .ContentWide {
+        margin-left: 25px;
+        margin-right: 25px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .ContentWide {
+        margin-left: 35px;
+        margin-right: 35px;
+    }
+}

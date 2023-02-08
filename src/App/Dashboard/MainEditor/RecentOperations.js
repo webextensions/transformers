@@ -27,7 +27,6 @@ const RecentOperations = function ({
         <div
             style={{
                 display: 'flex',
-                width: 291,
                 overflow: 'hidden',
                 paddingRight: 10,
                 marginLeft: 'auto',

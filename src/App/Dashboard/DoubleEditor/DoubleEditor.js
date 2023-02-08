@@ -17,8 +17,8 @@ const DoubleEditor = () => {
     const [autoApply, setAutoApply] = React.useState(true);
 
     return (
-        <div className={styles.TripleEditor}>
-            <div style={{ display: 'flex', justifyContent: 'center', minWidth: 1120 }}>
+        <div className={styles.DoubleEditor}>
+            <div className={styles.DoubleEditorContainer}>
                 <div>
                     <div
                         style={{
@@ -37,7 +37,7 @@ const DoubleEditor = () => {
                                 editorARef.current = editor;
                             }}
                             style={{ marginTop: 5 }}
-                            editorWidth="500px"
+                            editorWidth="100%"
                             editorHeight="300px"
                             // allowFileInput
                             autoApply={autoApply}
@@ -50,16 +50,8 @@ const DoubleEditor = () => {
                         />
                     </div>
                 </div>
-                <div style={{ marginLeft: 20 }}>
-                    <div
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            // height: '300px'
-                            marginTop: 30
-                        }}
-                    >
+                <div>
+                    <div className={styles.Combinator}>
                         <FormControlLabel
                             control={
                                 <Checkbox
@@ -76,17 +68,14 @@ const DoubleEditor = () => {
                                     <span style={{ fontSize: 12 }}>Auto-apply</span>
                                 </div>
                             }
+                            style={{
+                                // Seems that Material UI is introducing some margin, so, overriding that
+                                marginLeft: 0,
+                                marginRight: 0
+                            }}
                         />
                     </div>
-                    <div style={{ textAlign: 'center' }}>&nbsp;</div>
-                    <div
-                        style={{
-                            marginTop: 20,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center'
-                        }}
-                    >
+                    <div className={styles.Swap}>
                         <div
                             style={{
                                 marginLeft: 'auto',
@@ -97,6 +86,7 @@ const DoubleEditor = () => {
                                 variant="filled"
                                 color="primary"
                                 size="small"
+                                className={styles.SwapButton}
                                 onClick={() => {
                                     const valueA = editorARef.current.getValue();
                                     const valueB = editorBRef.current.getValue();
@@ -111,7 +101,7 @@ const DoubleEditor = () => {
                         </div>
                     </div>
                 </div>
-                <div style={{ marginLeft: 10 }}>
+                <div>
                     <div
                         style={{
                             textAlign: 'center',
@@ -130,7 +120,7 @@ const DoubleEditor = () => {
                                 editorBRef.current = editor;
                             }}
                             style={{ marginTop: 5 }}
-                            editorWidth="500px"
+                            editorWidth="100%"
                             editorHeight="300px"
                             // allowFileInput
                             hideOperations

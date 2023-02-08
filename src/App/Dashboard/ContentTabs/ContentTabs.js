@@ -13,6 +13,9 @@ import { SingleEditor } from '../SingleEditor/SingleEditor.js';
 import { DoubleEditor } from '../DoubleEditor/DoubleEditor.js';
 import { TripleEditor } from '../TripleEditor/TripleEditor.js';
 
+import helperStyles from '../../helperStyles.css';
+import styles from './ContentTabs.css';
+
 const TabPanel = function (props) {
     const { children, value, index, ...other } = props;
 
@@ -101,12 +104,12 @@ const ContentTabs = () => {
     };
 
     return (
-        <div>
+        <div className={styles.ContentTabs}>
             <div
                 style={{
                     display: 'flex',
                     justifyContent: 'center',
-                    minWidth: '1120'
+                    containerType: 'inline-size'
                 }}
             >
                 <Tabs value={selectedTabIndex} onChange={handleChange}>
@@ -120,7 +123,10 @@ const ContentTabs = () => {
                                     fontSize: 18
                                 }}
                             >
-                                Transformers I
+                                <span className={helperStyles.hideForContainerLT640}>
+                                    Transformers
+                                </span>
+                                {' I'}
                             </div>
                         }
                     />
@@ -134,7 +140,10 @@ const ContentTabs = () => {
                                     fontSize: 18
                                 }}
                             >
-                                Transformers II
+                                <span className={helperStyles.hideForContainerLT640}>
+                                    Transformers
+                                </span>
+                                {' II'}
                             </div>
                         }
                     />
@@ -148,20 +157,16 @@ const ContentTabs = () => {
                                     fontSize: 18
                                 }}
                             >
-                                Transformers III
+                                <span className={helperStyles.hideForContainerLT640}>
+                                    Transformers
+                                </span>
+                                {' III'}
                             </div>
                         }
                     />
                 </Tabs>
             </div>
-            <div
-                style={{
-                    marginTop: 40,
-                    display: 'flex',
-                    justifyContent: 'center',
-                    minWidth: '1120'
-                }}
-            >
+            <div style={{ marginTop: 40 }}>
                 <TabPanel value={selectedTabIndex} index={0}>
                     <div>
                         <SingleEditor />
