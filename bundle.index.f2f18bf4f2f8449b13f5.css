@@ -86,6 +86,24 @@ blockquote::before, blockquote::after, q::before, q::after {
     content: none;
 }
 
+.App__ContentWide--Llj80 {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+@media (min-width: 640px) {
+    .App__ContentWide--Llj80 {
+        margin-left: 25px;
+        margin-right: 25px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .App__ContentWide--Llj80 {
+        margin-left: 35px;
+        margin-right: 35px;
+    }
+}
 
 @font-face {
     font-family: 'Transformers';
@@ -108,6 +126,18 @@ blockquote::before, blockquote::after, q::before, q::after {
     letter-spacing: 0.1em;
 }
 
+@container (min-width: 640px) {
+    .helperStyles__hideForContainerGE640--MOu7X {
+        display: none;
+    }
+}
+
+@container not (min-width: 640px) {
+    .helperStyles__hideForContainerLT640--Ow38P {
+        display: none;
+    }
+}
+
 .MainEditor__MainEditor--Q_tBg .ace_editor,
 .MainEditor__MainEditor--Q_tBg .ace_editor * {
     font-family: 'Courier New', Courier, monospace;
@@ -121,10 +151,72 @@ blockquote::before, blockquote::after, q::before, q::after {
     opacity: 1;
 }
 
+.MainEditor__SelectTheOperation--wnn3M {
+    width: 75px;
+}
+@container (min-width: 320px) {
+    .MainEditor__SelectTheOperation--wnn3M {
+        width: 125px;
+    }
+}
+
+.SingleEditor__SingleEditor--kv3Xy {
+}
+
 .DoubleEditor__DoubleEditor--molkI {
 }
 
+.DoubleEditor__DoubleEditorContainer--QjHrA {
+    display: grid;
+    grid-gap: 15px;
+
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+    .DoubleEditor__DoubleEditorContainer--QjHrA {
+        grid-template-columns: 1fr 124px 1fr;
+        grid-template-rows: auto;
+    }
+}
+
+.DoubleEditor__Combinator--BS6ym {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (min-width: 768px) {
+    .DoubleEditor__Combinator--BS6ym {
+        margin-top: 27px;
+    }
+}
+
+.DoubleEditor__Swap--KQmx6 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+@media (min-width: 768px) {
+    .DoubleEditor__Swap--KQmx6 {
+        margin-top: 36px;
+    }
+}
+
+.DoubleEditor__SwapButton--nb6q9 {
+    transform: rotate(90deg);
+}
+@media (min-width: 768px) {
+    .DoubleEditor__SwapButton--nb6q9 {
+        transform: unset;
+    }
+}
+
 .TripleEditor__TripleEditor--CeiGf {
+}
+
+.ContentTabs__ContentTabs--fG_XB {
 }
 
 .Dashboard__Dashboard--d2pNX {
@@ -139,4 +231,4 @@ blockquote::before, blockquote::after, q::before, q::after {
 }
 
 
-/*# sourceMappingURL=bundle.index.3a9a24272019b8aa8ccc.css.map*/
+/*# sourceMappingURL=bundle.index.f2f18bf4f2f8449b13f5.css.map*/
