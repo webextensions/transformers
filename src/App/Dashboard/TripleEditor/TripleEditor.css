@@ -1,2 +1,74 @@
 .TripleEditor {
 }
+
+.TripleEditorContainer {
+    display: grid;
+    grid-gap: 15px;
+
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 1024px) {
+    .TripleEditorContainer {
+        grid-template-columns: 1fr 40px 1fr 75px 1fr;
+        grid-template-rows: auto;
+    }
+}
+
+.Combinator {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (min-width: 1024px) {
+    .CombinatorAB {
+        margin-top: 92px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .CombinatorFinalOperations {
+        margin-top: 92px;
+    }
+}
+
+.OperationsButtons {
+    width: 100%;
+
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    display: grid;
+    grid-gap: 10px;
+
+    justify-content: center;
+
+    grid-template-columns: repeat(1, 75px);
+}
+@media (min-width: 300px) {
+    .OperationsButtons {
+        grid-template-columns: repeat(2, 75px);
+    }
+}
+@media (min-width: 500px) {
+    .OperationsButtons {
+        grid-template-columns: repeat(auto-fit, 75px);
+    }
+}
+@media (min-width: 1024px) {
+    .OperationsButtons {
+        margin-top: unset;
+        margin-bottom: unset;
+    }
+}
+
+.SwapButton {
+    transform: rotate(90deg);
+}
+@media (min-width: 1024px) {
+    .SwapButton {
+        transform: unset;
+    }
+}

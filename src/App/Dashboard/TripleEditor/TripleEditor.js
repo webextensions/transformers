@@ -53,7 +53,7 @@ const TripleEditor = function () {
 
     return (
         <div className={styles.TripleEditor}>
-            <div style={{ display: 'flex', justifyContent: 'center', minWidth: 1120 }}>
+            <div className={styles.TripleEditorContainer}>
                 <div>
                     <div className={theEditorsStyles.TransformersStyleHeading}>
                         A
@@ -64,27 +64,29 @@ const TripleEditor = function () {
                                 editorARef.current = editor;
                             }}
                             style={{ marginTop: 5 }}
-                            editorWidth="360px"
+                            editorWidth="100%"
                             editorHeight="300px"
                             // allowFileInput
                         />
                     </div>
                 </div>
-                <div style={{ marginLeft: 10 }}>
-                    <div style={{ textAlign: 'center' }}>&nbsp;</div>
+                <div
+                    className={
+                        styles.Combinator + ' ' +
+                        styles.CombinatorAB
+                    }
+                >
                     <div
                         style={{
-                            marginTop: 88,
                             display: 'flex',
-                            flexDirection: 'column',
-                            // justifyContent: 'center',
-                            height: '300px'
+                            flexDirection: 'column'
                         }}
                     >
                         <IconButton
                             variant="filled"
                             color="primary"
                             size="small"
+                            className={styles.SwapButton}
                             onClick={() => {
                                 const valueA = editorARef.current.getValue();
                                 const valueB = editorBRef.current.getValue();
@@ -98,7 +100,7 @@ const TripleEditor = function () {
                         </IconButton>
                     </div>
                 </div>
-                <div style={{ marginLeft: 10 }}>
+                <div>
                     <div className={theEditorsStyles.TransformersStyleHeading}>
                         B
                     </div>
@@ -108,23 +110,19 @@ const TripleEditor = function () {
                                 editorBRef.current = editor;
                             }}
                             style={{ marginTop: 5 }}
-                            editorWidth="360px"
+                            editorWidth="100%"
                             editorHeight="300px"
                             // allowFileInput
                         />
                     </div>
                 </div>
-                <div style={{ marginLeft: 10 }}>
-                    <div style={{ textAlign: 'center' }}>&nbsp;</div>
-                    <div
-                        style={{
-                            marginTop: 92,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            // justifyContent: 'center',
-                            height: '300px'
-                        }}
-                    >
+                <div
+                    className={
+                        styles.Combinator + ' ' +
+                        styles.CombinatorFinalOperations
+                    }
+                >
+                    <div className={styles.OperationsButtons}>
                         <Button
                             variant="contained"
                             size="small"
@@ -146,7 +144,7 @@ const TripleEditor = function () {
                             variant="contained"
                             size="small"
                             type="button"
-                            style={{ display: 'block', marginTop: 5 }}
+                            style={{ display: 'block' }}
                             onClick={() => {
                                 performABToC({
                                     editorARef,
@@ -163,7 +161,7 @@ const TripleEditor = function () {
                             variant="contained"
                             size="small"
                             type="button"
-                            style={{ display: 'block', marginTop: 5 }}
+                            style={{ display: 'block' }}
                             onClick={() => {
                                 performABToC({
                                     editorARef,
@@ -180,7 +178,7 @@ const TripleEditor = function () {
                             variant="contained"
                             size="small"
                             type="button"
-                            style={{ display: 'block', marginTop: 5 }}
+                            style={{ display: 'block' }}
                             onClick={() => {
                                 performABToC({
                                     editorARef,
@@ -194,7 +192,7 @@ const TripleEditor = function () {
                         </Button>
                     </div>
                 </div>
-                <div style={{ marginLeft: 10 }}>
+                <div>
                     <div className={theEditorsStyles.TransformersStyleHeading}>
                         C
                     </div>
@@ -205,7 +203,7 @@ const TripleEditor = function () {
                                 editorCRef.current = editor;
                             }}
                             style={{ marginTop: 5 }}
-                            editorWidth="360px"
+                            editorWidth="100%"
                             editorHeight="300px"
                             hideOperations
                         />
