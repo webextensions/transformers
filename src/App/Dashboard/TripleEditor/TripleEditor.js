@@ -13,6 +13,7 @@ import Button from '@mui/material/Button/index.js';
 
 import { MainEditor } from '../MainEditor/MainEditor.js';
 
+import theEditorsStyles from '../TheEditors.css';
 import styles from './TripleEditor.css';
 
 const performABToC = ({
@@ -54,14 +55,7 @@ const TripleEditor = function () {
         <div className={styles.TripleEditor}>
             <div style={{ display: 'flex', justifyContent: 'center', minWidth: 1120 }}>
                 <div>
-                    <div
-                        style={{
-                            textAlign: 'center',
-                            fontFamily: '"Transformers", sans-serif',
-                            fontSize: 20,
-                            color: '#777'
-                        }}
-                    >
+                    <div className={theEditorsStyles.TransformersStyleHeading}>
                         A
                     </div>
                     <div>
@@ -105,14 +99,7 @@ const TripleEditor = function () {
                     </div>
                 </div>
                 <div style={{ marginLeft: 10 }}>
-                    <div
-                        style={{
-                            textAlign: 'center',
-                            fontFamily: '"Transformers", sans-serif',
-                            fontSize: 20,
-                            color: '#777'
-                        }}
-                    >
+                    <div className={theEditorsStyles.TransformersStyleHeading}>
                         B
                     </div>
                     <div>
@@ -208,14 +195,7 @@ const TripleEditor = function () {
                     </div>
                 </div>
                 <div style={{ marginLeft: 10 }}>
-                    <div
-                        style={{
-                            textAlign: 'center',
-                            fontFamily: '"Transformers", sans-serif',
-                            fontSize: 20,
-                            color: '#777'
-                        }}
-                    >
+                    <div className={theEditorsStyles.TransformersStyleHeading}>
                         C
                     </div>
                     <div>

@@ -8,6 +8,7 @@ import FormControlLabel from '@mui/material/FormControlLabel/index.js';
 
 import { MainEditor } from '../MainEditor/MainEditor.js';
 
+import theEditorsStyles from '../TheEditors.css';
 import styles from './DoubleEditor.css';
 
 const DoubleEditor = () => {
@@ -20,16 +21,8 @@ const DoubleEditor = () => {
         <div className={styles.DoubleEditor}>
             <div className={styles.DoubleEditorContainer}>
                 <div>
-                    <div
-                        style={{
-                            textAlign: 'center',
-                            fontFamily: '"Transformers", sans-serif',
-                            fontSize: 14,
-                            letterSpacing: '0.05em',
-                            color: '#777'
-                        }}
-                    >
-                        <span style={{ fontSize: 18 }}>I</span>nput
+                    <div className={theEditorsStyles.TransformersStyleHeading}>
+                        I<span style={{ fontSize: 14 }}>nput</span>
                     </div>
                     <div>
                         <MainEditor
@@ -102,16 +95,8 @@ const DoubleEditor = () => {
                     </div>
                 </div>
                 <div>
-                    <div
-                        style={{
-                            textAlign: 'center',
-                            fontFamily: '"Transformers", sans-serif',
-                            fontSize: 14,
-                            letterSpacing: '0.05em',
-                            color: '#777'
-                        }}
-                    >
-                        <span style={{ fontSize: 18 }}>O</span>utput
+                    <div className={theEditorsStyles.TransformersStyleHeading}>
+                        O<span style={{ fontSize: 14 }}>utput</span>
                     </div>
                     <div>
                         <MainEditor

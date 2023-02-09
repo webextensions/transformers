@@ -2,24 +2,17 @@ import React, { useRef } from 'react';
 
 import { MainEditor } from '../MainEditor/MainEditor.js';
 
+import theEditorsStyles from '../TheEditors.css';
 import styles from './SingleEditor.css';
 
 const SingleEditor = () => {
     const editorRef = useRef(null);
     return (
         <div className={styles.SingleEditor}>
-            <div
-                style={{
-                    textAlign: 'center',
-                    fontFamily: '"Transformers", sans-serif',
-                    fontSize: 14,
-                    letterSpacing: '0.05em',
-                    color: '#777'
-                }}
-            >
-                <span style={{ fontSize: 18 }}>I</span>nput
+            <div className={theEditorsStyles.TransformersStyleHeading}>
+                I<span style={{ fontSize: 14 }}>nput</span>
                 {' / '}
-                <span style={{ fontSize: 18 }}>O</span>utput
+                O<span style={{ fontSize: 14 }}>utput</span>
             </div>
             <div>
                 <MainEditor

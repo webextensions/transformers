@@ -124,9 +124,9 @@ const ContentTabs = () => {
                                 }}
                             >
                                 <span className={helperStyles.hideForContainerLT640}>
-                                    Transformers
+                                    Transformers{' '}
                                 </span>
-                                {' I'}
+                                I
                             </div>
                         }
                     />
@@ -141,9 +141,9 @@ const ContentTabs = () => {
                                 }}
                             >
                                 <span className={helperStyles.hideForContainerLT640}>
-                                    Transformers
+                                    Transformers{' '}
                                 </span>
-                                {' II'}
+                                II
                             </div>
                         }
                     />
@@ -158,9 +158,9 @@ const ContentTabs = () => {
                                 }}
                             >
                                 <span className={helperStyles.hideForContainerLT640}>
-                                    Transformers
+                                    Transformers{' '}
                                 </span>
-                                {' III'}
+                                III
                             </div>
                         }
                     />
