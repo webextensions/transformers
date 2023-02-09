@@ -160,6 +160,14 @@ blockquote::before, blockquote::after, q::before, q::after {
     }
 }
 
+.TheEditors__TransformersStyleHeading--bRtat {
+    text-align: center;
+    font-family: "Transformers", sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.05em;
+    color: #777;
+}
+
 .SingleEditor__SingleEditor--kv3Xy {
 }
 
@@ -216,6 +224,78 @@ blockquote::before, blockquote::after, q::before, q::after {
 .TripleEditor__TripleEditor--CeiGf {
 }
 
+.TripleEditor__TripleEditorContainer--FIE3s {
+    display: grid;
+    grid-gap: 15px;
+
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 1024px) {
+    .TripleEditor__TripleEditorContainer--FIE3s {
+        grid-template-columns: 1fr 40px 1fr 75px 1fr;
+        grid-template-rows: auto;
+    }
+}
+
+.TripleEditor__Combinator--dMGvj {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (min-width: 1024px) {
+    .TripleEditor__CombinatorAB--SQ7s9 {
+        margin-top: 92px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .TripleEditor__CombinatorFinalOperations--DN7fl {
+        margin-top: 92px;
+    }
+}
+
+.TripleEditor__OperationsButtons--iMigy {
+    width: 100%;
+
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    display: grid;
+    grid-gap: 10px;
+
+    justify-content: center;
+
+    grid-template-columns: repeat(1, 75px);
+}
+@media (min-width: 300px) {
+    .TripleEditor__OperationsButtons--iMigy {
+        grid-template-columns: repeat(2, 75px);
+    }
+}
+@media (min-width: 500px) {
+    .TripleEditor__OperationsButtons--iMigy {
+        grid-template-columns: repeat(auto-fit, 75px);
+    }
+}
+@media (min-width: 1024px) {
+    .TripleEditor__OperationsButtons--iMigy {
+        margin-top: unset;
+        margin-bottom: unset;
+    }
+}
+
+.TripleEditor__SwapButton--l0CD9 {
+    transform: rotate(90deg);
+}
+@media (min-width: 1024px) {
+    .TripleEditor__SwapButton--l0CD9 {
+        transform: unset;
+    }
+}
+
 .ContentTabs__ContentTabs--fG_XB {
 }
 
@@ -231,4 +311,4 @@ blockquote::before, blockquote::after, q::before, q::after {
 }
 
 
-/*# sourceMappingURL=bundle.index.f2f18bf4f2f8449b13f5.css.map*/
+/*# sourceMappingURL=bundle.index.b2e78d55351174d51786.css.map*/
