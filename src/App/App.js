@@ -8,6 +8,8 @@ import { PageHeader } from './PageHeader/PageHeader.js';
 import { Dashboard } from './Dashboard/Dashboard.js';
 import { PageFooter } from './PageFooter/PageFooter.js';
 
+import { AppDialogs } from './AppDialogs/AppDialogs.js';
+
 const App = function () {
     return (
         <div className={styles.App}>
@@ -16,6 +18,8 @@ const App = function () {
                 <Dashboard />
             </div>
             <PageFooter />
+
+            <AppDialogs />
         </div>
     );
 };
