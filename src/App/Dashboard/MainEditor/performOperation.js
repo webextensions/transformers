@@ -57,6 +57,8 @@ import {
 
     $json_removeProperty,
 
+    $json_arrayOfObjects_flattenObjects,
+
     $json_sort,
 
     $json_fixDataTypes,
@@ -153,6 +155,7 @@ const performOperation = async function ({ getInputValue, operation }) {
                 $json_format,
                 $json_minify,
                 $json_removeProperty,
+                $json_arrayOfObjects_flattenObjects,
                 $json_sort,
                 $json_fixDataTypes,
                 $json_toLines,
@@ -207,6 +210,76 @@ const performOperation = async function ({ getInputValue, operation }) {
                         } else {
                             return [new Error('Please provide a property name.')];
                         }
+                    }
+                    break;
+                case $json_arrayOfObjects_flattenObjects:
+                    // Just a block
+                    {
+                        // Flatten an array of objects recursively
+                        /*
+                            // Sample input:
+                            [
+                                {
+                                    "propA": "a",
+                                    "propB": {
+                                        "propC": "c",
+                                        "propD": {
+                                            "propE": "e"
+                                        }
+                                    }
+                                },
+                                {
+                                    "prop1": 1,
+                                    "prop2": {
+                                        "prop3": 3,
+                                        "prop4": {
+                                            "prop5": 5
+                                        }
+                                    }
+                                }
+                            ]
+
+                            // Sample output:
+                            [
+                                {
+                                    "propA": "a",
+                                    "propB.propC": "c",
+                                    "propB.propD.propE": "e"
+                                },
+                                {
+                                    "prop1": 1,
+                                    "prop2.prop3": 3,
+                                    "prop2.prop4.prop5": 5
+                                }
+                            ]
+                        */
+                        const flattenObjectsRecursively = (obj, parentKey) => {
+                            let output = {};
+
+                            Object.keys(obj).forEach(key => {
+                                const value = obj[key];
+                                const newKey = parentKey ? `${parentKey}.${key}` : key;
+
+                                if (typeof value === 'object') {
+                                    output = {
+                                        ...output,
+                                        ...flattenObjectsRecursively(value, newKey)
+                                    };
+                                } else {
+                                    output[newKey] = value;
+                                }
+                            });
+
+                            return output;
+                        };
+
+                        if (Array.isArray(jsonInput)) {
+                            output = jsonInput.map(item => flattenObjectsRecursively(item));
+                        } else {
+                            return [new Error('Please provide an array of objects as the input.')];
+                        }
+
+                        output = JSON.stringify(output, null, '\t');
                     }
                     break;
                 case $json_sort:

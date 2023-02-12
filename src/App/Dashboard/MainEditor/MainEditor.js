@@ -85,6 +85,8 @@ import {
 
     $json_removeProperty,
 
+    $json_arrayOfObjects_flattenObjects,
+
     $json_sort,
 
     $json_fixDataTypes,
@@ -622,6 +624,11 @@ const MainEditor = function ({
                                                 <optgroup label="Edit">
                                                     <option value={$json_removeProperty}>
                                                         Remove property
+                                                    </option>
+                                                </optgroup>
+                                                <optgroup label="Edit - Array of objects">
+                                                    <option value={$json_arrayOfObjects_flattenObjects}>
+                                                        Flatten objects
                                                     </option>
                                                 </optgroup>
                                                 <optgroup label="Fix">
