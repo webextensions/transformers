@@ -25,6 +25,8 @@ import AppsIcon from '@mui/icons-material/Apps.js';
 import MoodIcon from '@mui/icons-material/Mood.js';
 import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove.js';
 
+import SwapVertIcon from '@mui/icons-material/SwapVert.js';
+
 import LinearScaleIcon from '@mui/icons-material/LinearScale.js';
 
 import CategoryIcon from '@mui/icons-material/Category.js';
@@ -101,7 +103,10 @@ export const
 
     $json_removeProperty                     = 'jsonRemoveProperty',
 
+    $json_array_reverse                      = 'jsonArrayReverse',
+
     $json_arrayOfObjects_flattenObjects      = 'jsonArrayOfObjectsFlattenObjects',
+    $json_arrayOfObjects_sortByProperty      = 'jsonArrayOfObjectsSortByProperty',
 
     $json_fixDataTypes                       = 'jsonFixDataTypes',
 
@@ -160,7 +165,10 @@ const
 
             [$json_removeProperty]                     : { message: 'Remove property',                        Icon: PlaylistRemoveIcon },
 
+            [$json_array_reverse]                      : { message: 'Reverse array',                          Icon: SwapVertIcon },
+
             [$json_arrayOfObjects_flattenObjects]      : { message: 'Flatten objects',                        Icon: LinearScaleIcon },
+            [$json_arrayOfObjects_sortByProperty]      : { message: 'Sort by property',                       Icon: CategoryIcon },
 
             [$json_fixDataTypes]                       : { message: 'Fix data types',                         Icon: BuildIcon },
 
