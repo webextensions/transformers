@@ -1,7 +1,7 @@
 import { atom } from 'jotai';
 
 import {
-    allOperationIds,
+    // allOperationIds,
 
     defaultRecommendedOperations
 } from './constOperations.js';
@@ -18,10 +18,11 @@ try {
     console.error(err);
 }
 
-// Remove operations that are not available anymore with that name
-recentOperations.filter(operation => {
-    return allOperationIds.includes(operation);
-});
+// // Remove operations that are not available anymore with that name
+// recentOperations = recentOperations.filter(operation => {
+//     return allOperationIds.includes(operation);
+// });
+// console.log('TODO: FIXME: Bring back this commented out code');
 
 const recentOperationsAtom = atom(recentOperations);
 

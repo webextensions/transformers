@@ -73,22 +73,46 @@ const ContentTabs = () => {
     const transformersAsInt = parseInt(transformers, 10);
     const [selectedTabIndex, setSelectedTabIndex] = useState(transformersAsInt - 1);
 
+    const [firstTabInitialized, setFirstTabInitialized] = useState(false);
+    const [secondTabInitialized, setSecondTabInitialized] = useState(false);
+    const [thirdTabInitialized, setThirdTabInitialized] = useState(false);
+
     const [searchParams, setSearchParams] = useSearchParams();
     useEffect(
         () => {
             const transformersFromSearchParams = searchParams.get('transformers');
             const sanitizedTransformersWithStatus = getSanitizedTransformersWithStatus(transformersFromSearchParams);
 
+            let transformerBeingMounted = transformersAsInt;
+
             if (sanitizedTransformersWithStatus.wasAlreadyClean) {
                 setStoredTransformers(transformersFromSearchParams);
                 setSelectedTabIndex(
                     parseInt(sanitizedTransformersWithStatus.transformers, 10) - 1
                 );
+
+                transformerBeingMounted = parseInt(sanitizedTransformersWithStatus.transformers, 10);
+            }
+
+            if (transformerBeingMounted === 1 && !firstTabInitialized) {
+                setFirstTabInitialized(true);
+            } else if (transformerBeingMounted === 2 && !secondTabInitialized) {
+                setSecondTabInitialized(true);
+            } else if (transformerBeingMounted === 3 && !thirdTabInitialized) {
+                setThirdTabInitialized(true);
             }
         },
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [] // This useEffect() should run only once (at the time of mounting)
     );
+
+    if (transformersAsInt === 1 && !firstTabInitialized) {
+        setFirstTabInitialized(true);
+    } else if (transformersAsInt === 2 && !secondTabInitialized) {
+        setSecondTabInitialized(true);
+    } else if (transformersAsInt === 3 && !thirdTabInitialized) {
+        setThirdTabInitialized(true);
+    }
 
     const handleChange = (event, newValue) => {
         setSelectedTabIndex(newValue);
@@ -169,16 +193,18 @@ const ContentTabs = () => {
             <div style={{ marginTop: 40 }}>
                 <TabPanel value={selectedTabIndex} index={0}>
                     <div>
-                        <SingleEditor />
+                        { firstTabInitialized ? <SingleEditor /> : null }
                     </div>
                 </TabPanel>
                 <TabPanel value={selectedTabIndex} index={1}>
                     <div>
-                        <DoubleEditor />
+                        { secondTabInitialized ? <DoubleEditor /> : null }
                     </div>
                 </TabPanel>
                 <TabPanel value={selectedTabIndex} index={2}>
-                    <TripleEditor />
+                    <div>
+                        { thirdTabInitialized ? <TripleEditor /> : null }
+                    </div>
                 </TabPanel>
             </div>
         </div>

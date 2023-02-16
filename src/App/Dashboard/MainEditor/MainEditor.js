@@ -45,6 +45,11 @@ import { recentOperationsAtom } from './JotaiState.js';
 import { getCurrentSearchParamsAsJson } from '../utils/getCurrentSearchParamsAsJson.js';
 
 import {
+    arrModeConfigs,
+    obModeConfigs
+} from './modes/index.js';
+
+import {
     mode_css,
     mode_csv,
     mode_json,
@@ -53,63 +58,12 @@ import {
 
     modes,
 
-    $css_format,
-    $css_minify,
-
-    $css_toScss,
-
-    $list_removeEmptyLines,
-    $list_removeDuplicates,
-
-    $list_sort,
-    $list_caseInsensitiveSort,
-    $list_naturalSort,
-    $list_randomize,
-    $list_reverse,
-
-    $list_trimLines,
-    $list_removeCommaCharacterAtLineEnds,
-    $list_removeQuoteAndApostropheCharacters,
-
-    $list_getStats,
-
-    $list_linesToJsonArray,
-
-    $csv_removeFirstColumnFromCsv,
-    $csv_removeLastColumnFromCsv,
-
-    $csv_toJson,
-
-    $json_format,
-    $json_minify,
-
-    $json_removeProperty,
-
-    $json_array_reverse,
-
-    $json_arrayOfObjects_flattenObjects,
-    $json_arrayOfObjects_sortByProperty,
-
-    $json_sort,
-
-    $json_fixDataTypes,
-
-    $json_toLines,
-    $json_toCsv,
-
-    $less_format,
-    $less_minify,
-
-    $less_toCss,
-
     defaultRecommendedOperations,
 
     defaultSelectedOperations
 } from './constOperations.js';
 
 import { RecentOperations } from './RecentOperations.js';
-
-import { performOperation } from './performOperation.js';
 
 import helperStyles from '../../helperStyles.css';
 import styles from './MainEditor.css';
@@ -274,9 +228,10 @@ const MainEditor = function ({
         750
     );
 
-    const applyTheOperation = async () => {
+    const applyTheOperation = async (passedOperation) => {
+        const operationToApply = passedOperation || operation;
         const operationsByUser = [
-            operation,
+            operationToApply,
             ...recentOperations
         ];
         // Remove duplicate operations (keep the first occurrence)
@@ -291,10 +246,81 @@ const MainEditor = function ({
             const value = editorRef.current.getValue();
             return value;
         };
-        const [err, output, extraInfo] = await performOperation({
-            getInputValue,
-            operation
-        });
+
+        const modeConfig = obModeConfigs[mode];
+        const operationId = operationToApply;
+        const operationConfig = modeConfig.obOperations[operationId];
+
+        const inputValue = getInputValue();
+
+        if (inputValue === '') {
+            // TODO: FIXME: This code is duplicated elsewhere in this project
+            const output = inputValue;
+            if (typeof onComputeOutput === 'function') {
+                onComputeOutput({
+                    operation: operationToApply,
+                    output
+                });
+            } else {
+                editorRef.current.setValue(output);
+            }
+            if (typeof onValueUpdate === 'function') {
+                onValueUpdate(output);
+            }
+            return;
+        }
+
+        let
+            err,
+            output,
+            extraInfo;
+
+        try {
+            const parameters = {};
+
+            switch (operationConfig.operationInputType) {
+                case 'json': {
+                    const inputJson = JSON.parse(inputValue);
+                    parameters.inputJson = inputJson;
+                    break;
+                }
+                case 'array-of-strings': {
+                    const inputArrayOfStrings = inputValue.split('\n');
+                    parameters.inputArrayOfStrings = inputArrayOfStrings;
+                    break;
+                }
+                case 'text':
+                default: {
+                    const inputText = inputValue;
+                    parameters.inputText = inputText;
+                    break;
+                }
+            }
+
+            [err, output, extraInfo] = await operationConfig.performOperation(parameters);
+        } catch (e) {
+            err = e;
+        }
+
+        if (!err) {
+            switch (operationConfig.operationOutputType) {
+                case 'json': {
+                    output = JSON.stringify(output, null, '\t');
+                    break;
+                }
+                case 'array-of-strings': {
+                    if (Array.isArray(output)) {
+                        output = output.join('\n');
+                    }
+                    break;
+                }
+                case 'text':
+                default: {
+                    // Do nothing
+                    break;
+                }
+            }
+        }
 
         if (err) {
             console.error(err);
@@ -314,13 +340,17 @@ const MainEditor = function ({
             }
         } else {
             if (output === null) {
-                const extraInfoString = JSON.stringify(extraInfo, null, '\t');
-                console.error(extraInfoString);
-                debouncedEnqueueSnackbar(extraInfoString);
+                if (extraInfo && extraInfo.stats) {
+                    // Do nothing (for now)
+                } else {
+                    const extraInfoString = JSON.stringify(extraInfo, null, '\t');
+                    console.error(extraInfoString);
+                    debouncedEnqueueSnackbar(extraInfoString);
+                }
             } else {
                 if (typeof onComputeOutput === 'function') {
                     onComputeOutput({
-                        operation,
+                        operation: operationToApply,
                         output
                     });
                 } else {
@@ -385,21 +415,25 @@ const MainEditor = function ({
                                             setSearchParams(searchParamsToApply);
                                         }}
                                     >
-                                        <option value={mode_css}>CSS</option>
-                                        <option value={mode_csv}>CSV</option>
-                                        <option value={mode_json}>JSON</option>
-                                        <option value={mode_less}>Less</option>
-                                        <option value={mode_list}>List</option>
+                                        {
+                                            arrModeConfigs.map((modeConfig) => {
+                                                return (
+                                                    <option
+                                                        key={modeConfig.modeId}
+                                                        value={modeConfig.modeId}
+                                                    >
+                                                        {modeConfig.title}
+                                                    </option>
+                                                );
+                                            })
+                                        }
                                     </Select>
                                 </div>
                                 <div style={{ marginLeft: 5 }}>
                                     {(() => {
                                         const disabled = (() => {
-                                            if (
-                                                mode === mode_json ||
-                                                mode === mode_css ||
-                                                mode === mode_less
-                                            ) {
+                                            const modeConfig = obModeConfigs[mode];
+                                            if (modeConfig.hasSyntaxHighlighting) {
                                                 return false;
                                             } else {
                                                 return true;
@@ -499,164 +533,34 @@ const MainEditor = function ({
                                             -- Operations --
                                         </option>
 
-                                        {
-                                            mode === mode_css &&
-                                            <React.Fragment>
-                                                <optgroup label="Format">
-                                                    <option value={$css_format}>
-                                                        Format CSS
-                                                    </option>
-                                                    <option value={$css_minify}>
-                                                        Minify CSS
-                                                    </option>
-                                                </optgroup>
-                                                <optgroup label="Transform">
-                                                    <option value={$css_toScss}>
-                                                        CSS to SCSS
-                                                    </option>
-                                                </optgroup>
-                                            </React.Fragment>
-                                        }
-                                        {
-                                            mode === mode_less &&
-                                            <React.Fragment>
-                                                <optgroup label="Format">
-                                                    <option value={$less_format}>
-                                                        Format Less
-                                                    </option>
-                                                    <option value={$less_minify}>
-                                                        Minify Less
-                                                    </option>
-                                                </optgroup>
-                                                <optgroup label="Transform">
-                                                    <option value={$less_toCss}>
-                                                        Less to CSS
-                                                    </option>
-                                                </optgroup>
-                                            </React.Fragment>
-                                        }
-                                        {
-                                            mode === mode_list &&
-                                            <React.Fragment>
-                                                <optgroup label="Lines">
-                                                    <option value={$list_removeEmptyLines}>
-                                                        Remove empty lines
-                                                    </option>
-                                                    <option value={$list_removeDuplicates}>
-                                                        Remove duplicates
-                                                    </option>
-                                                </optgroup>
+                                        {(() => {
+                                            const modeConfig = obModeConfigs[mode];
 
-                                                <optgroup label="Sort">
-                                                    <option value={$list_sort}>
-                                                        Sort
-                                                    </option>
-                                                    <option value={$list_caseInsensitiveSort}>
-                                                        Case-insensitive sort
-                                                    </option>
-                                                    <option value={$list_naturalSort}>
-                                                        Natural sort
-                                                    </option>
-                                                    <option value={$list_randomize}>
-                                                        Randomize
-                                                    </option>
-                                                    <option value={$list_reverse}>
-                                                        Reverse
-                                                    </option>
-                                                </optgroup>
+                                            const { operations } = modeConfig;
 
-                                                <optgroup label="String">
-                                                    <option value={$list_trimLines}>
-                                                        Trim lines
-                                                    </option>
-                                                    <option value={$list_removeCommaCharacterAtLineEnds}>
-                                                        Remove comma character at line ends
-                                                    </option>
-                                                    <option value={$list_removeQuoteAndApostropheCharacters}>
-                                                        Remove &quot; and &apos; characters
-                                                    </option>
-                                                </optgroup>
-
-                                                <optgroup label="Stats">
-                                                    <option value={$list_getStats}>
-                                                        Get Stats
-                                                    </option>
-                                                </optgroup>
-
-                                                <optgroup label="Transform">
-                                                    <option value={$list_linesToJsonArray}>
-                                                        Lines to JSON Array
-                                                    </option>
-                                                </optgroup>
-                                            </React.Fragment>
-                                        }
-                                        {
-                                            mode === mode_csv &&
-                                            <React.Fragment>
-                                                <optgroup label="Columns">
-                                                    <option value={$csv_removeFirstColumnFromCsv}>
-                                                        Remove first column from CSV
-                                                    </option>
-                                                    <option value={$csv_removeLastColumnFromCsv}>
-                                                        Remove last column from CSV
-                                                    </option>
-                                                </optgroup>
-                                                <optgroup label="Transform">
-                                                    <option value={$csv_toJson}>
-                                                        CSV to JSON
-                                                    </option>
-                                                </optgroup>
-                                            </React.Fragment>
-                                        }
-                                        {
-                                            mode === mode_json &&
-                                            <React.Fragment>
-                                                <optgroup label="Format">
-                                                    <option value={$json_format}>
-                                                        Format JSON
-                                                    </option>
-                                                    <option value={$json_minify}>
-                                                        Minify JSON
-                                                    </option>
-                                                </optgroup>
-                                                <optgroup label="Sort">
-                                                    <option value={$json_sort}>
-                                                        Sort JSON
-                                                    </option>
-                                                </optgroup>
-                                                <optgroup label="Edit">
-                                                    <option value={$json_removeProperty}>
-                                                        Remove property
-                                                    </option>
-                                                </optgroup>
-                                                <optgroup label="Array">
-                                                    <option value={$json_array_reverse}>
-                                                        Reverse
-                                                    </option>
-                                                </optgroup>
-                                                <optgroup label="Array of objects">
-                                                    <option value={$json_arrayOfObjects_flattenObjects}>
-                                                        Flatten objects
-                                                    </option>
-                                                    <option value={$json_arrayOfObjects_sortByProperty}>
-                                                        Sort by property
-                                                    </option>
-                                                </optgroup>
-                                                <optgroup label="Fix">
-                                                    <option value={$json_fixDataTypes}>
-                                                        Fix data types
-                                                    </option>
-                                                </optgroup>
-                                                <optgroup label="Transform">
-                                                    <option value={$json_toLines}>
-                                                        JSON to Lines
-                                                    </option>
-                                                    <option value={$json_toCsv}>
-                                                        JSON to CSV
-                                                    </option>
-                                                </optgroup>
-                                            </React.Fragment>
-                                        }
+                                            // It has "optgroup" and there are "options" under each "optgroup"
+                                            return operations.map((operation) => {
+                                                return (
+                                                    <optgroup
+                                                        key={operation.optgroupLabel}
+                                                        label={operation.optgroupLabel}
+                                                    >
+                                                        {
+                                                            operation.options.map((option) => {
+                                                                return (
+                                                                    <option
+                                                                        key={option.operationId}
+                                                                        value={option.operationId}
+                                                                    >
+                                                                        {option.label}
+                                                                    </option>
+                                                                );
+                                                            })
+                                                        }
+                                                    </optgroup>
+                                                );
+                                            });
+                                        })()}
                                     </Select>
                                 </div>
 
@@ -667,72 +571,29 @@ const MainEditor = function ({
                                         onClick={() => {
                                             const editor = editorRef.current;
 
-                                            let output = [];
-                                            switch (mode) {
-                                                case mode_css:
-                                                    output = output = [
-                                                        'body {',
-                                                        '    background-color: #f0f0f0;',
-                                                        '}',
-                                                        '',
-                                                        'body h1 {',
-                                                        '    color: #000000;',
-                                                        '    font-size: 24px;',
-                                                        '    font-weight: bold;',
-                                                        '    text-align: center;',
-                                                        '}',
-                                                        ''
-                                                    ];
-                                                    break;
-                                                case mode_csv:
-                                                    output = [
-                                                        'Name,Age,Height',
-                                                        'Charlie,22,1.85',
-                                                        'Bob,21,1.75',
-                                                        'Alice,20,1.65',
-                                                        'David,23,1.95'
-                                                    ];
-                                                    break;
-                                                case mode_json:
-                                                    output = [
-                                                        '{',
-                                                        '    "data": [',
-                                                        '        { "name": "Charlie", "age": 22, "height": 1.85 },',
-                                                        '        { "name": "Bob",     "age": 21, "height": 1.75 },',
-                                                        '        { "name": "Alice",   "age": 20, "height": 1.65 },',
-                                                        '        { "name": "David",   "age": 23, "height": 1.95 }',
-                                                        '    ]',
-                                                        '}'
-                                                    ];
-                                                    break;
-                                                case mode_less:
-                                                    output = [
-                                                        '@color: #222;',
-                                                        '',
-                                                        'body {',
-                                                        '    color: @color;',
-                                                        '',
-                                                        '    a {',
-                                                        '        color: @color;',
-                                                        '    }',
-                                                        '}'
-                                                    ];
-                                                    break;
-                                                case mode_list:
-                                                    output = [
-                                                        'Charlie',
-                                                        'Bob',
-                                                        'Alice',
-                                                        'David'
-                                                    ];
-                                                    break;
-                                                default:
-                                                    output = [
-                                                        'Please provide content here'
-                                                    ];
-                                            }
+                                            const modeConfig = obModeConfigs[mode];
+                                            const selectedOperationId = selectedOperations[mode];
+                                            const operation = modeConfig.obOperations[selectedOperationId];
 
-                                            editor.setValue(output.join('\n'));
+                                            const sample = (
+                                                (
+                                                    operation &&
+                                                    operation.snippets &&
+                                                    operation.snippets[0] &&
+                                                    operation.snippets[0].content
+                                                ) ||
+                                                (
+                                                    modeConfig.snippets &&
+                                                    modeConfig.snippets[0] &&
+                                                    modeConfig.snippets[0].content
+                                                ) ||
+                                                (
+                                                    'Please provide content here'
+                                                )
+                                            );
+
+                                            editor.setValue(sample);
+                                            editor.focus();
                                         }}
                                     >
                                         <ScienceIcon style={{ fontSize: 16 }} />
@@ -818,9 +679,10 @@ const MainEditor = function ({
                                     }}
                                 >
                                     <RecentOperations
-                                        editorRef={editorRef}
-                                        onValueUpdate={onValueUpdate}
                                         mode={mode}
+                                        onOperationClick={async (operationId) => {
+                                            await applyTheOperation(operationId);
+                                        }}
                                     />
                                 </div>
                             </div>

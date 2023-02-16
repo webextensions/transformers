@@ -7,21 +7,20 @@ import { recentOperationsAtom } from './JotaiState.js';
 
 import IconButton from '@mui/material/IconButton/index.js';
 
-import {
-    IconNotAvailable,
+import { IconNotAvailable } from './constOperations.js';
 
-    availableOperations,
-    allOperationsById
-} from './constOperations.js';
-
-import { performOperation } from './performOperation.js';
+import { obModeConfigs } from './modes/index.js';
 
 const RecentOperations = function ({
-    editorRef,
-    onValueUpdate,
-    mode
+    mode,
+    onOperationClick
 }) {
+    // TODO: FIXME: Check if `setRecentOperations` is needed
+    // eslint-disable-next-line no-unused-vars
     const [recentOperations, setRecentOperations] = useAtom(recentOperationsAtom);
+
+    const modeConfig = obModeConfigs[mode];
+    const operationsForMode = Object.keys(modeConfig.obOperations);
 
     return (
         <div
@@ -33,79 +32,50 @@ const RecentOperations = function ({
                 flexDirection: 'row-reverse'
             }}
         >
-            {
-                recentOperations
-                    .filter(operation => {
-                        const operationsForMode = availableOperations[mode];
-                        return operationsForMode[operation];
-                    })
-                    .map((operation, index) => {
-                        const operationsForMode = availableOperations[mode];
-                        return (
-                            <div key={index}>
-                                <IconButton
-                                    size="small"
-                                    title={(
-                                        operationsForMode[operation]?.message ||
-                                        operation
-                                    )}
-                                    onClick={async () => {
-                                        // DUPLICATE: Some piece of this code is duplicated elsewhere in this project
-                                        const operationsByUser = [
-                                            operation,
-                                            ...recentOperations
-                                        ];
-                                        // Remove duplicate operations (keep the first occurrence)
-                                        const uniqueOperationsByUser = operationsByUser.filter((operation, index) => {
-                                            return operationsByUser.indexOf(operation) === index;
-                                        });
-                                        setRecentOperations(uniqueOperationsByUser);
-                                        localStorage.setItem('recentOperations', JSON.stringify(uniqueOperationsByUser));
+            {(() => {
+                let arr = recentOperations;
+                arr = arr.filter(operationId => {
+                    if (operationsForMode.includes(operationId)) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
 
-                                        // DUPLICATE: Some piece of this code is duplicated elsewhere in this project
-                                        const getInputValue = () => {
-                                            const value = editorRef.current.getValue();
-                                            return value;
-                                        };
-                                        const [err, output, extraInfo] = await performOperation({
-                                            getInputValue,
-                                            operation
-                                        });
+                arr = arr.map((operationId, index) => {
+                    const operationForMode = modeConfig.obOperations[operationId];
+                    return (
+                        <div key={index}>
+                            <IconButton
+                                size="small"
+                                title={(
+                                    operationForMode?.iconTooltip ||
+                                    operationForMode?.label
+                                )}
+                                onClick={async () => {
+                                    await onOperationClick(operationId);
+                                }}
+                            >
+                                {(() => {
+                                    let Icon = modeConfig.obOperations[operationId]?.icon;
+                                    if (!Icon) {
+                                        Icon = IconNotAvailable;
+                                    }
+                                    return <Icon style={{ fontSize: 16 }} />;
+                                })()}
+                            </IconButton>
+                        </div>
+                    );
+                });
 
-                                        if (err) {
-                                            console.error(err);
-                                            alert(err.message); // eslint-disable-line no-alert
-                                        } else {
-                                            if (output === null) {
-                                                alert(JSON.stringify(extraInfo, null, '\t')); // eslint-disable-line no-alert
-                                            } else {
-                                                editorRef.current.setValue(output);
-                                                if (typeof onValueUpdate === 'function') {
-                                                    onValueUpdate(output);
-                                                }
-                                            }
-                                        }
-                                    }}
-                                >
-                                    {(() => {
-                                        let Icon = allOperationsById[operation]?.Icon;
-                                        if (!Icon) {
-                                            Icon = IconNotAvailable;
-                                        }
-                                        return <Icon style={{ fontSize: 16 }} />;
-                                    })()}
-                                </IconButton>
-                            </div>
-                        );
-                    })
-            }
+                return arr;
+            })()}
         </div>
     );
 };
 RecentOperations.propTypes = {
-    editorRef: PropTypes.object.isRequired,
-    onValueUpdate: PropTypes.func,
-    mode: PropTypes.string.isRequired
+    mode: PropTypes.string.isRequired,
+    onOperationClick: PropTypes.func.isRequired
 };
 
 export { RecentOperations };
