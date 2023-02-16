@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { useSearchParams  } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver.js'; // https://github.com/securingsincity/react-ace/issues/725#issuecomment-543109155
@@ -116,6 +116,24 @@ const getSanitizedModeWithStatus = (mode) => {
     }
 };
 
+const getSanitizedOperationWithStatus = (mode, operation) => {
+    if (
+        obModeConfigs[mode] &&
+        obModeConfigs[mode].obOperations &&
+        obModeConfigs[mode].obOperations[operation]
+    ) {
+        return {
+            wasAlreadyClean: true,
+            operation
+        };
+    } else {
+        return {
+            wasAlreadyClean: false,
+            operation: obModeConfigs[mode].arrOperations[0] // TODO: FIXME: This is not always the first operation
+        };
+    }
+};
+
 const readable = {
     [mode_css]: 'CSS',
     [mode_csv]: 'CSV',
@@ -170,6 +188,12 @@ const MainEditor = function ({
             return JSON.parse(JSON.stringify(defaultSelectedOperations));
         }
     })();
+    const modeFromSearchParams = searchParams.get('mode');
+    const operationFromSearchParams = searchParams.get('operation');
+
+    const sanitizedMode = getSanitizedModeWithStatus(modeFromSearchParams).mode;
+    const sanitizedOperation = getSanitizedOperationWithStatus(sanitizedMode, operationFromSearchParams).operation;
+    selectedOperations[sanitizedMode] = sanitizedOperation;
 
     const operation = selectedOperations[mode];
 
