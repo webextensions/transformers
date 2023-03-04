@@ -12,11 +12,22 @@ const removeDuplicates = function (lines) {
     return output;
 };
 
-const trimLine = (line) => {
-    return line.trim();
-};
 const trimLines = function (lines) {
-    const output = lines.map(trimLine);
+    const output = lines.map((line) => {
+        return line.trim();
+    });
+    return output;
+};
+const trimLinesLeft = function (lines) {
+    const output = lines.map((line) => {
+        return line.trimLeft();
+    });
+    return output;
+};
+const trimLinesRight = function (lines) {
+    const output = lines.map((line) => {
+        return line.trimRight();
+    });
     return output;
 };
 
@@ -167,6 +178,8 @@ export {
     removeDuplicates,
 
     trimLines,
+    trimLinesLeft,
+    trimLinesRight,
     removeCommaCharacterAtEndFromLines,
     removeQuoteAndApostropheCharactersFromLines,
 

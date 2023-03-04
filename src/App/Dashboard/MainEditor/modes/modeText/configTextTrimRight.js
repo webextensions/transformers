@@ -1,12 +1,12 @@
-import CommitIcon from '@mui/icons-material/Commit.js';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward.js';
 
-import { trimLines } from '../../textUtils.js';
+import { trimLinesRight } from '../../textUtils.js';
 
-const configTextTrimLines = {
-    operationId: 'textTrimLines',
+const configTextTrimRight = {
+    operationId: 'textTrimRight',
 
-    label: 'Trim lines',
-    icon: CommitIcon,
+    label: 'Trim lines from right',
+    icon: ArrowForwardIcon,
 
     snippets: [{
         content: [
@@ -20,9 +20,9 @@ const configTextTrimLines = {
     operationInputType: 'array-of-strings', // 'text' / 'json' / 'array-of-strings'
     operationOutputType: 'array-of-strings', // 'text' / 'json' / 'array-of-strings'
     performOperation: ({ inputArrayOfStrings }) => {
-        const outputArrayOfStrings = trimLines(inputArrayOfStrings);
+        const outputArrayOfStrings = trimLinesRight(inputArrayOfStrings);
         return [null, outputArrayOfStrings];
     }
 };
 
-export { configTextTrimLines };
+export { configTextTrimRight };

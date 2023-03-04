@@ -9,7 +9,9 @@ import { configTextSortNatural } from './configTextSortNatural.js';
 import { configTextRandomize } from './configTextRandomize.js';
 import { configTextReverse } from './configTextReverse.js';
 
-import { configTextTrimLines } from './configTextTrimLines.js';
+import { configTextTrim } from './configTextTrim.js';
+import { configTextTrimLeft } from './configTextTrimLeft.js';
+import { configTextTrimRight } from './configTextTrimRight.js';
 import { configTextRemoveCommaCharacterAtLineEnds } from './configTextRemoveCommaCharacterAtLineEnds.js';
 import { configTextRemoveQuoteAndApostropheCharacters } from './configTextRemoveQuoteAndApostropheCharacters.js';
 
@@ -58,7 +60,9 @@ const modeText = {
         {
             optgroupLabel: 'String',
             options: [
-                configTextTrimLines,                         // Trim lines
+                configTextTrim,                              // Trim lines
+                configTextTrimLeft,                          // Trim lines from left
+                configTextTrimRight,                         // Trim lines from right
                 configTextRemoveCommaCharacterAtLineEnds,    // Remove comma character at line ends
                 configTextRemoveQuoteAndApostropheCharacters // Remove " and ' characters
             ]
