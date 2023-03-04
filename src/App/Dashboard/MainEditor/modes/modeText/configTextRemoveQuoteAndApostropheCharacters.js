@@ -2,8 +2,8 @@ import FormatQuoteIcon from '@mui/icons-material/FormatQuote.js';
 
 import { removeQuoteAndApostropheCharactersFromLines } from '../../textUtils.js';
 
-const configListRemoveQuoteAndApostropheCharacters = {
-    operationId: 'listRemoveQuoteAndApostropheCharacters',
+const configTextRemoveQuoteAndApostropheCharacters = {
+    operationId: 'textRemoveQuoteAndApostropheCharacters',
 
     label: 'Remove quote and apostrophe characters',
     icon: FormatQuoteIcon,
@@ -25,4 +25,4 @@ const configListRemoveQuoteAndApostropheCharacters = {
     }
 };
 
-export { configListRemoveQuoteAndApostropheCharacters };
+export { configTextRemoveQuoteAndApostropheCharacters };

@@ -1,7 +1,7 @@
 import ShuffleOnIcon from '@mui/icons-material/ShuffleOn.js';
 
-const configListRandomize = {
-    operationId: 'listRandomize',
+const configTextRandomize = {
+    operationId: 'textRandomize',
 
     label: 'Randomize',
     icon: ShuffleOnIcon,
@@ -24,4 +24,4 @@ const configListRandomize = {
     }
 };
 
-export { configListRandomize };
+export { configTextRandomize };

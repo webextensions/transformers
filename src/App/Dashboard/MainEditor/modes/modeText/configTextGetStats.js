@@ -1,7 +1,7 @@
 import BarChartIcon from '@mui/icons-material/BarChart.js';
 
-const configListGetStats = {
-    operationId: 'listGetStats',
+const configTextGetStats = {
+    operationId: 'textGetStats',
 
     label: 'Get stats',
     icon: BarChartIcon,
@@ -45,4 +45,4 @@ const configListGetStats = {
     }
 };
 
-export { configListGetStats };
+export { configTextGetStats };

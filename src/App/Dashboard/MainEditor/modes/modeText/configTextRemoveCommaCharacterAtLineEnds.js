@@ -2,8 +2,8 @@ import CleaningServicesIcon from '@mui/icons-material/CleaningServices.js';
 
 import { removeCommaCharacterAtEndFromLines } from '../../textUtils.js';
 
-const configListRemoveCommaCharacterAtLineEnds = {
-    operationId: 'listRemoveCommaCharacterAtLineEnds',
+const configTextRemoveCommaCharacterAtLineEnds = {
+    operationId: 'textRemoveCommaCharacterAtLineEnds',
 
     label: 'Remove comma character at line ends',
     icon: CleaningServicesIcon,
@@ -25,4 +25,4 @@ const configListRemoveCommaCharacterAtLineEnds = {
     }
 };
 
-export { configListRemoveCommaCharacterAtLineEnds };
+export { configTextRemoveCommaCharacterAtLineEnds };

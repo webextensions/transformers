@@ -1,7 +1,7 @@
 import AbcIcon from '@mui/icons-material/Abc.js';
 
-const configListSortCaseInsensitive = {
-    operationId: 'listSortCaseInsensitive',
+const configTextSortCaseInsensitive = {
+    operationId: 'textSortCaseInsensitive',
 
     label: 'Case-insensitive sort',
     icon: AbcIcon,
@@ -30,4 +30,4 @@ const configListSortCaseInsensitive = {
     }
 };
 
-export { configListSortCaseInsensitive };
+export { configTextSortCaseInsensitive };

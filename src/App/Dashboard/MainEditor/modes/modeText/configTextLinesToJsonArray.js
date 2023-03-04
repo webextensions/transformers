@@ -1,6 +1,6 @@
 import DataObjectIcon from '@mui/icons-material/DataObject.js';
 
-const configListLinesToJsonArray = {
+const configTextLinesToJsonArray = {
     operationId: 'linesToJsonArray',
 
     label: 'Lines to JSON Array',
@@ -22,4 +22,4 @@ const configListLinesToJsonArray = {
     }
 };
 
-export { configListLinesToJsonArray };
+export { configTextLinesToJsonArray };

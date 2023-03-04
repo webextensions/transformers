@@ -5,7 +5,7 @@ export const
     mode_csv  = 'csv',
     mode_json = 'json',
     mode_less = 'less',
-    mode_list = 'list';
+    mode_text = 'text';
 
 export const
     modes = [
@@ -13,7 +13,7 @@ export const
         mode_csv,
         mode_json,
         mode_less,
-        mode_list
+        mode_text
     ];
 
 export const defaultRecommendedOperations = [
@@ -21,7 +21,7 @@ export const defaultRecommendedOperations = [
     'csvToJson',
     'jsonFormat',
     'lessFormat',
-    'listSort'
+    'textSort'
 ];
 
 export const defaultSelectedOperations = {
@@ -29,7 +29,7 @@ export const defaultSelectedOperations = {
     [mode_csv]: '',
     [mode_json]: '',
     [mode_less]: '',
-    [mode_list]: ''
+    [mode_text]: ''
 };
 
 export const IconNotAvailable = CircleIcon;

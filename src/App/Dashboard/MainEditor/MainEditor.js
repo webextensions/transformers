@@ -54,7 +54,7 @@ import {
     mode_csv,
     mode_json,
     mode_less,
-    mode_list,
+    mode_text,
 
     modes,
 
@@ -111,7 +111,7 @@ const getSanitizedModeWithStatus = (mode) => {
     } else {
         return {
             wasAlreadyClean: false,
-            mode: mode_list
+            mode: mode_text
         };
     }
 };
@@ -139,7 +139,7 @@ const readable = {
     [mode_csv]: 'CSV',
     [mode_json]: 'JSON',
     [mode_less]: 'LESS',
-    [mode_list]: 'List'
+    [mode_text]: 'Text'
 };
 
 const MainEditor = function ({
@@ -216,7 +216,7 @@ const MainEditor = function ({
                     return 'json';
                 case mode_less:
                     return 'less';
-                case mode_list:
+                case mode_text:
                     return 'text';
                 default:
                     return 'text';

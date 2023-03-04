@@ -1,2 +1,2 @@
 # Transformers
-Tools for performing operations on the text (Lists, Sets, CSV, JSON, etc)
+Tools for performing operations on the text (Text, List, Set, CSV, JSON, etc)

@@ -1,16 +1,16 @@
-import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown.js';
+import SortIcon from '@mui/icons-material/Sort.js';
 
-const configListReverse = {
-    operationId: 'listReverse',
+const configTextSort = {
+    operationId: 'textSort',
 
-    label: 'Reverse',
-    icon: KeyboardDoubleArrowDownIcon,
+    label: 'Sort',
+    icon: SortIcon,
 
     snippets: [{
         content: [
-            'Alice',
-            'Bob',
             'Chelsea',
+            'Bob',
+            'Alice',
             'David'
         ].join('\n')
     }],
@@ -19,9 +19,9 @@ const configListReverse = {
     operationOutputType: 'array-of-strings', // 'text' / 'json' / 'array-of-strings'
     performOperation: ({ inputArrayOfStrings }) => {
         const outputArrayOfStrings = inputArrayOfStrings;
-        outputArrayOfStrings.reverse();
+        outputArrayOfStrings.sort();
         return [null, outputArrayOfStrings];
     }
 };
 
-export { configListReverse };
+export { configTextSort };
