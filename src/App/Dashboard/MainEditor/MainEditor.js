@@ -156,7 +156,7 @@ const MainEditor = function ({
 }) {
     const { enqueueSnackbar } = useSnackbar();
 
-    const [storedMode, setStoredMode] = useLocalStorage('mode', mode_json, { raw: true });
+    const [storedMode, setStoredMode] = useLocalStorage('mode', mode_text, { raw: true });
     const [mode, setMode] = useState(
         getSanitizedModeWithStatus(storedMode).mode
     );
@@ -192,7 +192,12 @@ const MainEditor = function ({
     const operationFromSearchParams = searchParams.get('operation');
 
     const sanitizedMode = getSanitizedModeWithStatus(modeFromSearchParams).mode;
-    const sanitizedOperation = getSanitizedOperationWithStatus(sanitizedMode, operationFromSearchParams).operation;
+    const sanitizedOperation = (
+        getSanitizedOperationWithStatus(
+            sanitizedMode,
+            operationFromSearchParams || selectedOperations[sanitizedMode]
+        ).operation
+    );
     selectedOperations[sanitizedMode] = sanitizedOperation;
 
     const operation = selectedOperations[mode];

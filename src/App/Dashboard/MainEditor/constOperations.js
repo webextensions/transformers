@@ -25,11 +25,11 @@ export const defaultRecommendedOperations = [
 ];
 
 export const defaultSelectedOperations = {
-    [mode_css]: '',
-    [mode_csv]: '',
-    [mode_json]: '',
-    [mode_less]: '',
-    [mode_text]: ''
+    [mode_css]: 'cssFormat',
+    [mode_csv]: 'csvToJson',
+    [mode_json]: 'jsonFormat',
+    [mode_less]: 'lessFormat',
+    [mode_text]: 'textSort'
 };
 
 export const IconNotAvailable = CircleIcon;
