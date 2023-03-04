@@ -162,6 +162,8 @@
     "build-development-local-inspect-brk":                    "node --inspect-brk ./node_modules/.bin/webpack-cli --mode development --progress --env config=\"config/config.development.local.js\"",
     "build-development-local":                                                                           "webpack --mode development --progress --env config=\"config/config.development.local.js\"",
 
+    "build-development-local:stats":                                                                     "webpack --mode development --progress --env config=\"config/config.development.local.js\" --json stats.json",
+
     "build-inspect-brk": "npm run build-development-local-inspect-brk",
     "build":             "npm run build-development-local",
 

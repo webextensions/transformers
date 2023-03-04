@@ -102,6 +102,7 @@
     "build-development-inspect-brk": "node --inspect-brk ./node_modules/.bin/webpack-cli --mode development --progress --env config=\"config/config.development.js\"",
     "build-development-local": "webpack --mode development --progress --env config=\"config/config.development.local.js\"",
     "build-development-local-inspect-brk": "node --inspect-brk ./node_modules/.bin/webpack-cli --mode development --progress --env config=\"config/config.development.local.js\"",
+    "build-development-local:stats": "webpack --mode development --progress --env config=\"config/config.development.local.js\" --json stats.json",
     "build-inspect-brk": "npm run build-development-local-inspect-brk",
     "build-production": "NODE_ENV=production webpack --mode production  --progress --env config=\"config/config.production.js\"",
     "build-production-inspect-brk": "NODE_ENV=production node --inspect-brk ./node_modules/.bin/webpack-cli --mode production  --progress --env config=\"config/config.production.js\"",

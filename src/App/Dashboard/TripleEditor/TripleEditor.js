@@ -1,10 +1,6 @@
 import React, { useRef } from 'react';
 
-import {
-    intersection,
-    union,
-    difference
-} from 'lodash';
+import { lazyLoadIntersectionUnionDifference } from '../../../utils/lazyLoadLibraries/lazyLoadLibraries.js';
 
 import IconButton from '@mui/material/IconButton/index.js';
 import SwapHorizontalCircleRoundedIcon from '@mui/icons-material/SwapHorizontalCircleRounded.js';
@@ -16,7 +12,7 @@ import { MainEditor } from '../MainEditor/MainEditor.js';
 import theEditorsStyles from '../TheEditors.css';
 import styles from './TripleEditor.css';
 
-const performABToC = ({
+const performABToC = async ({
     editorARef,
     editorBRef,
     editorCRef,
@@ -29,6 +25,12 @@ const performABToC = ({
     const b = valueB.split('\n');
 
     let c = '';
+
+    const {
+        intersection,
+        union,
+        difference
+    } = await lazyLoadIntersectionUnionDifference();
 
     if (operation === 'append') {
         c = [...a, ...b];
@@ -128,8 +130,8 @@ const TripleEditor = function () {
                             size="small"
                             type="button"
                             style={{ display: 'block' }}
-                            onClick={() => {
-                                performABToC({
+                            onClick={async () => {
+                                await performABToC({
                                     editorARef,
                                     editorBRef,
                                     editorCRef,
@@ -145,8 +147,8 @@ const TripleEditor = function () {
                             size="small"
                             type="button"
                             style={{ display: 'block' }}
-                            onClick={() => {
-                                performABToC({
+                            onClick={async () => {
+                                await performABToC({
                                     editorARef,
                                     editorBRef,
                                     editorCRef,
@@ -162,8 +164,8 @@ const TripleEditor = function () {
                             size="small"
                             type="button"
                             style={{ display: 'block' }}
-                            onClick={() => {
-                                performABToC({
+                            onClick={async () => {
+                                await performABToC({
                                     editorARef,
                                     editorBRef,
                                     editorCRef,
@@ -179,8 +181,8 @@ const TripleEditor = function () {
                             size="small"
                             type="button"
                             style={{ display: 'block' }}
-                            onClick={() => {
-                                performABToC({
+                            onClick={async () => {
+                                await performABToC({
                                     editorARef,
                                     editorBRef,
                                     editorCRef,

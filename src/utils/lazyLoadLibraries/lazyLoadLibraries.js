@@ -28,6 +28,19 @@ export const lazyLoadBeautifyCssAndLess = async () => {
     };
 };
 
+export const lazyLoadIntersectionUnionDifference = async () => {
+    const {
+        intersection,
+        union,
+        difference
+    } = await import('lodash');
+    return {
+        intersection,
+        union,
+        difference
+    };
+};
+
 export const lazyLoadCssToScss = async () => {
     const { cssToScss } = await import('helpmate-css/dist/index.js');
     return { cssToScss };
