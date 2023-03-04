@@ -30,6 +30,7 @@
     "lodash": "^4.17.21",
     "note-down": "^0.3.1",
     "notistack": "^2.0.8",
+    "prettier": "^2.8.4",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-ace": "^10.1.0",

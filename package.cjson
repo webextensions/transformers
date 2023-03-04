@@ -64,6 +64,9 @@
 
     "use-debounce": "^9.0.3",
 
+    // HTML
+    "prettier": "^2.8.4",
+
     // Less
     "less": "^4.1.3",
 

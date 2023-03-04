@@ -3,6 +3,7 @@ import CircleIcon from '@mui/icons-material/Circle.js';
 export const
     mode_css  = 'css',
     mode_csv  = 'csv',
+    mode_html = 'html',
     mode_json = 'json',
     mode_less = 'less',
     mode_text = 'text';
@@ -11,6 +12,7 @@ export const
     modes = [
         mode_css,
         mode_csv,
+        mode_html,
         mode_json,
         mode_less,
         mode_text
@@ -19,6 +21,7 @@ export const
 export const defaultRecommendedOperations = [
     'cssFormat',
     'csvToJson',
+    'htmlFormat',
     'jsonFormat',
     'lessFormat',
     'textSort'
@@ -27,6 +30,7 @@ export const defaultRecommendedOperations = [
 export const defaultSelectedOperations = {
     [mode_css]: 'cssFormat',
     [mode_csv]: 'csvToJson',
+    [mode_html]: 'htmlFormat',
     [mode_json]: 'jsonFormat',
     [mode_less]: 'lessFormat',
     [mode_text]: 'textSort'

@@ -6,6 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver.js'; // https://github.com/securingsincity/react-ace/issues/725#issuecomment-543109155
 import 'ace-builds/src-noconflict/mode-css.js';
+import 'ace-builds/src-noconflict/mode-html.js';
 import 'ace-builds/src-noconflict/mode-json.js';
 import 'ace-builds/src-noconflict/theme-github.js';
 // import 'ace-builds/src-noconflict/ext-language_tools.js';
@@ -52,6 +53,7 @@ import {
 import {
     mode_css,
     mode_csv,
+    mode_html,
     mode_json,
     mode_less,
     mode_text,
@@ -137,6 +139,7 @@ const getSanitizedOperationWithStatus = (mode, operation) => {
 const readable = {
     [mode_css]: 'CSS',
     [mode_csv]: 'CSV',
+    [mode_html]: 'HTML',
     [mode_json]: 'JSON',
     [mode_less]: 'LESS',
     [mode_text]: 'Text'
@@ -217,6 +220,8 @@ const MainEditor = function ({
                     return 'css';
                 case mode_csv:
                     return 'text';
+                case mode_html:
+                    return 'html';
                 case mode_json:
                     return 'json';
                 case mode_less:
