@@ -1,7 +1,7 @@
 import SortIcon from '@mui/icons-material/Sort.js';
 
-const configListSort = {
-    operationId: 'listSort',
+const configTextSort = {
+    operationId: 'textSort',
 
     label: 'Sort',
     icon: SortIcon,
@@ -24,4 +24,4 @@ const configListSort = {
     }
 };
 
-export { configListSort };
+export { configTextSort };

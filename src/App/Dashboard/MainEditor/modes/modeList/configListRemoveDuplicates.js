@@ -2,8 +2,8 @@ import CopyAllIcon from '@mui/icons-material/CopyAll.js';
 
 import { removeDuplicates } from '../../textUtils.js';
 
-const configListRemoveDuplicates = {
-    operationId: 'listRemoveDuplicates',
+const configTextRemoveDuplicates = {
+    operationId: 'textRemoveDuplicates',
 
     label: 'Remove duplicates',
     icon: CopyAllIcon,
@@ -27,4 +27,4 @@ const configListRemoveDuplicates = {
     }
 };
 
-export { configListRemoveDuplicates };
+export { configTextRemoveDuplicates };

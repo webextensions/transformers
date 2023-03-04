@@ -26,7 +26,7 @@ const PageHeader = function () {
                     </span>
                 </h1>
                 <h3 style={{ fontSize: 11, margin: '10px 0 0 0', color: '#555', textAlign: 'center' }}>
-                    Operations for Lists, Sets, CSV, JSON, etc
+                    Operations for Text, List, Set, CSV, JSON, etc
                 </h3>
             </div>
         </div>

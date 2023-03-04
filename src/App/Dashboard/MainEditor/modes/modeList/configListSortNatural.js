@@ -1,7 +1,7 @@
 import ParkIcon from '@mui/icons-material/Park.js';
 
-const configListSortNatural = {
-    operationId: 'listSortNatural',
+const configTextSortNatural = {
+    operationId: 'textSortNatural',
 
     label: 'Natural sort',
     icon: ParkIcon,
@@ -26,4 +26,4 @@ const configListSortNatural = {
     }
 };
 
-export { configListSortNatural };
+export { configTextSortNatural };

@@ -2,8 +2,8 @@ import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet.js';
 
 import { removeEmptyLines } from '../../textUtils.js';
 
-const configListRemoveEmptyLines = {
-    operationId: 'listRemoveEmptyLines',
+const configTextRemoveEmptyLines = {
+    operationId: 'textRemoveEmptyLines',
 
     label: 'Remove empty lines',
     icon: SettingsEthernetIcon,
@@ -28,4 +28,4 @@ const configListRemoveEmptyLines = {
     }
 };
 
-export { configListRemoveEmptyLines };
+export { configTextRemoveEmptyLines };

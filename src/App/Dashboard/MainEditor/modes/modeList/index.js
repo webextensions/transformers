@@ -1,27 +1,27 @@
 /* eslint-disable filenames/no-index */
 
-import { configListRemoveEmptyLines } from './configListRemoveEmptyLines.js';
-import { configListRemoveDuplicates } from './configListRemoveDuplicates.js';
+import { configTextRemoveEmptyLines } from './configTextRemoveEmptyLines.js';
+import { configTextRemoveDuplicates } from './configTextRemoveDuplicates.js';
 
-import { configListSort } from './configListSort.js';
-import { configListSortCaseInsensitive } from './configListSortCaseInsensitive.js';
-import { configListSortNatural } from './configListSortNatural.js';
-import { configListRandomize } from './configListRandomize.js';
-import { configListReverse } from './configListReverse.js';
+import { configTextSort } from './configTextSort.js';
+import { configTextSortCaseInsensitive } from './configTextSortCaseInsensitive.js';
+import { configTextSortNatural } from './configTextSortNatural.js';
+import { configTextRandomize } from './configTextRandomize.js';
+import { configTextReverse } from './configTextReverse.js';
 
-import { configListTrimLines } from './configListTrimLines.js';
-import { configListRemoveCommaCharacterAtLineEnds } from './configListRemoveCommaCharacterAtLineEnds.js';
-import { configListRemoveQuoteAndApostropheCharacters } from './configListRemoveQuoteAndApostropheCharacters.js';
+import { configTextTrimLines } from './configTextTrimLines.js';
+import { configTextRemoveCommaCharacterAtLineEnds } from './configTextRemoveCommaCharacterAtLineEnds.js';
+import { configTextRemoveQuoteAndApostropheCharacters } from './configTextRemoveQuoteAndApostropheCharacters.js';
 
-import { configListGetStats } from './configListGetStats.js';
+import { configTextGetStats } from './configTextGetStats.js';
 
-import { configListLinesToJsonArray } from './configListLinesToJsonArray.js';
+import { configTextLinesToJsonArray } from './configTextLinesToJsonArray.js';
 
-const modeList = {
-    modeId: 'list',
+const modeText = {
+    modeId: 'text',
     modeNameForAceEditor: 'text',
 
-    title: 'List',
+    title: 'Text',
 
     icon: null,
 
@@ -40,33 +40,33 @@ const modeList = {
         {
             optgroupLabel: 'Lines',
             options: [
-                configListRemoveEmptyLines, // Remove empty lines
-                configListRemoveDuplicates  // Remove duplicates
+                configTextRemoveEmptyLines, // Remove empty lines
+                configTextRemoveDuplicates  // Remove duplicates
                 // Remove beyond N lines
             ]
         },
         {
             optgroupLabel: 'Sort',
             options: [
-                configListSort,                // Sort
-                configListSortCaseInsensitive, // Case-insensitive sort
-                configListSortNatural,         // Natural sort
-                configListRandomize,           // Randomize
-                configListReverse              // Reverse
+                configTextSort,                // Sort
+                configTextSortCaseInsensitive, // Case-insensitive sort
+                configTextSortNatural,         // Natural sort
+                configTextRandomize,           // Randomize
+                configTextReverse              // Reverse
             ]
         },
         {
             optgroupLabel: 'String',
             options: [
-                configListTrimLines,                         // Trim lines
-                configListRemoveCommaCharacterAtLineEnds,    // Remove comma character at line ends
-                configListRemoveQuoteAndApostropheCharacters // Remove " and ' characters
+                configTextTrimLines,                         // Trim lines
+                configTextRemoveCommaCharacterAtLineEnds,    // Remove comma character at line ends
+                configTextRemoveQuoteAndApostropheCharacters // Remove " and ' characters
             ]
         },
         {
             optgroupLabel: 'Stats',
             options: [
-                configListGetStats // Get statistics
+                configTextGetStats // Get statistics
                 // Count lines        // Icon: FormatListNumberedRtlIcon
                 // Count characters   // Icon: AbcIcon
                 // Count words        // Icon: SubtitlesIcon
@@ -76,17 +76,17 @@ const modeList = {
         {
             optgroupLabel: 'Convert',
             options: [
-                configListLinesToJsonArray // Lines to JSON array
+                configTextLinesToJsonArray // Lines to JSON array
             ]
         }
     ]
 };
-modeList.arrOperations = modeList.operations.reduce((acc, curr) => {
+modeText.arrOperations = modeText.operations.reduce((acc, curr) => {
     return acc.concat(curr.options);
 }, []);
-modeList.obOperations = modeList.arrOperations.reduce((acc, curr) => {
+modeText.obOperations = modeText.arrOperations.reduce((acc, curr) => {
     acc[curr.operationId] = curr;
     return acc;
 }, {});
 
-export { modeList };
+export { modeText };

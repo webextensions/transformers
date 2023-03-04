@@ -2,8 +2,8 @@ import CommitIcon from '@mui/icons-material/Commit.js';
 
 import { trimLines } from '../../textUtils.js';
 
-const configListTrimLines = {
-    operationId: 'listTrimLines',
+const configTextTrimLines = {
+    operationId: 'textTrimLines',
 
     label: 'Trim lines',
     icon: CommitIcon,
@@ -25,4 +25,4 @@ const configListTrimLines = {
     }
 };
 
-export { configListTrimLines };
+export { configTextTrimLines };

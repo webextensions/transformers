@@ -1,7 +1,7 @@
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown.js';
 
-const configListReverse = {
-    operationId: 'listReverse',
+const configTextReverse = {
+    operationId: 'textReverse',
 
     label: 'Reverse',
     icon: KeyboardDoubleArrowDownIcon,
@@ -24,4 +24,4 @@ const configListReverse = {
     }
 };
 
-export { configListReverse };
+export { configTextReverse };

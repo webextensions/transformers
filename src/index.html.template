@@ -2,7 +2,7 @@
 <html data-app-version="{{appVersion}}">
 
 <head>
-    <title>Transformers: Tools for working with data from Lists, Sets, CSV, JSON, etc</title>
+    <title>Transformers: Tools for working with data from Text, List, Set, CSV, JSON, etc</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, shrink-to-fit=no" />
 
