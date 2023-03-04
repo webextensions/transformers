@@ -1,6 +1,6 @@
 import DataObjectIcon from '@mui/icons-material/DataObject.js';
 
-import { cssToScss } from 'helpmate-css/dist/index.js';
+import { lazyLoadCssToScss } from '../../../../../utils/lazyLoadLibraries/lazyLoadLibraries.js';
 
 const configCssToScss = {
     operationId: 'cssToScss',
@@ -20,11 +20,12 @@ const configCssToScss = {
         ].join('\n')
     }],
 
-    performOperation: ({ inputText }) => {
+    performOperation: async ({ inputText }) => {
         let output;
         if (inputText.trim() === '') {
             output = inputText;
         } else {
+            const { cssToScss } = await lazyLoadCssToScss();
             output = cssToScss(inputText);
 
             // TODO: Identify and add note about in which case this might happen

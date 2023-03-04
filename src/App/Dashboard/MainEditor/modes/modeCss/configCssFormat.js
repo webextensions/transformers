@@ -1,6 +1,6 @@
 import MoodIcon from '@mui/icons-material/Mood.js';
 
-import { beautifyCss } from 'helpmate-css/dist/index.js';
+import { lazyLoadBeautifyCss } from '../../../../../utils/lazyLoadLibraries/lazyLoadLibraries.js';
 
 const configCssFormat = {
     operationId: 'cssFormat',
@@ -16,7 +16,8 @@ const configCssFormat = {
         ].join('\n')
     }],
 
-    performOperation: ({ inputText }) => {
+    performOperation: async ({ inputText }) => {
+        const { beautifyCss } = await lazyLoadBeautifyCss();
         const output = beautifyCss(inputText);
         return [null, output];
     },

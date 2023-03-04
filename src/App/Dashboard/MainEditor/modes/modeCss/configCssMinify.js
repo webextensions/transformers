@@ -1,6 +1,6 @@
 import CompressIcon from '@mui/icons-material/Compress.js';
 
-import { minifyCss } from 'helpmate-css/dist/index.js';
+import { lazyLoadMinifyCss } from '../../../../../utils/lazyLoadLibraries/lazyLoadLibraries.js';
 
 const configCssMinify = {
     operationId: 'cssMinify',
@@ -20,7 +20,8 @@ const configCssMinify = {
         ].join('\n')
     }],
 
-    performOperation: ({ inputText }) => {
+    performOperation: async ({ inputText }) => {
+        const { minifyCss } = await lazyLoadMinifyCss();
         const output = minifyCss(inputText);
         return [null, output];
     }

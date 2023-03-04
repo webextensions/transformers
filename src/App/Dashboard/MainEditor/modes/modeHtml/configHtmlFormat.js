@@ -1,13 +1,6 @@
 import MoodIcon from '@mui/icons-material/Mood.js';
 
-const lazyLoadPrettierAndParserHtml = async () => {
-    const [prettier, parserHtml] = await Promise.all([
-        import('prettier'),
-        import('prettier/parser-html.js')
-    ]);
-
-    return { prettier, parserHtml };
-};
+import { lazyLoadPrettierAndParserHtml } from '../../../../../utils/lazyLoadLibraries/lazyLoadLibraries.js';
 
 const configHtmlFormat = {
     operationId: 'htmlFormat',
