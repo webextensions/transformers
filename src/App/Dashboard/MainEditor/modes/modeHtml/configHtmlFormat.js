@@ -1,7 +1,13 @@
 import MoodIcon from '@mui/icons-material/Mood.js';
 
-import prettier from 'prettier';
-import parserHtml from 'prettier/parser-html.js';
+const lazyLoadPrettierAndParserHtml = async () => {
+    const [prettier, parserHtml] = await Promise.all([
+        import('prettier'),
+        import('prettier/parser-html.js')
+    ]);
+
+    return { prettier, parserHtml };
+};
 
 const configHtmlFormat = {
     operationId: 'htmlFormat',
@@ -64,7 +70,8 @@ const configHtmlFormat = {
         ].join('\n')
     }],
 
-    performOperation: ({ inputText }) => {
+    performOperation: async ({ inputText }) => {
+        const { prettier, parserHtml } = await lazyLoadPrettierAndParserHtml();
         const options = {
             parser: 'html',
 
