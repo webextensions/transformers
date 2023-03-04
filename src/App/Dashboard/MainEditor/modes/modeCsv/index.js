@@ -13,7 +13,7 @@ const modeCsv = {
 
     icon: null,
 
-    hasSyntaxHighlighting: true,
+    hasSyntaxHighlighting: false,
 
     snippets: [{
         content: [
