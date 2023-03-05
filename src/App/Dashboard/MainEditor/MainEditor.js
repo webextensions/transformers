@@ -1,15 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, Suspense } from 'react';
 import PropTypes from 'prop-types';
 
 import { useSearchParams } from 'react-router-dom';
-
-import AceEditor from 'react-ace';
-import 'ace-builds/webpack-resolver.js'; // https://github.com/securingsincity/react-ace/issues/725#issuecomment-543109155
-import 'ace-builds/src-noconflict/mode-css.js';
-import 'ace-builds/src-noconflict/mode-html.js';
-import 'ace-builds/src-noconflict/mode-json.js';
-import 'ace-builds/src-noconflict/theme-github.js';
-// import 'ace-builds/src-noconflict/ext-language_tools.js';
 
 import IconButton from '@mui/material/IconButton/index.js';
 import Button from '@mui/material/Button/index.js';
@@ -41,6 +33,8 @@ import { useSnackbar } from 'notistack';
 
 import { useDebouncedCallback } from 'use-debounce';
 
+import { Loading } from 'Loading/Loading.js';
+
 import { recentOperationsAtom } from './JotaiState.js';
 
 import { getCurrentSearchParamsAsJson } from '../utils/getCurrentSearchParamsAsJson.js';
@@ -69,6 +63,11 @@ import { RecentOperations } from './RecentOperations.js';
 
 import helperStyles from '../../helperStyles.css';
 import styles from './MainEditor.css';
+
+const AceEditor = React.lazy(() => {
+    const comp = import('../../../utils/lazyLoadComponents/lazyLoadAceEditorComponent.js');
+    return comp;
+});
 
 const copy = async function (simpleText) {
     try {
@@ -277,7 +276,11 @@ const MainEditor = function ({
 
         // DUPLICATE: Some piece of this code is duplicated elsewhere in this project
         const getInputValue = () => {
-            const value = editorRef.current.getValue();
+            const value = (
+                editorRef.current ?
+                    editorRef.current.getValue() :
+                    ''
+            );
             return value;
         };
 
@@ -727,43 +730,44 @@ const MainEditor = function ({
 
             <div style={{ marginTop: 10 }}>
                 <div>
-                    <AceEditor
-                        placeholder={
-                            placeholder ||
-                            `Provide ${readable[mode]} here`
-                        }
-                        setOptions={{
-                            // useWorker: false,
-                            // enableBasicAutocompletion: true,
-                            // enableLiveAutocompletion: true,
-                            // enableSnippets: true,
-                            // showLineNumbers: true,
-                            // tabSize: 4,
-                            // useSoftTabs: true,
-
-                            wrap: flagLineWrap === 'yes' ? true : false
-                        }}
-                        mode={modeForSyntaxHighlighting}
-                        theme="github"
-                        onLoad={(editor) => {
-                            editorRef.current = editor;
-                            if (typeof onLoad === 'function') {
-                                onLoad(editor);
+                    <Suspense fallback={<Loading type="line-scale" />}>
+                        <AceEditor
+                            placeholder={
+                                placeholder ||
+                                `Provide ${readable[mode]} here`
                             }
-                        }}
-                        onChange={(val, delta) => {
-                            (async () => {
-                                await debouncedOnChange(val, delta);
-                            })();
-                        }}
-                        editorProps={{ $blockScrolling: true }}
-                        width={editorWidth}
-                        height={editorHeight}
-                        style={{
-                            minHeight: '65vh'
-                        }}
-                    />
+                            setOptions={{
+                                // useWorker: false,
+                                // enableBasicAutocompletion: true,
+                                // enableLiveAutocompletion: true,
+                                // enableSnippets: true,
+                                // showLineNumbers: true,
+                                // tabSize: 4,
+                                // useSoftTabs: true,
 
+                                wrap: flagLineWrap === 'yes' ? true : false
+                            }}
+                            mode={modeForSyntaxHighlighting}
+                            theme="github"
+                            onLoad={(editor) => {
+                                editorRef.current = editor;
+                                if (typeof onLoad === 'function') {
+                                    onLoad(editor);
+                                }
+                            }}
+                            onChange={(val, delta) => {
+                                (async () => {
+                                    await debouncedOnChange(val, delta);
+                                })();
+                            }}
+                            editorProps={{ $blockScrolling: true }}
+                            width={editorWidth}
+                            height={editorHeight}
+                            style={{
+                                minHeight: '65vh'
+                            }}
+                        />
+                    </Suspense>
                 </div>
                 {
                     allowFileInput &&
