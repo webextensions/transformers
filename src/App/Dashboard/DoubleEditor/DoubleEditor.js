@@ -109,7 +109,7 @@ const DoubleEditor = () => {
                             style={{ marginTop: 5 }}
                             editorWidth="100%"
                             editorHeight="300px"
-                            hideOperations
+                            // hideOperations
                         />
                     </div>
                 </div>
