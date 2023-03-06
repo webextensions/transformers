@@ -1,6 +1,10 @@
 import React, { useRef } from 'react';
 
-import { lazyLoadIntersectionUnionDifference } from '../../../utils/lazyLoadLibraries/lazyLoadLibraries.js';
+import {
+    lazyLoadDifference,
+    lazyLoadIntersection,
+    lazyLoadUnion
+} from '../../../utils/lazyLoadLibraries/lazyLoadLibraries.js';
 
 import IconButton from '@mui/material/IconButton/index.js';
 import SwapHorizontalCircleRoundedIcon from '@mui/icons-material/SwapHorizontalCircleRounded.js';
@@ -26,20 +30,17 @@ const performABToC = async ({
 
     let c = '';
 
-    const {
-        intersection,
-        union,
-        difference
-    } = await lazyLoadIntersectionUnionDifference();
-
     if (operation === 'append') {
         c = [...a, ...b];
-    } else if (operation === 'union') {
-        c = union(a, b);
-    } else if (operation === 'intersection') {
-        c = intersection(a, b);
     } else if (operation === 'difference') {
+        const { difference } = await lazyLoadDifference();
         c = difference(a, b);
+    } else if (operation === 'intersection') {
+        const { intersection } = await lazyLoadIntersection();
+        c = intersection(a, b);
+    } else if (operation === 'union') {
+        const { union } = await lazyLoadUnion();
+        c = union(a, b);
     }
 
     const valueC = c.join('\n');

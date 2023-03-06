@@ -28,17 +28,20 @@ export const lazyLoadBeautifyCssAndLess = async () => {
     };
 };
 
-export const lazyLoadIntersectionUnionDifference = async () => {
-    const {
-        intersection,
-        union,
-        difference
-    } = await import('lodash');
-    return {
-        intersection,
-        union,
-        difference
-    };
+export const lazyLoadDifference = async () => {
+    // https://lodash.com/per-method-packages
+    const difference = await import('lodash/difference.js');
+    return { difference: difference.default };
+};
+export const lazyLoadIntersection = async () => {
+    // https://lodash.com/per-method-packages
+    const intersection = await import('lodash/intersection.js');
+    return { intersection: intersection.default };
+};
+export const lazyLoadUnion = async () => {
+    // https://lodash.com/per-method-packages
+    const union = await import('lodash/union.js');
+    return { union: union.default };
 };
 
 export const lazyLoadCssToScss = async () => {
