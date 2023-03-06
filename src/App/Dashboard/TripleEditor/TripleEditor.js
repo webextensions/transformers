@@ -69,7 +69,7 @@ const TripleEditor = function () {
                             style={{ marginTop: 5 }}
                             editorWidth="100%"
                             editorHeight="300px"
-                            // allowFileInput
+                            allowFileInput
                         />
                     </div>
                 </div>
@@ -115,7 +115,7 @@ const TripleEditor = function () {
                             style={{ marginTop: 5 }}
                             editorWidth="100%"
                             editorHeight="300px"
-                            // allowFileInput
+                            allowFileInput
                         />
                     </div>
                 </div>

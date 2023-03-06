@@ -11,6 +11,7 @@ import ScienceIcon from '@mui/icons-material/Science.js';
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined.js';
 import BorderColorIcon from '@mui/icons-material/BorderColor.js';
 
+import FileOpenIcon from '@mui/icons-material/FileOpen.js';
 import ContentCutIcon from '@mui/icons-material/ContentCut.js';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy.js';
 import BackspaceIcon from '@mui/icons-material/Backspace.js';
@@ -769,12 +770,6 @@ const MainEditor = function ({
                         />
                     </Suspense>
                 </div>
-                {
-                    allowFileInput &&
-                    <div style={{ marginTop: 10 }}>
-                        <input type="file" />
-                    </div>
-                }
             </div>
             <div style={{ marginTop: 10 }}>
                 <div
@@ -782,6 +777,34 @@ const MainEditor = function ({
                     style={{ display: 'flex', justifyContent: 'space-between' }}
                 >
                     <div style={{ display: 'flex' }}>
+                        {
+                            allowFileInput &&
+                            <IconButton
+                                title="Load from file"
+                                size="small"
+                                component="label"
+                            >
+                                <FileOpenIcon style={{ fontSize: 16 }} />
+                                <input
+                                    type="file"
+                                    style={{ display: 'none' }}
+                                    onChange={async (e) => {
+                                        const file = e.target.files[0];
+                                        if (file) {
+                                            const fileContent = await file.text();
+                                            const editor = editorRef.current;
+                                            if (editor) {
+                                                editor.setValue(fileContent);
+                                            }
+                                        }
+
+                                        // Reset the file input value so that the same file can also be loaded again
+                                        e.target.value = null;
+                                    }}
+                                />
+                            </IconButton>
+                        }
+
                         {/* Cut button */}
                         <IconButton
                             title="Cut"

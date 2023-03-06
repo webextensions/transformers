@@ -22,6 +22,7 @@ const SingleEditor = () => {
                     style={{ marginTop: 5 }}
                     editorWidth="100%"
                     editorHeight="100%"
+                    allowFileInput
                 />
             </div>
         </div>

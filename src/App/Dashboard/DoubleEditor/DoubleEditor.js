@@ -32,7 +32,7 @@ const DoubleEditor = () => {
                             style={{ marginTop: 5 }}
                             editorWidth="100%"
                             editorHeight="300px"
-                            // allowFileInput
+                            allowFileInput
                             autoApply={autoApply}
                             onComputeOutput={
                                 // eslint-disable-next-line no-unused-vars
@@ -109,7 +109,6 @@ const DoubleEditor = () => {
                             style={{ marginTop: 5 }}
                             editorWidth="100%"
                             editorHeight="300px"
-                            // allowFileInput
                             hideOperations
                         />
                     </div>
