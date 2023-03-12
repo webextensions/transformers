@@ -7,6 +7,7 @@ import { configTextSort } from './configTextSort.js';
 import { configTextSortCaseInsensitive } from './configTextSortCaseInsensitive.js';
 import { configTextSortNatural } from './configTextSortNatural.js';
 import { configTextRandomize } from './configTextRandomize.js';
+import { configTextSortByLength } from './configTextSortByLength.js';
 import { configTextReverse } from './configTextReverse.js';
 
 import { configTextTrim } from './configTextTrim.js';
@@ -54,6 +55,7 @@ const modeText = {
                 configTextSortCaseInsensitive, // Case-insensitive sort
                 configTextSortNatural,         // Natural sort
                 configTextRandomize,           // Randomize
+                configTextSortByLength,        // Sort by length
                 configTextReverse              // Reverse
             ]
         },
