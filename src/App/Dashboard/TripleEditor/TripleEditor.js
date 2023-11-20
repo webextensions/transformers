@@ -49,6 +49,14 @@ const performABToC = async ({
     editorCRef.current.setValue(valueC);
 };
 
+const TransformersFont = ({ children }) => {
+    return (
+        <div style={{ fontFamily: 'Transformers, sans-serif' }}>
+            {children}
+        </div>
+    );
+};
+
 const TripleEditor = function () {
     const editorARef = useRef(null);
     const editorBRef = useRef(null);
@@ -140,7 +148,11 @@ const TripleEditor = function () {
                                 });
                             }}
                         >
-                            A ∪ B
+                            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                <TransformersFont>A</TransformersFont>
+                                <div style={{ marginTop: -2, marginLeft: 4, marginRight: 4 }}> ∪ </div>
+                                <TransformersFont>B</TransformersFont>
+                            </div>
                         </Button>
 
                         <Button
@@ -157,7 +169,11 @@ const TripleEditor = function () {
                                 });
                             }}
                         >
-                            A ∩ B
+                            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                <TransformersFont>A</TransformersFont>
+                                <div style={{ marginTop: -2, marginLeft: 4, marginRight: 4 }}> ∩ </div>
+                                <TransformersFont>B</TransformersFont>
+                            </div>
                         </Button>
 
                         <Button
@@ -174,7 +190,11 @@ const TripleEditor = function () {
                                 });
                             }}
                         >
-                            A + B
+                            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                <TransformersFont>A</TransformersFont>
+                                <div style={{ marginTop: -2, marginLeft: 4, marginRight: 4 }}> + </div>
+                                <TransformersFont>B</TransformersFont>
+                            </div>
                         </Button>
 
                         <Button
@@ -191,7 +211,11 @@ const TripleEditor = function () {
                                 });
                             }}
                         >
-                            A − B
+                            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                <TransformersFont>A</TransformersFont>
+                                <div style={{ marginTop: -2, marginLeft: 4, marginRight: 4 }}> - </div>
+                                <TransformersFont>B</TransformersFont>
+                            </div>
                         </Button>
                     </div>
                 </div>
