@@ -15,7 +15,7 @@ updateAndGeneratePackageJson() {
                        $packageCjson --mode update-and-generate-package-json
 }
 
-updateAndGeneratePackageJson
+updateAndGeneratePackageJson || exit 1
 
 printf "\n"
 printf "${GREEN} ✔ Done ${NORMAL}\n\n";
