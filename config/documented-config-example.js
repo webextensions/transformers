@@ -1,7 +1,7 @@
 /* eslint-disable filenames/match-exported */
 
 /*
-const logger = require('note-down');
+const { logger } = require('note-down');
 if (process.env.NODE_ENV !== 'production') {
     logger.warnHeading('Warning: Production configuration is being loaded while process.env.NODE_ENV is not set as production.');
     logger.warn(

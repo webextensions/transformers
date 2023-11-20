@@ -25,8 +25,7 @@ const
 
 const getPort = require('get-port');
 
-const
-    logger = require('note-down');
+const { logger } = require('note-down');
 
 const
     hardCodedResponse = require('express-hard-coded-response'),

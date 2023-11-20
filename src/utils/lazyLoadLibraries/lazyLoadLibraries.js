@@ -6,18 +6,18 @@ export const lazyLoadLess = async () => {
 };
 
 export const lazyLoadBeautifyCss = async () => {
-    const { beautifyCss } = await import('helpmate-css/dist/index.js');
+    const { beautifyCss } = await import('helpmate-css/dist/format/beautifyCss.js');
     return { beautifyCss };
 };
 
 export const lazyLoadMinifyCss = async () => {
-    const { minifyCss } = await import('helpmate-css/dist/index.js');
+    const { minifyCss } = await import('helpmate-css/dist/format/minifyCss.js');
     return { minifyCss };
 };
 
 export const lazyLoadBeautifyCssAndLess = async () => {
     const libs = await Promise.all([
-        import('helpmate-css/dist/index.js'),
+        import('helpmate-css/dist/format/beautifyCss.js'),
         import('less')
     ]);
     const { beautifyCss } = libs[0];
@@ -45,14 +45,17 @@ export const lazyLoadUnion = async () => {
 };
 
 export const lazyLoadCssToScss = async () => {
-    const { cssToScss } = await import('helpmate-css/dist/index.js');
+    const { cssToScss } = await import('helpmate-css/dist/transform/cssToScss.js');
     return { cssToScss };
 };
 
 export const lazyLoadPrettierAndParserHtml = async () => {
-    const [prettier, parserHtml] = await Promise.all([
+    const [
+        prettier,
+        parserHtml
+    ] = await Promise.all([
         import('prettier'),
-        import('prettier/parser-html.js')
+        import('prettier/plugins/html.js')
     ]);
     return {
         prettier,

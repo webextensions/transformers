@@ -73,7 +73,7 @@ const configHtmlFormat = {
 
             plugins: [parserHtml]
         };
-        const output = prettier.format(inputText, options);
+        const output = await prettier.format(inputText, options);
         return [null, output];
     }
 };

@@ -7,7 +7,7 @@ const path = require('path');
 const clearModule = require('clear-module');
 const handlebars = require('handlebars');
 
-const logger = require('note-down');
+const { logger } = require('note-down');
 
 const packageJsonPath = path.resolve(__dirname, '..', '..', '..', 'package.json');
 
