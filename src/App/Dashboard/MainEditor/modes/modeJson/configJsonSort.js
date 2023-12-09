@@ -1,3 +1,5 @@
+/* eslint-disable @stylistic/no-tabs */
+
 import CategoryIcon from '@mui/icons-material/Category.js';
 
 import { jsonStableStringify } from '../../textUtils.js';

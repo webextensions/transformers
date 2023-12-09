@@ -21,7 +21,7 @@ const configJsonToLines = {
     performOperation: ({ inputJson }) => {
         if (
             Array.isArray(inputJson) &&
-            inputJson.every(item => typeof item === 'string')
+            inputJson.every((item) => typeof item === 'string')
         ) {
             const output = inputJson.join('\n');
             return [null, output];

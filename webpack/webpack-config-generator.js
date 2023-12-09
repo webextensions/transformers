@@ -97,7 +97,6 @@ const webpackConfigGenerator = function (generatorOptions = {}) {
         //     jquery: 'jQuery'
         // },
 
-
         // // https://webpack.js.org/configuration/resolve/
         // resolve: {
         //     // https://webpack.js.org/configuration/resolve/#resolvemodules

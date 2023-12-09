@@ -137,7 +137,7 @@ const fixDataTypes = function (json) {
                 }
             }
         } else if (Array.isArray(node)) {
-            node = node.map(item => {
+            node = node.map((item) => {
                 return fixDataTypes(item);
             });
         } else if (typeof node === 'object') {

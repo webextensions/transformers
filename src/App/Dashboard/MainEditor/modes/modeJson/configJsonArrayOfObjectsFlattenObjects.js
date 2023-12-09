@@ -41,7 +41,7 @@ import LinearScaleIcon from '@mui/icons-material/LinearScale.js';
 const flattenObjectsRecursively = (obj, parentKey) => {
     let output = {};
 
-    Object.keys(obj).forEach(key => {
+    Object.keys(obj).forEach((key) => {
         const value = obj[key];
         const newKey = parentKey ? `${parentKey}.${key}` : key;
 
@@ -96,7 +96,7 @@ const configJsonArrayOfObjectsFlattenObjects = {
             return [new Error('Please provide an array of objects as the input.')];
         }
 
-        const output = inputJson.map(item => flattenObjectsRecursively(item));
+        const output = inputJson.map((item) => flattenObjectsRecursively(item));
 
         return [null, output];
     }

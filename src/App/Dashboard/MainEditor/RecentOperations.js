@@ -34,7 +34,7 @@ const RecentOperations = function ({
         >
             {(() => {
                 let arr = recentOperations;
-                arr = arr.filter(operationId => {
+                arr = arr.filter((operationId) => {
                     if (operationsForMode.includes(operationId)) {
                         return true;
                     } else {
