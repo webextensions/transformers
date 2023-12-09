@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import PropTypes from 'prop-types';
 
 import {
     lazyLoadDifference,
@@ -55,6 +56,9 @@ const TransformersFont = ({ children }) => {
             {children}
         </div>
     );
+};
+TransformersFont.propTypes = {
+    children: PropTypes.node.isRequired
 };
 
 const TripleEditor = function () {
