@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ContentTabs } from './ContentTabs/ContentTabs.js';
 
-import styles from './Dashboard.css';
+import * as styles from './Dashboard.css';
 
 const Dashboard = () => {
     return (

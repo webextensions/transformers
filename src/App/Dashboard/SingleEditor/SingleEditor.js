@@ -2,8 +2,8 @@ import React, { useRef } from 'react';
 
 import { MainEditor } from '../MainEditor/MainEditor.js';
 
-import theEditorsStyles from '../TheEditors.css';
-import styles from './SingleEditor.css';
+import * as theEditorsStyles from '../TheEditors.css';
+import * as styles from './SingleEditor.css';
 
 const SingleEditor = () => {
     const editorRef = useRef(null);

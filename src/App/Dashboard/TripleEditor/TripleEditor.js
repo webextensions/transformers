@@ -14,8 +14,8 @@ import Button from '@mui/material/Button/index.js';
 
 import { MainEditor } from '../MainEditor/MainEditor.js';
 
-import theEditorsStyles from '../TheEditors.css';
-import styles from './TripleEditor.css';
+import * as theEditorsStyles from '../TheEditors.css';
+import * as styles from './TripleEditor.css';
 
 const performABToC = async ({
     editorARef,

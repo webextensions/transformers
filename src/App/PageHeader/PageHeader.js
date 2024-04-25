@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from './PageHeader.css';
+import * as styles from './PageHeader.css';
 
 const PageHeader = function () {
     return (

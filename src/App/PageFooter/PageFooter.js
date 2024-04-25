@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from './PageFooter.css';
+import * as styles from './PageFooter.css';
 
 import { CreatedByMessage } from 'generic-components/CreatedByMessage/CreatedByMessage.js';
 

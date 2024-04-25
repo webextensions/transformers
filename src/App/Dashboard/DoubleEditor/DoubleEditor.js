@@ -8,8 +8,8 @@ import FormControlLabel from '@mui/material/FormControlLabel/index.js';
 
 import { MainEditor } from '../MainEditor/MainEditor.js';
 
-import theEditorsStyles from '../TheEditors.css';
-import styles from './DoubleEditor.css';
+import * as theEditorsStyles from '../TheEditors.css';
+import * as styles from './DoubleEditor.css';
 
 const DoubleEditor = () => {
     const editorARef = useRef(null);

@@ -13,8 +13,8 @@ import { SingleEditor } from '../SingleEditor/SingleEditor.js';
 import { DoubleEditor } from '../DoubleEditor/DoubleEditor.js';
 import { TripleEditor } from '../TripleEditor/TripleEditor.js';
 
-import helperStyles from '../../helperStyles.css';
-import styles from './ContentTabs.css';
+import * as helperStyles from '../../helperStyles.css';
+import * as styles from './ContentTabs.css';
 
 const TabPanel = function (props) {
     const { children, value, index, ...other } = props;

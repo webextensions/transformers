@@ -2,7 +2,7 @@ import React from 'react';
 
 import './styles-reset.css';
 
-import styles from './App.css';
+import * as styles from './App.css';
 
 import { PageHeader } from './PageHeader/PageHeader.js';
 import { Dashboard } from './Dashboard/Dashboard.js';

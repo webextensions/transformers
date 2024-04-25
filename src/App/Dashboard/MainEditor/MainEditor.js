@@ -62,8 +62,8 @@ import {
 
 import { RecentOperations } from './RecentOperations.js';
 
-import helperStyles from '../../helperStyles.css';
-import styles from './MainEditor.css';
+import * as helperStyles from '../../helperStyles.css';
+import * as styles from './MainEditor.css';
 
 const AceEditor = React.lazy(() => {
     const comp = import('../../../utils/lazyLoadComponents/lazyLoadAceEditorComponent.js');
