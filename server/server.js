@@ -4,15 +4,17 @@
 
 'use strict';
 
-const
-    commander = require('commander'),
-    application = require('./application.js');
+const { Command } = require('commander');
 
-commander
+const application = require('./application.js');
+
+const program = new Command();
+
+program
     .option('-c, --config <config-file>', 'Configuration file to be used (eg: config/config.development.js)')
-    .parse(process.argv);
+    .parse();
 
-const options = commander.opts();
+const options = program.opts();
 (async () => {
     await application.start({
         configOptionsFileRootRelativePath: options.config
