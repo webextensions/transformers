@@ -12,6 +12,8 @@ const
     fs = require('fs'),
     path = require('path');
 
+const semver = require('semver');
+
 const
     logger = require('../../utils/logger.js');
 
@@ -31,7 +33,7 @@ try {
     const
         dotNvmrcPath = path.resolve(__dirname, '../../.nvmrc'),
         dotNvmrcContents = fs.readFileSync(dotNvmrcPath, 'utf8');
-    if (dotNvmrcContents !== nodeVersion) {
+    if (!semver.satisfies(nodeVersion, dotNvmrcContents)) {
         logger.log('');
         logger.success(' ✓   .nvmrc suggests: Node JS ' + dotNvmrcContents);
         loggerWarnOrError(' ✗ You currently use: Node JS ' + nodeVersion);
