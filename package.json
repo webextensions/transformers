@@ -25,6 +25,7 @@
     "helmet": "^7.1.0",
     "helpmate-css": "=0.1.1",
     "jotai": "^2.8.0",
+    "json-2-csv": "^5.5.7",
     "json-stable-stringify": "^1.1.1",
     "less": "^4.2.0",
     "lodash": "^4.17.21",

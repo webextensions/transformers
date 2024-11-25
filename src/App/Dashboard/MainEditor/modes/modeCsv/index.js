@@ -17,11 +17,11 @@ const modeCsv = {
 
     snippets: [{
         content: [
-            'Name,Age,Height',
-            'Chelsea,22,1.85',
-            'Bob,21,1.75',
-            'Alice,20,1.65',
-            'David,23,1.95'
+            'name,age,height,course.field',
+            'Chelsea,22,1.85,Engineering',
+            'Bob,21,1.75,Medical',
+            'Alice,20,1.65,Engineering',
+            'David,23,1.95,Medical'
         ].join('\n')
     }],
 

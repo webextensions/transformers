@@ -1,5 +1,7 @@
 import jsonStableStringify from 'json-stable-stringify';
 
+import { json2csv, csv2json } from 'json-2-csv';
+
 const removeEmptyLines = function (lines) {
     const output = lines.filter((x) => {
         return x;
@@ -81,26 +83,16 @@ const removeFirstColumnFromCsvLines = function (lines) {
 };
 
 const csvToJson = function (lines) {
-    const output = ['['];
-    const headers = lines[0].split(',');
-    for (let i = 1; i < lines.length; i++) {
-        const line = lines[i];
-        const columns = line.split(',');
-        const obj = {};
+    const arrJson = csv2json(lines.join('\n'));
 
-        // eslint-disable-next-line unicorn/no-for-loop
-        for (let j = 0; j < columns.length; j++) {
-            const column = columns[j];
-            const header = headers[j];
-            obj[header] = column;
-        }
-        if (i < lines.length - 1) {
-            output.push('\t' + JSON.stringify(obj) + ',');
-        } else {
-            output.push('\t' + JSON.stringify(obj));
-        }
-    }
+    let output = ['['];
+    arrJson.forEach((obj, index) => {
+        output.push('\t' + JSON.stringify(obj) + (index === arrJson.length - 1 ? '' : ','));
+    });
     output.push(']');
+
+    output = output.join('\n');
+
     return output;
 };
 
@@ -152,25 +144,9 @@ const fixDataTypes = function (json) {
     return output;
 };
 
-const jsonToCsv = function (json) {
-    const line = [];
-    const output = [];
-
-    const keys = Object.keys(json[0]);
-    for (const key of keys) {
-        line.push(key);
-    }
-    output.push(line.join(','));
-
-    for (const ob of json) {
-        const line = [];
-        for (const key of keys) {
-            line.push(ob[key]);
-        }
-        output.push(line.join(','));
-    }
-
-    return output.join('\n');
+const jsonToCsv = async function (json) {
+    const csv = await json2csv(json);
+    return csv;
 };
 
 export {

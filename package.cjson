@@ -64,6 +64,9 @@
 
     "use-debounce": "^10.0.0",
 
+    // JSON
+    "json-2-csv": "^5.5.7",
+
     // HTML
     "prettier": "^3.2.5",
 
