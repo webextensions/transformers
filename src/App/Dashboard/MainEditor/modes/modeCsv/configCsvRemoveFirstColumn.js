@@ -1,4 +1,4 @@
-import FirstPageIcon from '@mui/icons-material/FirstPage.js';
+import FirstPageIcon from '@mui/icons-material/FirstPage';
 
 import { removeFirstColumnFromCsvLines } from '../../textUtils.js';
 

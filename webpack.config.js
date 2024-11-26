@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-/* eslint-disable filenames/match-exported */
+/* eslint-disable n/no-process-exit */
 
-const path = require('path');
+const path = require('node:path');
 
 const chalk = require('chalk');
 

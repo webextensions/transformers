@@ -1,5 +1,3 @@
-/* globals describe, it */
-
 describe('Application', function () {
     const application = require('../server/application.js'); // eslint-disable-line no-unused-vars
 

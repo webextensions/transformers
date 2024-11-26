@@ -1,4 +1,4 @@
-import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet.js';
+import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
 
 import { removeEmptyLines } from '../../textUtils.js';
 

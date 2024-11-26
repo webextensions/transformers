@@ -8,7 +8,7 @@ import {
 } from '../../../utils/lazyLoadLibraries/lazyLoadLibraries.js';
 
 import IconButton from '@mui/material/IconButton/index.js';
-import SwapHorizontalCircleRoundedIcon from '@mui/icons-material/SwapHorizontalCircleRounded.js';
+import SwapHorizontalCircleRoundedIcon from '@mui/icons-material/SwapHorizontalCircleRounded';
 
 import Button from '@mui/material/Button/index.js';
 

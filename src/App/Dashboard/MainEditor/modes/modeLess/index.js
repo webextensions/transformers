@@ -1,5 +1,3 @@
-/* eslint-disable filenames/no-index */
-
 import { configLessFormat } from './configLessFormat.js';
 
 import { configLessToCss } from './configLessToCss.js';
@@ -43,9 +41,11 @@ const modeLess = {
         }
     ]
 };
+// eslint-disable-next-line unicorn/no-array-reduce
 modeLess.arrOperations = modeLess.operations.reduce((acc, curr) => {
     return acc.concat(curr.options);
 }, []);
+// eslint-disable-next-line unicorn/no-array-reduce
 modeLess.obOperations = modeLess.arrOperations.reduce((acc, curr) => {
     acc[curr.operationId] = curr;
     return acc;

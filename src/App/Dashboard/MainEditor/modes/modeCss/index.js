@@ -1,5 +1,3 @@
-/* eslint-disable filenames/no-index */
-
 import { configCssFormat } from './configCssFormat.js';
 import { configCssMinify } from './configCssMinify.js';
 
@@ -46,9 +44,11 @@ const modeCss = {
         }
     ]
 };
+// eslint-disable-next-line unicorn/no-array-reduce
 modeCss.arrOperations = modeCss.operations.reduce((acc, curr) => {
     return acc.concat(curr.options);
 }, []);
+// eslint-disable-next-line unicorn/no-array-reduce
 modeCss.obOperations = modeCss.arrOperations.reduce((acc, curr) => {
     acc[curr.operationId] = curr;
     return acc;

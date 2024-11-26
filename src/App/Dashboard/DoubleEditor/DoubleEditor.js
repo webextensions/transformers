@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 
 import IconButton from '@mui/material/IconButton/index.js';
-import SwapHorizontalCircleRoundedIcon from '@mui/icons-material/SwapHorizontalCircleRounded.js';
+import SwapHorizontalCircleRoundedIcon from '@mui/icons-material/SwapHorizontalCircleRounded';
 
 import Checkbox from '@mui/material/Checkbox/index.js';
 import FormControlLabel from '@mui/material/FormControlLabel/index.js';

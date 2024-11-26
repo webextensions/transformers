@@ -1,4 +1,4 @@
-import AppsIcon from '@mui/icons-material/Apps.js';
+import AppsIcon from '@mui/icons-material/Apps';
 
 import { jsonToCsv } from '../../textUtils.js';
 

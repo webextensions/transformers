@@ -1,5 +1,3 @@
-/* eslint-disable filenames/no-index */
-
 import { configHtmlFormat } from './configHtmlFormat.js';
 
 const modeHtml = {
@@ -36,9 +34,11 @@ const modeHtml = {
         }
     ]
 };
+// eslint-disable-next-line unicorn/no-array-reduce
 modeHtml.arrOperations = modeHtml.operations.reduce((acc, curr) => {
     return acc.concat(curr.options);
 }, []);
+// eslint-disable-next-line unicorn/no-array-reduce
 modeHtml.obOperations = modeHtml.arrOperations.reduce((acc, curr) => {
     acc[curr.operationId] = curr;
     return acc;

@@ -1,5 +1,3 @@
-/* eslint-disable @stylistic/jsx-curly-brace-presence */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 

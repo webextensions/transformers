@@ -1,4 +1,4 @@
-import CopyAllIcon from '@mui/icons-material/CopyAll.js';
+import CopyAllIcon from '@mui/icons-material/CopyAll';
 
 import { removeDuplicates } from '../../textUtils.js';
 

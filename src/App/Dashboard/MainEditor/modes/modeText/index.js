@@ -1,5 +1,3 @@
-/* eslint-disable filenames/no-index */
-
 import { configTextRemoveEmptyLines } from './configTextRemoveEmptyLines.js';
 import { configTextRemoveDuplicates } from './configTextRemoveDuplicates.js';
 
@@ -87,9 +85,11 @@ const modeText = {
         }
     ]
 };
+// eslint-disable-next-line unicorn/no-array-reduce
 modeText.arrOperations = modeText.operations.reduce((acc, curr) => {
     return acc.concat(curr.options);
 }, []);
+// eslint-disable-next-line unicorn/no-array-reduce
 modeText.obOperations = modeText.arrOperations.reduce((acc, curr) => {
     acc[curr.operationId] = curr;
     return acc;

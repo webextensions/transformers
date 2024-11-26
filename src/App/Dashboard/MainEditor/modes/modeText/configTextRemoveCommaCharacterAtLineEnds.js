@@ -1,4 +1,4 @@
-import CleaningServicesIcon from '@mui/icons-material/CleaningServices.js';
+import CleaningServicesIcon from '@mui/icons-material/CleaningServices';
 
 import { removeCommaCharacterAtEndFromLines } from '../../textUtils.js';
 

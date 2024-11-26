@@ -1,5 +1,3 @@
-/* eslint-disable filenames/match-exported */
-
 /*
 const { logger } = require('note-down');
 if (process.env.NODE_ENV !== 'production') {

@@ -1,4 +1,4 @@
-import SortIcon from '@mui/icons-material/Sort.js';
+import SortIcon from '@mui/icons-material/Sort';
 
 const configTextSort = {
     operationId: 'textSort',

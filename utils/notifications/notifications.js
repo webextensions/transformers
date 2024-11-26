@@ -1,9 +1,9 @@
-const path = require('path');
+const path = require('node:path');
 
 let notifier;
 try {
     notifier = require('node-notifier');
-} catch (e) {
+} catch (e) { // eslint-disable-line no-unused-vars
     console.log(
         'Could not load module "node-notifier".' +
         '\nYou need to run "$ npm install node-notifier" to be able to see desktop notifications.' +

@@ -6,25 +6,25 @@ import { useSearchParams } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton/index.js';
 import Button from '@mui/material/Button/index.js';
 
-import ScienceIcon from '@mui/icons-material/Science.js';
+import ScienceIcon from '@mui/icons-material/Science';
 
-import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined.js';
-import BorderColorIcon from '@mui/icons-material/BorderColor.js';
+import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
 
-import FileOpenIcon from '@mui/icons-material/FileOpen.js';
-import ContentCutIcon from '@mui/icons-material/ContentCut.js';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy.js';
-import BackspaceIcon from '@mui/icons-material/Backspace.js';
-import UndoIcon from '@mui/icons-material/Undo.js';
-import RedoIcon from '@mui/icons-material/Redo.js';
-import WrapTextIcon from '@mui/icons-material/WrapText.js';
-import SaveIcon from '@mui/icons-material/Save.js';
+import FileOpenIcon from '@mui/icons-material/FileOpen';
+import ContentCutIcon from '@mui/icons-material/ContentCut';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import BackspaceIcon from '@mui/icons-material/Backspace';
+import UndoIcon from '@mui/icons-material/Undo';
+import RedoIcon from '@mui/icons-material/Redo';
+import WrapTextIcon from '@mui/icons-material/WrapText';
+import SaveIcon from '@mui/icons-material/Save';
 
 import Select from '@mui/material/Select/index.js';
 
-import CheckIcon from '@mui/icons-material/Check.js';
+import CheckIcon from '@mui/icons-material/Check';
 
-import StarIcon from '@mui/icons-material/Star.js';
+import StarIcon from '@mui/icons-material/Star';
 
 import { useAtom } from 'jotai';
 
@@ -74,7 +74,7 @@ const copy = async function (simpleText) {
     try {
         await navigator.clipboard.writeText(simpleText);
         return true;
-    } catch (e) {
+    } catch (e) { // eslint-disable-line no-unused-vars
         return false;
     }
 };
@@ -105,7 +105,7 @@ const generateTargetSearchParamsAsJson = ({ mode, operation, selectedOperations 
 };
 
 const getSanitizedModeWithStatus = (mode) => {
-    if (modes.indexOf(mode) >= 0) {
+    if (modes.includes(mode)) {
         return {
             wasAlreadyClean: true,
             mode
@@ -181,14 +181,14 @@ const MainEditor = function ({
 
     const [storedOperations, setStoredOperations] = useLocalStorage(
         'selectedOperations',
-        JSON.parse(JSON.stringify(defaultSelectedOperations))
+        structuredClone(defaultSelectedOperations)
     );
 
     const selectedOperations = (() => {
         if (storedOperations) {
             return storedOperations;
         } else {
-            return JSON.parse(JSON.stringify(defaultSelectedOperations));
+            return structuredClone(defaultSelectedOperations);
         }
     })();
     const modeFromSearchParams = searchParams.get('mode');
@@ -216,20 +216,27 @@ const MainEditor = function ({
     const modeForSyntaxHighlighting = (() => {
         if (flagSyntaxHighlighting === 'yes') {
             switch (mode) {
-                case mode_css:
+                case mode_css: {
                     return 'css';
-                case mode_csv:
+                }
+                case mode_csv: {
                     return 'text';
-                case mode_html:
+                }
+                case mode_html: {
                     return 'html';
-                case mode_json:
+                }
+                case mode_json: {
                     return 'json';
-                case mode_less:
+                }
+                case mode_less: {
                     return 'less';
-                case mode_text:
+                }
+                case mode_text: {
                     return 'text';
-                default:
+                }
+                default: {
                     return 'text';
+                }
             }
         } else {
             return 'text';
@@ -327,6 +334,7 @@ const MainEditor = function ({
                     parameters.inputArrayOfStrings = inputArrayOfStrings;
                     break;
                 }
+                // eslint-disable-next-line unicorn/no-useless-switch-case
                 case 'text':
                 default: {
                     const inputText = inputValue;
@@ -352,6 +360,7 @@ const MainEditor = function ({
                     }
                     break;
                 }
+                // eslint-disable-next-line unicorn/no-useless-switch-case
                 case 'text':
                 default: {
                     // Do nothing
@@ -551,7 +560,7 @@ const MainEditor = function ({
                                         onChange={(e) => {
                                             const selectedOperation = e.target.value;
 
-                                            const json = JSON.parse(JSON.stringify(selectedOperations));
+                                            const json = structuredClone(selectedOperations);
                                             json[mode] = selectedOperation;
 
                                             setStoredOperations(json);
@@ -962,23 +971,28 @@ const MainEditor = function ({
                                     a.href = URL.createObjectURL(blob);
                                     let extension;
                                     switch (mode) {
-                                        case mode_css:
+                                        case mode_css: {
                                             extension = 'css';
                                             break;
-                                        case mode_csv:
+                                        }
+                                        case mode_csv: {
                                             extension = 'csv';
                                             break;
-                                        case mode_json:
+                                        }
+                                        case mode_json: {
                                             extension = 'json';
                                             break;
-                                        case mode_less:
+                                        }
+                                        case mode_less: {
                                             extension = 'less';
                                             break;
-                                        default:
+                                        }
+                                        default: {
                                             extension = 'txt';
+                                        }
                                     }
-                                    const localTime = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60 * 1000)).toISOString().substring(0, 19).replace('T', ' ');
-                                    const localTimeAsPartOfFilename = localTime.replace(' ', '_').replace(/:/g, '-');
+                                    const localTime = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60 * 1000)).toISOString().slice(0, 19).replace('T', ' ');
+                                    const localTimeAsPartOfFilename = localTime.replace(' ', '_').replaceAll(':', '-');
                                     a.download = `output-${localTimeAsPartOfFilename}.${extension}`;
                                     a.click();
                                 }

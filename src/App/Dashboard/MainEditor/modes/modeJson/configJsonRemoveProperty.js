@@ -1,6 +1,6 @@
 /* eslint-disable @stylistic/no-tabs */
 
-import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove.js';
+import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove';
 
 // Remove a property from a JSON object recursively
 // TODO: Optimize this function
@@ -10,21 +10,21 @@ const removePropertyRecursively = (obj, propertyName) => {
     if (obj.hasOwnProperty(propertyName)) {
         delete obj[propertyName];
     } else {
-        Object.keys(obj).forEach((key) => {
+        for (const key of Object.keys(obj)) {
             if (typeof obj[key] === 'object') {
                 removePropertyRecursively(obj[key], propertyName);
             } else if (Array.isArray(obj[key])) {
-                obj[key].forEach((item) => {
+                for (const item of obj[key]) {
                     if (typeof item === 'object') {
                         removePropertyRecursively(item, propertyName);
                     } else {
                         // Do nothing
                     }
-                });
+                }
             } else {
                 // Do nothing
             }
-        });
+        }
     }
 };
 

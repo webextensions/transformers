@@ -8,12 +8,14 @@
 //           OR
 //     $ ./check-npm-install-status.js --return-exit-code
 
+/* eslint-disable n/no-process-exit */
+
 const t1 = new Date();
 
 const
-    fs = require('fs'),
-    path = require('path'),
-    http = require('https');
+    fs = require('node:fs'),
+    path = require('node:path'),
+    http = require('node:https');
 
 const returnExitCode = (process.argv[2] === '--return-exit-code');
 
@@ -61,10 +63,10 @@ function mergeObjects(obj1, obj2) {
 function readFileAsJson(filePath) {
     try {
         const
-            data = fs.readFileSync(filePath, 'utf-8'),
+            data = fs.readFileSync(filePath, 'utf8'),
             json = JSON.parse(data);
         return json;
-    } catch (e) {
+    } catch (e) { // eslint-disable-line no-unused-vars
         return undefined;
     }
 }
@@ -89,7 +91,7 @@ function main(rootPath) {
         invalidFound = false;
 
     const updateMessages = [];
-    Object.keys(allDependencies).forEach(function (packageName) {
+    for (const packageName of Object.keys(allDependencies)) {
         const
             packageJson = readFileAsJson(path.resolve(rootPath, 'node_modules', packageName, 'package.json')),
             valid = packageJson && semver.valid(packageJson.version);
@@ -103,7 +105,7 @@ function main(rootPath) {
         if (!valid || !match) {
             updateMessages.push(packageName + ' : ' + ((packageJson && packageJson.version) || 'NA') + ' -> ' + allDependencies[packageName]);
         }
-    });
+    }
 
     const t2 = new Date();
     if (!mismatchFound && !invalidFound) {
@@ -116,7 +118,7 @@ function main(rootPath) {
             console.log(chalkRedOrYellow('\n' + updateMessages.length + '/' + Object.keys(allDependencies).length + ' npm packages need to be updated: (' + ((t2 - t1) / 1000) + ' seconds)'));
             console.log('    ' + updateMessages.join('\n    '));
             console.log(chalkRedOrYellow('You might want to run "$ npm install"\n'));
-        } catch (e) {
+        } catch (e) { // eslint-disable-line no-unused-vars
             console.log('\nCould not load module "chalk"');
             console.log('\n' + updateMessages.length + '/' + Object.keys(allDependencies).length + ' npm packages need to be updated: (' + ((t2 - t1) / 1000) + ' seconds)');
             console.log('    ' + updateMessages.join('\n    '));
@@ -137,7 +139,7 @@ function initiateCheck() {
 try {
     fs.statSync(semverFilePath);
     initiateCheck();
-} catch (e) {
+} catch (e) { // eslint-disable-line no-unused-vars
     const url = 'https://raw.githubusercontent.com/npm/node-semver/master/semver.js';
     console.log('\nDownloading (timeout: 15s) ' + url + ' (to be used in check-npm-install-status.js)');
     download(url, semverFilePath, function (errMsg) {

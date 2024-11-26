@@ -1,4 +1,4 @@
-import AbcIcon from '@mui/icons-material/Abc.js';
+import AbcIcon from '@mui/icons-material/Abc';
 
 const configTextSortCaseInsensitive = {
     operationId: 'textSortCaseInsensitive',

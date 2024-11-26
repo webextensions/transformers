@@ -1,4 +1,4 @@
-import ShuffleOnIcon from '@mui/icons-material/ShuffleOn.js';
+import ShuffleOnIcon from '@mui/icons-material/ShuffleOn';
 
 const configTextRandomize = {
     operationId: 'textRandomize',

@@ -1,6 +1,6 @@
 /* eslint-disable @stylistic/no-tabs */
 
-import SwapVertIcon from '@mui/icons-material/SwapVert.js';
+import SwapVertIcon from '@mui/icons-material/SwapVert';
 
 const configJsonArrayReverse = {
     operationId: 'jsonArrayReverse',

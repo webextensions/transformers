@@ -1,11 +1,7 @@
-import jsonStableStringify from 'json-stable-stringify';
-
 import { json2csv, csv2json } from 'json-2-csv';
 
 const removeEmptyLines = function (lines) {
-    const output = lines.filter((x) => {
-        return x;
-    });
+    const output = lines.filter(Boolean);
     return output;
 };
 
@@ -22,20 +18,21 @@ const trimLines = function (lines) {
 };
 const trimLinesLeft = function (lines) {
     const output = lines.map((line) => {
-        return line.trimLeft();
+        return line.trimStart();
     });
     return output;
 };
 const trimLinesRight = function (lines) {
     const output = lines.map((line) => {
-        return line.trimRight();
+        return line.trimEnd();
     });
     return output;
 };
 
 const removeMatchingCharacterAtEndFromLine = function (line, char) {
-    if (line[line.length - 1] === char) {
-        return line.substring(0, line.length - 1);
+    if (line.at(-1) === char) {
+        // return line.substring(0, line.length - 1);
+        return line.slice(0, Math.max(0, line.length - 1));
     }
     return line;
 };
@@ -45,6 +42,7 @@ const removeCommaCharacterAtEndFromLine = function (line) {
 };
 
 const removeCommaCharacterAtEndFromLines = function (lines) {
+    // eslint-disable-next-line unicorn/no-array-callback-reference
     const output = lines.map(removeCommaCharacterAtEndFromLine);
     return output;
 };
@@ -57,6 +55,7 @@ const removeQuoteAndApostropheCharactersFromLine = function (line) {
     );
 };
 const removeQuoteAndApostropheCharactersFromLines = function (lines) {
+    // eslint-disable-next-line unicorn/no-array-callback-reference
     const output = lines.map(removeQuoteAndApostropheCharactersFromLine);
     return output;
 };
@@ -67,6 +66,7 @@ const removeLastColumnFromCsvLine = (line) => {
     return columns.join(',');
 };
 const removeLastColumnFromCsvLines = function (lines) {
+    // eslint-disable-next-line unicorn/no-array-callback-reference
     const output = lines.map(removeLastColumnFromCsvLine);
     return output;
 };
@@ -78,6 +78,7 @@ const removeFirstColumnFromCsvLine = (line) => {
     return output;
 };
 const removeFirstColumnFromCsvLines = function (lines) {
+    // eslint-disable-next-line unicorn/no-array-callback-reference
     const output = lines.map(removeFirstColumnFromCsvLine);
     return output;
 };
@@ -86,9 +87,9 @@ const csvToJson = function (lines) {
     const arrJson = csv2json(lines.join('\n'));
 
     let output = ['['];
-    arrJson.forEach((obj, index) => {
+    for (const [index, obj] of arrJson.entries()) {
         output.push('\t' + JSON.stringify(obj) + (index === arrJson.length - 1 ? '' : ','));
-    });
+    }
     output.push(']');
 
     output = output.join('\n');
@@ -149,6 +150,8 @@ const jsonToCsv = async function (json) {
     return csv;
 };
 
+export { default as jsonStableStringify } from 'json-stable-stringify';
+
 export {
     removeEmptyLines,
     removeDuplicates,
@@ -165,6 +168,5 @@ export {
     csvToJson,
 
     fixDataTypes,
-    jsonStableStringify,
     jsonToCsv
 };

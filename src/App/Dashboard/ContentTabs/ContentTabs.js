@@ -70,7 +70,7 @@ const ContentTabs = () => {
     const [storedTransformers, setStoredTransformers] = useLocalStorage('transformers', '2', { raw: true });
 
     const transformers = getSanitizedTransformersWithStatus(storedTransformers).transformers;
-    const transformersAsInt = parseInt(transformers, 10);
+    const transformersAsInt = Number.parseInt(transformers, 10);
     const [selectedTabIndex, setSelectedTabIndex] = useState(transformersAsInt - 1);
 
     const [firstTabInitialized, setFirstTabInitialized] = useState(false);
@@ -88,10 +88,10 @@ const ContentTabs = () => {
             if (sanitizedTransformersWithStatus.wasAlreadyClean) {
                 setStoredTransformers(transformersFromSearchParams);
                 setSelectedTabIndex(
-                    parseInt(sanitizedTransformersWithStatus.transformers, 10) - 1
+                    Number.parseInt(sanitizedTransformersWithStatus.transformers, 10) - 1
                 );
 
-                transformerBeingMounted = parseInt(sanitizedTransformersWithStatus.transformers, 10);
+                transformerBeingMounted = Number.parseInt(sanitizedTransformersWithStatus.transformers, 10);
             }
 
             if (transformerBeingMounted === 1 && !firstTabInitialized) {

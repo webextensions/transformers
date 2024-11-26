@@ -8,9 +8,11 @@
 //           OR
 //     $ ./check-node-version.js --return-exit-code
 
+/* eslint-disable n/no-process-exit */
+
 const
-    fs = require('fs'),
-    path = require('path');
+    fs = require('node:fs'),
+    path = require('node:path');
 
 const semver = require('semver');
 
@@ -41,7 +43,7 @@ try {
         loggerWarnOrError('    $ nvm use\n');
         exitWithCodeIfRequired(1);
     }
-} catch (e) {
+} catch (e) { // eslint-disable-line no-unused-vars
     loggerWarnOrError('\nWarning: Unable to read the .nvmrc file\n');
     exitWithCodeIfRequired(1);
 }

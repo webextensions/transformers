@@ -1,4 +1,4 @@
-import CompressIcon from '@mui/icons-material/Compress.js';
+import CompressIcon from '@mui/icons-material/Compress';
 
 import { lazyLoadMinifyCss } from '../../../../../utils/lazyLoadLibraries/lazyLoadLibraries.js';
 

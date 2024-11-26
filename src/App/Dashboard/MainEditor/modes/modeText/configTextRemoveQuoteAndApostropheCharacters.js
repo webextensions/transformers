@@ -1,4 +1,4 @@
-import FormatQuoteIcon from '@mui/icons-material/FormatQuote.js';
+import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
 
 import { removeQuoteAndApostropheCharactersFromLines } from '../../textUtils.js';
 

@@ -1,4 +1,4 @@
-import ParkIcon from '@mui/icons-material/Park.js';
+import ParkIcon from '@mui/icons-material/Park';
 
 const configTextSortNatural = {
     operationId: 'textSortNatural',

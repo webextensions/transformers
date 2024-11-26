@@ -1,4 +1,4 @@
-import TextRotationAngledownIcon from '@mui/icons-material/TextRotationAngledown.js';
+import TextRotationAngledownIcon from '@mui/icons-material/TextRotationAngledown';
 
 const configTextSortByLength = {
     operationId: 'textSortByLength',

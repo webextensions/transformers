@@ -1,5 +1,3 @@
-/* eslint-disable filenames/no-index */
-
 import { modeCss } from './modeCss/index.js';
 import { modeCsv } from './modeCsv/index.js';
 import { modeHtml } from './modeHtml/index.js';

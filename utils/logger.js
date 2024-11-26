@@ -1,21 +1,21 @@
 let chalk;
 try {
     chalk = require('chalk');
-} catch (e) {
+} catch (e) { // eslint-disable-line no-unused-vars
     // do nothing
 }
 
 let boxen;
 try {
     boxen = require('boxen');
-} catch (e) {
+} catch (e) { // eslint-disable-line no-unused-vars
     // do nothing
 }
 
 let stripAnsi;
 try {
     stripAnsi = require('strip-ansi');
-} catch (e) {
+} catch (e) { // eslint-disable-line no-unused-vars
     // do nothing
 }
 

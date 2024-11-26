@@ -1,4 +1,4 @@
-import BarChartIcon from '@mui/icons-material/BarChart.js';
+import BarChartIcon from '@mui/icons-material/BarChart';
 
 const configTextGetStats = {
     operationId: 'textGetStats',
@@ -27,10 +27,10 @@ const configTextGetStats = {
         stats.charactersCount = input.length;
 
         // Replace all punctuation characters with a single space
-        const inputWithoutPunctuation = input.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ' '); // eslint-disable-line no-useless-escape
+        const inputWithoutPunctuation = input.replaceAll(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ' '); // eslint-disable-line no-useless-escape
 
         // Replace all continuous whitespace characters with a single space
-        const inputWithoutWhitespace = inputWithoutPunctuation.replace(/\s+/g, ' ');
+        const inputWithoutWhitespace = inputWithoutPunctuation.replaceAll(/\s+/g, ' ');
 
         const words = inputWithoutWhitespace.split(' ').filter((word) => word !== '');
         stats.wordsCount = words.length; // Not a perfect way to count words, but it's good enough for now.

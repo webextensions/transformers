@@ -1,4 +1,4 @@
-import DataObjectIcon from '@mui/icons-material/DataObject.js';
+import DataObjectIcon from '@mui/icons-material/DataObject';
 
 const configTextLinesToJsonArray = {
     operationId: 'linesToJsonArray',

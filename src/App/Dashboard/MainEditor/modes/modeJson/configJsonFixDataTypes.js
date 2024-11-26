@@ -1,6 +1,6 @@
 /* eslint-disable @stylistic/no-tabs */
 
-import BuildIcon from '@mui/icons-material/Build.js';
+import BuildIcon from '@mui/icons-material/Build';
 
 import { fixDataTypes } from '../../textUtils.js';
 

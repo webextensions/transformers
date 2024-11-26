@@ -1,4 +1,4 @@
-import MultipleStopIcon from '@mui/icons-material/MultipleStop.js';
+import MultipleStopIcon from '@mui/icons-material/MultipleStop';
 
 import { trimLines } from '../../textUtils.js';
 

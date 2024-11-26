@@ -1,4 +1,4 @@
-import ArrowBackIcon from '@mui/icons-material/ArrowBack.js';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import { trimLinesLeft } from '../../textUtils.js';
 

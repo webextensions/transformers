@@ -1,4 +1,4 @@
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward.js';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 import { trimLinesRight } from '../../textUtils.js';
 

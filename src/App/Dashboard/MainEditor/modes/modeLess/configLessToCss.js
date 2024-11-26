@@ -1,4 +1,4 @@
-import DataObjectIcon from '@mui/icons-material/DataObject.js';
+import DataObjectIcon from '@mui/icons-material/DataObject';
 
 import { lazyLoadBeautifyCssAndLess } from '../../../../../utils/lazyLoadLibraries/lazyLoadLibraries.js';
 

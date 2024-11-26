@@ -2,7 +2,7 @@
 //     Implement "template to HTML" functionality
 //     Refactor
 
-const path = require('path');
+const path = require('node:path');
 
 const clearModule = require('clear-module');
 const handlebars = require('handlebars');
@@ -29,7 +29,7 @@ class TemplateToHtmlPlugin {
             // https://webpack.js.org/contribute/plugin-patterns/#monitoring-the-watch-graph
             compilation.fileDependencies.add(templateFilePath);
 
-            const templateFileContents = require('fs').readFileSync(_this.options.template, 'utf8');
+            const templateFileContents = require('node:fs').readFileSync(_this.options.template, 'utf8');
 
             // TODO: Refactor it
             handlebars.registerHelper('loadAllCssAndJsChunks', function (context, options) { // eslint-disable-line no-unused-vars
@@ -38,22 +38,22 @@ class TemplateToHtmlPlugin {
                 let
                     cssCode = '',
                     jsCode = '';
-                Object.keys(chunks).forEach(function (key) {
+                for (const key of Object.keys(chunks)) {
                     const
                         chunk = chunks[key],
                         filePath = chunk.filePath;
                     if (filePath.match(/\.css$/)) {
                         // Do not load `chunk.` files and let them get loaded in lazy manner
-                        if (filePath.indexOf('chunk.') === -1) {
+                        if (!filePath.includes('chunk.')) {
                             cssCode += `<link rel="stylesheet" href="${filePath}" />`;
                         }
                     } else if (filePath.match(/\.js$/)) {
                         // Do not load `chunk.` files and let them get loaded in lazy manner
-                        if (filePath.indexOf('chunk.') === -1) {
+                        if (!filePath.includes('chunk.')) {
                             jsCode += `\n<script src="${filePath}"></script>`;
                         }
                     }
-                });
+                }
 
                 return cssCode + '\n' + jsCode;
             });
@@ -116,7 +116,7 @@ class TemplateToHtmlPlugin {
 
             const compiledTemplate = handlebars.compile(templateFileContents);
 
-            const context = JSON.parse(JSON.stringify(_this.options.contextData));
+            const context = structuredClone(_this.options.contextData);
             context.chunks = context.chunks || {};
 
             let packageJson;
@@ -124,11 +124,13 @@ class TemplateToHtmlPlugin {
                 clearModule(packageJsonPath);
                 packageJson = require(packageJsonPath);
             } catch (e) {
-                logger.warn('WARNING: Unable to load package.json');
+                logger.error('ERROR: Unable to load package.json');
+                console.error(e);
+                process.exit(1); // eslint-disable-line n/no-process-exit
             }
             context.appVersion = packageJson?.version;
 
-            compilation.chunks.forEach(function (chunk) {
+            for (const chunk of compilation.chunks) {
                 const chunkFiles = chunk.files;
 
                 const isFileCssOrJs = function (fileName) {
@@ -153,7 +155,7 @@ class TemplateToHtmlPlugin {
                         };
                     }
                 }
-            });
+            }
 
             try {
                 const html = compiledTemplate(context);

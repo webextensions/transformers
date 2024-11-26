@@ -1,4 +1,4 @@
-import LastPageIcon from '@mui/icons-material/LastPage.js';
+import LastPageIcon from '@mui/icons-material/LastPage';
 
 import { removeLastColumnFromCsvLines } from '../../textUtils.js';
 

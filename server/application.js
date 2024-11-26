@@ -5,11 +5,11 @@
 'use strict';
 
 const
-    // url = require('url'),
-    Path = require('path'),
-    https = require('https'),
-    http = require('http'),
-    fs = require('fs');
+    // url = require('node:url'),
+    Path = require('node:path'),
+    https = require('node:https'),
+    http = require('node:http'),
+    fs = require('node:fs');
 
 const
     express = require('express'),
@@ -59,7 +59,7 @@ const routeSetup = function (exp) {
         )
         .use('/user-account', express.Router()
             .post('/create', function (req, res) {
-                const reqBody = JSON.parse(JSON.stringify(req.body));
+                const reqBody = structuredClone(req.body);
 
                 // TODO: Validate whether "reqBody.username" exists or not
                 res.send(`TODO: Create a user with ID ${reqBody.username} (if available)`);
@@ -107,8 +107,8 @@ const application = {
                     try {
                         responseStatus = res._header.split('\n')[0].trim(); // ".trim()" is required, otherwise, "\r" entry might remain there.
                         responseStatus = responseStatus.replace('HTTP/1.1', '').trim();
-                    } catch (e) {
-                        responseStatus = 'Error: Unexpected error in response status. This should never happen.';
+                    } catch (e) { // eslint-disable-line no-unused-vars
+                        responseStatus = 'THIS_SHOULD_NEVER_HAPPEN: Error: Unexpected error in response status.';
                     }
                     logger.verbose(
                         req.method + ' ' +
@@ -229,7 +229,7 @@ const application = {
                             }
                         )
                     );
-                } catch (e) {
+                } catch (e) { // eslint-disable-line no-unused-vars
                     console.warn(chalk.yellow('No favicon file found at path ', faviconPath));
                 }
             }
@@ -306,7 +306,7 @@ const application = {
                             setHeaders: function (res, path) {
                                 const numberOfSecondsInFifteenDays = 15 * 24 * 60 * 60;
 
-                                if (path.indexOf('ensure-freshness') !== -1) {
+                                if (path.includes('ensure-freshness')) {
                                     // Note:
                                     //     The Chrome DevTools do not necessarily show the real HTTP response status code.
                                     //     The following "Cache-Control" setting seems to work well for serving static
@@ -344,7 +344,7 @@ const application = {
                     if (!localIpAddressesAndHostnames) {
                         try {
                             localIpAddressesAndHostnames = require('local-ip-addresses-and-hostnames').getLocalIpAddressesAndHostnames();
-                        } catch (e) {
+                        } catch (e) { // eslint-disable-line no-unused-vars
                             localIpAddressesAndHostnames = [];
                         }
                     }
@@ -357,9 +357,9 @@ const application = {
                         } else {
                             logger.verbose('This application can be accessed from any of the following paths:' + ' (' + protocol + ' protocol)');
                         }
-                        localhostPaths.forEach(function (localhostPath) {
+                        for (const localhostPath of localhostPaths) {
                             logger.verbose('\t' + protocol + '://' + localhostPath + ':' + portNumber);
-                        });
+                        }
                     } else {
                         logger.verbose('This application is running an ' + protocol + ' server on port ' + portNumber);
                         logger.warn('Warning: Unable to get the accessible hostnames / IP addresses');
@@ -426,7 +426,7 @@ const application = {
                 }
             } else {
                 logger.fatal('Fatal error: HTTPS & HTTP, both the modes are disabled in the configuration. Exiting.');
-                process.exit(1);
+                process.exit(1); // eslint-disable-line n/no-process-exit
             }
         }
     }

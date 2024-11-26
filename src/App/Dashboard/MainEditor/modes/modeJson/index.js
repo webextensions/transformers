@@ -1,5 +1,3 @@
-/* eslint-disable filenames/no-index */
-
 import { configJsonFormat } from './configJsonFormat.js';
 import { configJsonMinify } from './configJsonMinify.js';
 
@@ -88,9 +86,11 @@ const modeJson = {
         }
     ]
 };
+// eslint-disable-next-line unicorn/no-array-reduce
 modeJson.arrOperations = modeJson.operations.reduce((acc, curr) => {
     return acc.concat(curr.options);
 }, []);
+// eslint-disable-next-line unicorn/no-array-reduce
 modeJson.obOperations = modeJson.arrOperations.reduce((acc, curr) => {
     acc[curr.operationId] = curr;
     return acc;

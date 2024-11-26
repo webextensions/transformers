@@ -3,7 +3,7 @@
 /* global exec */
 
 const
-    path = require('path');
+    path = require('node:path');
 
 const
     _ = require('lodash'),
@@ -94,9 +94,9 @@ const doCleanup = function (cmd, itemTerm, flagFilterInOnlyFolders, callback) {
         return callback();
     } else if (listOfPotentialItemsToClean.length === listOfItemsToClean.length) {
         logger.info('\nThe following ' + listOfItemsToClean.length + ` ${itemTerm}(s) are going to be deleted:`);
-        listOfItemsToClean.forEach(function (itemToClean) {
+        for (const itemToClean of listOfItemsToClean) {
             console.log('    * ' + itemToClean);
-        });
+        }
         logger.warn('\nAbout to delete the above mentioned ' + listOfItemsToClean.length + ` ${itemTerm}(s).`);
         process.stdout.write('5');
         setTimeout(function () { process.stdout.write(' 4'); }, 1000);
@@ -114,10 +114,11 @@ const doCleanup = function (cmd, itemTerm, flagFilterInOnlyFolders, callback) {
         logger.error(`Error: The following ${itemTerm}(s) are not being tracked, not marked for keeping and not marked for deleting.`);
         // https://stackoverflow.com/questions/38865869/how-to-find-difference-between-two-array-using-lodash-underscore-in-nodejs/38866051#38866051
         const differentItems = _.differenceWith(listOfPotentialItemsToClean, listOfItemsToClean, _.isEqual);
-        differentItems.forEach(function (differentItem) {
+        for (const differentItem of differentItems) {
             console.log('    * ' + differentItem);
-        });
+        }
 
+        // eslint-disable-next-line n/no-process-exit
         process.exit(1);
     }
 };

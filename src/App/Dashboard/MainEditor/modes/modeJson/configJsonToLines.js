@@ -1,4 +1,4 @@
-import ReorderIcon from '@mui/icons-material/Reorder.js';
+import ReorderIcon from '@mui/icons-material/Reorder';
 
 const configJsonToLines = {
     operationId: 'jsonToLines',

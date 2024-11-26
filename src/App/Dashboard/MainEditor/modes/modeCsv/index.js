@@ -1,5 +1,3 @@
-/* eslint-disable filenames/no-index */
-
 import { configCsvRemoveFirstColumn } from './configCsvRemoveFirstColumn.js';
 import { configCsvRemoveLastColumn } from './configCsvRemoveLastColumn.js';
 
@@ -41,9 +39,11 @@ const modeCsv = {
         }
     ]
 };
+// eslint-disable-next-line unicorn/no-array-reduce
 modeCsv.arrOperations = modeCsv.operations.reduce((acc, curr) => {
     return acc.concat(curr.options);
 }, []);
+// eslint-disable-next-line unicorn/no-array-reduce
 modeCsv.obOperations = modeCsv.arrOperations.reduce((acc, curr) => {
     acc[curr.operationId] = curr;
     return acc;

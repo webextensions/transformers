@@ -1,4 +1,4 @@
-import CircleIcon from '@mui/icons-material/Circle.js';
+export { default as IconNotAvailable } from '@mui/icons-material/Circle';
 
 export const
     mode_css  = 'css',
@@ -35,8 +35,6 @@ export const defaultSelectedOperations = {
     [mode_less]: 'lessFormat',
     [mode_text]: 'textSort'
 };
-
-export const IconNotAvailable = CircleIcon;
 
 // const availableOperations = {};
 

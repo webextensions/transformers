@@ -1,4 +1,4 @@
-import CompressIcon from '@mui/icons-material/Compress.js';
+import CompressIcon from '@mui/icons-material/Compress';
 
 const configJsonMinify = {
     operationId: 'jsonMinify',

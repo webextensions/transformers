@@ -1,4 +1,4 @@
-import MoodIcon from '@mui/icons-material/Mood.js';
+import MoodIcon from '@mui/icons-material/Mood';
 
 const configJsonFormat = {
     operationId: 'jsonFormat',
