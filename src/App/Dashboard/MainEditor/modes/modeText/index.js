@@ -11,10 +11,17 @@ import { configTextReverse } from './configTextReverse.js';
 import { configTextTrim } from './configTextTrim.js';
 import { configTextTrimLeft } from './configTextTrimLeft.js';
 import { configTextTrimRight } from './configTextTrimRight.js';
+import { configTextRemoveFirstFewCharacters } from './configTextRemoveFirstFewCharacters.js';
+import { configTextRemoveLastFewCharacters } from './configTextRemoveLastFewCharacters.js';
 import { configTextRemoveCommaCharacterAtLineEnds } from './configTextRemoveCommaCharacterAtLineEnds.js';
 import { configTextRemoveQuoteAndApostropheCharacters } from './configTextRemoveQuoteAndApostropheCharacters.js';
 
 import { configTextGetStats } from './configTextGetStats.js';
+
+import {
+    configUnicodeToPunycode,
+    configPunycodeToUnicode
+} from './configTextPunycode.js';
 
 import { configTextLinesToJsonArray } from './configTextLinesToJsonArray.js';
 
@@ -63,6 +70,8 @@ const modeText = {
                 configTextTrim,                              // Trim lines
                 configTextTrimLeft,                          // Trim lines from left
                 configTextTrimRight,                         // Trim lines from right
+                configTextRemoveFirstFewCharacters,          // Remove first few characters
+                configTextRemoveLastFewCharacters,           // Remove last few characters
                 configTextRemoveCommaCharacterAtLineEnds,    // Remove comma character at line ends
                 configTextRemoveQuoteAndApostropheCharacters // Remove " and ' characters
             ]
@@ -75,6 +84,13 @@ const modeText = {
                 // Count characters   // Icon: AbcIcon
                 // Count words        // Icon: SubtitlesIcon
                 // Count unique words // Icon: SubtitlesOutlinedIcon
+            ]
+        },
+        {
+            optgroupLabel: 'Encoding/Decoding',
+            options: [
+                configUnicodeToPunycode, // Unicode to Punycode
+                configPunycodeToUnicode  // Punycode to Unicode
             ]
         },
         {

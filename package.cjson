@@ -73,6 +73,9 @@
     // Less
     "less": "^4.2.1",
 
+    // Encoding/Decoding
+    "punycode": "^2.3.1",
+
     // Miscellaneous
     "lodash": "^4.17.21",
     "extend": "^3.0.2",
