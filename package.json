@@ -139,5 +139,5 @@
     "update-package-lock-json": "./scripts/housekeeping/update-package-lock-json.sh",
     "version": "./scripts/build-and-release/prepare-version/prepare-version.sh"
   },
-  "version": "0.6.6"
+  "version": "0.6.7"
 }
