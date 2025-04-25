@@ -1,5 +1,6 @@
 import { configTextRemoveEmptyLines } from './configTextRemoveEmptyLines.js';
 import { configTextRemoveDuplicates } from './configTextRemoveDuplicates.js';
+import { configTextRemoveUniques } from './configTextRemoveUniques.js';
 
 import { configTextSort } from './configTextSort.js';
 import { configTextSortCaseInsensitive } from './configTextSortCaseInsensitive.js';
@@ -49,7 +50,8 @@ const modeText = {
             optgroupLabel: 'Lines',
             options: [
                 configTextRemoveEmptyLines, // Remove empty lines
-                configTextRemoveDuplicates  // Remove duplicates
+                configTextRemoveDuplicates, // Remove duplicates
+                configTextRemoveUniques     // Remove uniques
                 // Remove beyond N lines
             ]
         },

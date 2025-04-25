@@ -10,6 +10,23 @@ const removeDuplicates = function (lines) {
     return output;
 };
 
+const removeUniques = function (lines) {
+    const counts = {};
+    for (const line of lines) {
+        counts[line] = counts[line] || 0;
+        counts[line]++;
+    }
+
+    const output = [];
+    for (const line in counts) {
+        if (counts[line] > 1) {
+            output.push(line);
+        }
+    }
+
+    return output;
+};
+
 const trimLines = function (lines) {
     const output = lines.map((line) => {
         return line.trim();
@@ -155,6 +172,7 @@ export { default as jsonStableStringify } from 'json-stable-stringify';
 export {
     removeEmptyLines,
     removeDuplicates,
+    removeUniques,
 
     trimLines,
     trimLinesLeft,
