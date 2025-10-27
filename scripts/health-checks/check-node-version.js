@@ -37,7 +37,7 @@ try {
         dotNvmrcContents = fs.readFileSync(dotNvmrcPath, 'utf8');
     if (!semver.satisfies(nodeVersion, dotNvmrcContents)) {
         logger.log('');
-        logger.success(' ✓   .nvmrc suggests: Node JS ' + dotNvmrcContents);
+        logger.success(' ✔   .nvmrc suggests: Node JS ' + dotNvmrcContents);
         loggerWarnOrError(' ✗ You currently use: Node JS ' + nodeVersion);
         loggerWarnOrError('\nYou might want to run:');
         loggerWarnOrError('    $ nvm use\n');
