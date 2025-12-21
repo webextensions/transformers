@@ -2,8 +2,6 @@
 
 /* eslint-env node */
 
-'use strict';
-
 const { Command } = require('commander');
 
 const application = require('./application.js');

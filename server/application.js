@@ -2,8 +2,6 @@
 
 /* eslint-env node */
 
-'use strict';
-
 const
     // url = require('node:url'),
     Path = require('node:path'),
